@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Dropdown} from 'react-bootstrap';
-import {Trans} from 'react-i18next';
 import {Link} from "react-router-dom";
 
 class Navbar extends Component {
