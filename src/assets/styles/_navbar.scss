@@ -39,11 +39,8 @@
       }
     }
     .search-form {
-      width: 35%;
+      width: 70%;
       margin-right: 30px;
-      @media (max-width: 1024px) {
-        width: 22%;
-      }
       .form-control {
         height: 32px;
       }

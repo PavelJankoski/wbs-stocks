@@ -20,7 +20,7 @@ const mapData = {
 // import DatePicker from 'react-datepicker';
 // import { Dropdown } from 'react-bootstrap';
 
-export class Dashboard extends Component {
+export class Stocks extends Component {
 
 
 
@@ -34,7 +34,6 @@ export class Dashboard extends Component {
       salesStatisticsChartData:{},
       netProfitChartData:{},
       totaltransactionChartData: {},
-      marketingOverviewChartData:{},
       areaOptions : {
         responsive: true,
         maintainAspectRatio: false,
@@ -185,57 +184,6 @@ export class Dashboard extends Component {
           }]
         }
       },
-      marketingOverviewOptions: {
-        responsive: true,
-        maintainAspectRatio: true,
-        layout: {
-          padding: {
-            left: 0,
-            right: 0,
-            top: 20,
-            bottom: 0
-          }
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-              max: 400,
-              display: true,
-              beginAtZero: true,
-              fontColor: "#dde4eb",
-              stepSize: 100
-            },
-            gridLines: {
-              display: false,
-              color: "#dde4eb",
-              zeroLineColor: "#dde4eb"
-            }
-          }],
-          xAxes: [{
-            stacked: true,
-            ticks: {
-              beginAtZero: true,
-              fontColor: "#dde4eb",
-              color: "#dde4eb",
-              zeroLineColor: "#dde4eb"
-            },
-            gridLines: {
-              display: true,
-              color: "#dde4eb",
-              zeroLineColor: "#dde4eb"
-            },
-            barPercentage: 0.2
-          }]
-        },
-        legend: {
-          display: false
-        },
-        elements: {
-          point: {
-            radius: 0
-          }
-        }
-      },
       todos: [
         {
             id: 1,
@@ -264,14 +212,21 @@ export class Dashboard extends Component {
         }
       ],
       inputValue: '',
+      active: '',
     }
     this.statusChangedHandler = this.statusChangedHandler.bind(this);
     this.addTodo = this.addTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
     this.inputChangeHandler = this.inputChangeHandler.bind(this); 
-  } 
-  changeChartOneData = () =>{
-    
+  }
+  changeChartOneData = (e) =>{
+    const clicked = e.target.id
+    if(this.state.active === clicked) { 
+        this.setState({active: ''});
+    } else {
+        this.setState({active: clicked})
+    }
+
     var oldDataSet = this.state.datasets[0];
     var oldDataSet1 = this.state.datasets[1];
     var newData = [60, 75, 65, 130, 130, 145, 110, 145, 155, 149, 170];
@@ -288,8 +243,6 @@ export class Dashboard extends Component {
     newDataSet1.data = newData1;
     
     // console.log('this is:', oldDataSet.data);
-    console.log('this is:', newDataSet.data);
-    console.log('this is:', newDataSet1.data);
     var newState = {
       // ...data,
       datasets: [newDataSet, newDataSet1]
@@ -302,8 +255,13 @@ export class Dashboard extends Component {
       throw Error(e);
     }
   }
-  changeChartTwoData = () =>{
-    
+  changeChartTwoData = (e) =>{
+    const clicked = e.target.id
+    if(this.state.active === clicked) { 
+        this.setState({active: ''});
+    } else {
+        this.setState({active: clicked})
+    }
     var oldDataSet = this.state.datasets[0];
     var oldDataSet1 = this.state.datasets[1];
     var newData = [130, 145, 155, 60, 75, 65, 130, 110, 145, 149, 170];
@@ -334,8 +292,13 @@ export class Dashboard extends Component {
       throw Error(e);
     }
   }
-  changeChartThreeData = () =>{
-    
+  changeChartThreeData = (e) =>{
+    const clicked = e.target.id
+    if(this.state.active === clicked) { 
+        this.setState({active: ''});
+    } else {
+        this.setState({active: clicked})
+    }
     var oldDataSet = this.state.datasets[0];
     var oldDataSet1 = this.state.datasets[1];
     var newData = [130, 75, 65, 130, 110, 145, 155, 60, 145, 149, 170];
@@ -366,8 +329,13 @@ export class Dashboard extends Component {
       throw Error(e);
     }
   }
-  changeChartFourData = () =>{
-    
+  changeChartFourData = (e) =>{
+    const clicked = e.target.id
+    if(this.state.active === clicked) { 
+        this.setState({active: ''});
+    } else {
+        this.setState({active: clicked})
+    }
     var oldDataSet = this.state.datasets[0];
     var oldDataSet1 = this.state.datasets[1];
     var newData = [130, 145, 65, 130, 75, 145, 149, 170, 110, 155, 60];
@@ -389,130 +357,6 @@ export class Dashboard extends Component {
     var newState = {
       // ...data,
       datasets: [newDataSet, newDataSet1]
-    };
-    try {
-      this.setState(
-        newState
-      );
-    } catch(e) {
-      throw Error(e);
-    }
-  }
-
-  changeMarketingOneData = () =>{
-    console.log("ashgj")
-    var oldDataSet = this.state.datasets[0];
-    var oldDataSet1 = this.state.datasets[1];
-    var oldDataSet2 = this.state.datasets[2];
-    var oldDataSet3 = this.state.datasets[3];
-    var newData = [145, 238, 148, 293, 242, 235, 256, 334];
-    var newData1 = [330, 380, 230, 400, 309, 430, 340, 310];
-    var newData2 = [375, 440, 284, 450, 386, 480, 400, 365];
-    var newData3 = [425, 480, 324, 490, 426, 520, 440, 405];
-    var newDataSet = {
-      ...oldDataSet
-    };
-    var newDataSet1 = {
-      ...oldDataSet1
-    };
-    var newDataSet2 = {
-      ...oldDataSet2
-    };
-    var newDataSet3 = {
-      ...oldDataSet3
-    };
-
-    newDataSet.data = newData;
-    newDataSet1.data = newData1;
-    newDataSet2.data = newData2;
-    newDataSet3.data = newData3;
-    
-    console.log('this is:', newDataSet.data);
-    console.log('this is:', newDataSet1.data);
-    var newState = {
-      datasets: [newDataSet, newDataSet1, newDataSet2, newDataSet3]
-    };
-    try {
-      this.setState(
-        newState
-      );
-    } catch(e) {
-      throw Error(e);
-    }
-  }
-  changeMarketingTwoData = () =>{
-    console.log("ashgj")
-    var oldDataSet = this.state.datasets[0];
-    var oldDataSet1 = this.state.datasets[1];
-    var oldDataSet2 = this.state.datasets[2];
-    var oldDataSet3 = this.state.datasets[3];
-    var newData = [125, 138, 108, 193, 102, 200, 290, 204];
-    var newData1 = [330, 380, 230, 400, 309, 430, 340, 310];
-    var newData2 = [375, 440, 284, 450, 386, 480, 400, 365];
-    var newData3 = [425, 480, 324, 490, 426, 520, 440, 405];
-    var newDataSet = {
-      ...oldDataSet
-    };
-    var newDataSet1 = {
-      ...oldDataSet1
-    };
-    var newDataSet2 = {
-      ...oldDataSet2
-    };
-    var newDataSet3 = {
-      ...oldDataSet3
-    };
-
-    newDataSet.data = newData;
-    newDataSet1.data = newData1;
-    newDataSet2.data = newData2;
-    newDataSet3.data = newData3;
-    
-    console.log('this is:', newDataSet.data);
-    console.log('this is:', newDataSet1.data);
-    var newState = {
-      datasets: [newDataSet, newDataSet1, newDataSet2, newDataSet3]
-    };
-    try {
-      this.setState(
-        newState
-      );
-    } catch(e) {
-      throw Error(e);
-    }
-  }
-  changeMarketingThreeData = () =>{
-    console.log("ashgj")
-    var oldDataSet = this.state.datasets[0];
-    var oldDataSet1 = this.state.datasets[1];
-    var oldDataSet2 = this.state.datasets[2];
-    var oldDataSet3 = this.state.datasets[3];
-    var newData = [145, 238, 148, 293, 242, 235, 256, 334];
-    var newData1 = [330, 380, 230, 400, 309, 430, 340, 310];
-    var newData2 = [375, 440, 284, 450, 386, 480, 400, 365];
-    var newData3 = [425, 480, 324, 490, 426, 520, 440, 405];
-    var newDataSet = {
-      ...oldDataSet
-    };
-    var newDataSet1 = {
-      ...oldDataSet1
-    };
-    var newDataSet2 = {
-      ...oldDataSet2
-    };
-    var newDataSet3 = {
-      ...oldDataSet3
-    };
-
-    newDataSet.data = newData;
-    newDataSet1.data = newData1;
-    newDataSet2.data = newData2;
-    newDataSet3.data = newData3;
-    
-    console.log('this is:', newDataSet.data);
-    console.log('this is:', newDataSet1.data);
-    var newState = {
-      datasets: [newDataSet, newDataSet1, newDataSet2, newDataSet3]
     };
     try {
       this.setState(
@@ -754,6 +598,89 @@ export class Dashboard extends Component {
       }
     }
   };
+    
+
+  marketingOverviewData= {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+    datasets: [{
+        label: 'OVERDUE',
+        data:[145, 238, 148, 293, 242, 235, 256, 334],
+        backgroundColor: '#826af9',
+        borderColor: '#826af9',
+        borderWidth: 0
+      }, {
+        label: 'SNOOZED',
+        data: [330, 380, 230, 400, 309, 430, 340, 310],
+        borderColor: '#9e86ff',
+        borderWidth: 0
+      },
+      {
+        label: 'COMPLETED',
+        data: [375, 440, 284, 450, 386, 480, 400, 365],
+        backgroundColor: '#d0aeff',
+        borderColor: '#d0aeff',
+        borderWidth: 0
+      },
+      {
+        label: 'PENDING',
+        data: [425, 480, 324, 490, 426, 520, 440, 405],
+        backgroundColor: '#f7d2ff',
+        borderColor: '#f7d2ff',
+        borderWidth: 0
+      }
+    ]
+  };
+  marketingOverviewOptions= {
+    responsive: true,
+    maintainAspectRatio: true,
+    layout: {
+      padding: {
+        left: 0,
+        right: 0,
+        top: 20,
+        bottom: 0
+      }
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          max: 400,
+          display: true,
+          beginAtZero: true,
+          fontColor: "#b9b8b8",
+          stepSize: 100
+        },
+        gridLines: {
+          display: false,
+          color: "#dde4eb",
+          zeroLineColor: "#dde4eb"
+        }
+      }],
+      xAxes: [{
+        stacked: true,
+        ticks: {
+          beginAtZero: true,
+          fontColor: "#b9b8b8",
+          color: "#dde4eb",
+          zeroLineColor: "#dde4eb"
+        },
+        gridLines: {
+          display: true,
+          color: "#dde4eb",
+          zeroLineColor: "#dde4eb"
+        },
+        barPercentage: 0.2
+      }]
+    },
+    legend: {
+      display: false
+    },
+    elements: {
+      point: {
+        radius: 0
+      }
+    }
+  };
 
   componentDidMount(){
 
@@ -839,44 +766,7 @@ export class Dashboard extends Component {
         fill: true
       }]
     };
-    var mDatas = [145, 238, 148, 293, 242, 235, 256, 334];
-    var mDatas1 = [330, 380, 230, 400, 309, 430, 340, 310];
-    var mDatas2 = [375, 440, 284, 450, 386, 480, 400, 365];
-    var mDatas3 = [425, 480, 324, 490, 426, 520, 440, 405];
-    
-
-    const marketingOverviewData= {
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
-      datasets: [{
-          label: 'OVERDUE',
-          data:mDatas,
-          backgroundColor: '#826af9',
-          borderColor: '#826af9',
-          borderWidth: 0
-        }, {
-          label: 'SNOOZED',
-          data: mDatas1,
-          borderColor: '#9e86ff',
-          borderWidth: 0
-        },
-        {
-          label: 'COMPLETED',
-          data: mDatas2,
-          backgroundColor: '#d0aeff',
-          borderColor: '#d0aeff',
-          borderWidth: 0
-        },
-        {
-          label: 'PENDING',
-          data: mDatas3,
-          backgroundColor: '#f7d2ff',
-          borderColor: '#f7d2ff',
-          borderWidth: 0
-        }
-      ]
-    };
-
-    // this.setState(marketingOverviewData);
+  
 
     var Datas = [60, 75, 65, 130, 130, 145, 110, 145, 155, 149, 170];
     var Datas1 = [0, 25, 20, 40, 70, 52, 49, 90, 70, 94, 110, 135];
@@ -905,7 +795,7 @@ export class Dashboard extends Component {
       }]
     };
 
-    this.setState(salesStatisticsData, marketingOverviewData);
+    this.setState(salesStatisticsData);
 
 
 
@@ -958,10 +848,12 @@ export class Dashboard extends Component {
         pointHitRadius: 7,
       }]
     };
-    this.setState({visitChartData: visitData, impressionChartData:impressionData, conversionChartData:conversionData, downloadChartData:downloadData, salesStatisticsChartData:salesStatisticsData, netProfitChartData:netProfitData, totaltransactionChartData:totaltransactionData, marketingOverviewChartData:marketingOverviewData} )
+    this.setState({visitChartData: visitData, impressionChartData:impressionData, conversionChartData:conversionData, downloadChartData:downloadData, salesStatisticsChartData:salesStatisticsData, netProfitChartData:netProfitData, totaltransactionChartData:totaltransactionData} )
   }
 
-  
+  toggleProBanner() {
+    document.querySelector('.proBanner').classList.toggle("hide");
+  }
   render () {
     return (
       <div>
@@ -1088,16 +980,16 @@ export class Dashboard extends Component {
                   <p>Lorem ipsum is placeholder text commonly used</p>
                   <ul className="nav nav-tabs sales-mini-tabs ml-lg-auto mb-4 mb-md-0" role="tablist">
                     <li className="nav-item">
-                      <button className="nav-link active bg-white" id="sales-statistics_switch_1" onClick={this.changeChartOneData} data-toggle="tab" role="tab" aria-selected="true">1D</button>
+                      <button className={`nav-link ${this.state.active === "sales-statistics_switch_1"? 'active': ''}`} id="sales-statistics_switch_1" onClick={this.changeChartOneData} data-toggle="tab" role="tab" aria-selected="false">1D</button>
                     </li>
                     <li className="nav-item">
-                    <button className="nav-link  bg-white" id="sales-statistics_switch_2" onClick={this.changeChartTwoData} data-toggle="tab" role="tab" aria-selected="false">5D</button>
+                      <button className={`nav-link ${this.state.active === "sales-statistics_switch_2"? 'active': ''}`} id="sales-statistics_switch_2" onClick={this.changeChartTwoData} data-toggle="tab" role="tab" aria-selected="false">5D</button>
                     </li>
                     <li className="nav-item">
-                    <button className="nav-link  bg-white" id="sales-statistics_switch_3" onClick={this.changeChartThreeData} data-toggle="tab" role="tab" aria-selected="false">1M</button>
+                      <button className={`nav-link ${this.state.active === "sales-statistics_switch_3"? 'active': ''}`} id="sales-statistics_switch_3" onClick={this.changeChartThreeData} data-toggle="tab" role="tab" aria-selected="false">1M</button>
                     </li>
                     <li className="nav-item">
-                    <button className="nav-link  bg-white" id="sales-statistics_switch_3" onClick={this.changeChartFourData} data-toggle="tab" role="tab" aria-selected="false">1Y</button>
+                      <button className={`nav-link ${this.state.active === "sales-statistics_switch_4"? 'active': ''}`} id="sales-statistics_switch_4" onClick={this.changeChartFourData} data-toggle="tab" role="tab" aria-selected="false">1Y</button>
                     </li>
                   </ul>
                 </div>
@@ -1208,7 +1100,7 @@ export class Dashboard extends Component {
                       <p className="mb-0 font-weight-medium mr-2 ml-2 mb-1">USD</p>
                       <p className="mb-0 text-success font-weight-semibold mb-1">(+1.37%)</p>
                     </div>
-                    <Bar data={this.state} options={this.state.marketingOverviewOptions} datasetKeyProvider={this.datasetKeyProvider} height={100} id="marketingOverviewChart"/>
+                    <Bar data={this.marketingOverviewData} options={this.marketingOverviewOptions} datasetKeyProvider={this.datasetKeyProvider} height={100} id="marketingOverviewChart1"/>
                   </div>
                 </div>
               </div>
@@ -1600,4 +1492,4 @@ export class Dashboard extends Component {
     );
   }
 }
-export default Dashboard;
+export default Stocks;
