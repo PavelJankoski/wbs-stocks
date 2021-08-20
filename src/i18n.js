@@ -9,7 +9,15 @@ i18n
       resources:{
           en: {
               translations: {
-                "Overview dashboard": "Overview dashboard",
+                  "overview-dashboard": "Overview dashboard",
+                  "cryptocurrency": "Cryptocurrency",
+                  "stocks": "Stocks"
+              }
+          },
+          mk: {
+              translations: {
+                  "cryptocurrency": "Криптовалути",
+                  "stocks": "Берза"
               }
           }
       },

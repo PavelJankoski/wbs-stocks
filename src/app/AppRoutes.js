@@ -1,28 +1,7 @@
-import React, {Component, Suspense, lazy} from 'react';
-import {Switch, Route, Redirect} from 'react-router-dom';
-
-import Spinner from '../app/shared/Spinner';
-
-const Stocks = lazy(() => import('./stocks/Stocks'));
-const Dashboard = lazy(() => import('./example/dashboard/Dashboard'));
-const Cryptocurrency = lazy(() => import('./cryptocurrency/Cryptocurrency'));
-
-const Buttons = lazy(() => import('./example/basic-ui/Buttons'));
-const Dropdowns = lazy(() => import('./example/basic-ui/Dropdowns'));
-
-const BasicElements = lazy(() => import('./example/form-elements/BasicElements'));
-
-const BasicTable = lazy(() => import('./example/tables/BasicTable'));
-
-const Mdi = lazy(() => import('./icons/Mdi'));
-
-const ChartJs = lazy(() => import('./example/charts/ChartJs'));
-
-const Error404 = lazy(() => import('./example/error-pages/Error404'));
-const Error500 = lazy(() => import('./example/error-pages/Error500'));
-
-const Login = lazy(() => import('./example/user-pages/Login'));
-const Register1 = lazy(() => import('./example/user-pages/Register'));
+import React, {Component, Suspense} from 'react';
+import {Switch, Redirect, Route} from 'react-router-dom';
+import Spinner from './shared/components/Spinner';
+import {routes} from "./shared/objects/routes";
 
 
 class AppRoutes extends Component {
@@ -30,29 +9,9 @@ class AppRoutes extends Component {
         return (
             <Suspense fallback={<Spinner/>}>
                 <Switch>
-                    <Route exact path="/stocks" component={Stocks}/>
-                    <Route exact path="/cryptocurrency" component={Cryptocurrency}/>
-
-                    // EXAMPLE ROUTES
-                    <Route exact path="/dashboard" component={Dashboard}/>
-
-                    <Route path="/basic-ui/buttons" component={Buttons}/>
-                    <Route path="/basic-ui/dropdowns" component={Dropdowns}/>
-
-                    <Route path="/form-Elements/basic-elements" component={BasicElements}/>
-
-                    <Route path="/tables/basic-table" component={BasicTable}/>
-
-                    <Route path="/icons/mdi" component={Mdi}/>
-
-                    <Route path="/charts/chart-js" component={ChartJs}/>
-
-
-                    <Route path="/user-pages/login-1" component={Login}/>
-                    <Route path="/user-pages/register-1" component={Register1}/>
-
-                    <Route path="/error-pages/error-404" component={Error404}/>
-                    <Route path="/error-pages/error-500" component={Error500}/>
+                    {routes.map((r, idx) => (
+                        <Route key={r.to} exact path={r.to} component={r.component} />
+                    ))}
                     <Redirect to="/stocks"/>
                 </Switch>
             </Suspense>

@@ -23,21 +23,21 @@ class Sidebar extends Component {
     return (
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <div className="text-center sidebar-brand-wrapper d-flex align-items-center">
-          <Link className="sidebar-brand brand-logo" to='/dashboard'><img src={require("../../assets/images/logo.png")} alt="logo" /></Link>
-          <Link className="sidebar-brand brand-logo-mini pt-3" to='/dashboard'><img src={require("../../assets/images/logo-mini.png" )} alt="logo" /></Link>
+          <Link className="sidebar-brand brand-logo" to='/dashboard'><img src={require("../../../assets/images/logo.png")} alt="logo" /></Link>
+          <Link className="sidebar-brand brand-logo-mini pt-3" to='/dashboard'><img src={require("../../../assets/images/logo-mini.png" )} alt="logo" /></Link>
         </div>
         <ul className="nav">
       
           <li className={ this.isPathActive('/stocks') ? 'nav-item active' : 'nav-item' }>
             <Link className="nav-link" to="/stocks">
               <i className="mdi mdi-chart-line menu-icon"/>
-              <span className="menu-title"><Trans>Stocks</Trans></span>
+              <span className="menu-title"><Trans i18nKey="stocks"/></span>
             </Link>
           </li>
           <li className={ this.isPathActive('/cryptocurrency') ? 'nav-item active' : 'nav-item' }>
             <Link className="nav-link" to="/cryptocurrency">
               <i className="mdi mdi-bitcoin menu-icon"/>
-              <span className="menu-title"><Trans>Cryptocurrency</Trans></span>
+              <span className="menu-title"><Trans i18nKey="cryptocurrency"/></span>
             </Link>
           </li>
         </ul>

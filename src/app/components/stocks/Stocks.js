@@ -1330,7 +1330,7 @@ export class Stocks extends Component {
                   <div className="card-body">
                     <h4 className="card-title mb-0">Top Performer</h4>
                     <div className="d-flex mt-3 py-2 border-bottom">
-                      <img className="img-sm rounded-circle" src={require("../../assets/images/faces/face3.jpg")} alt="profile" />
+                      <img className="img-sm rounded-circle" src={require("../../../assets/images/faces/face3.jpg")} alt="profile" />
                       <div className="wrapper ml-2">
                         <p className="mb-n1 font-weight-semibold">Ray Douglas</p>
                         <small>162543</small>
@@ -1346,7 +1346,7 @@ export class Stocks extends Component {
                       <small className="text-muted ml-auto">4 Hours ago</small>
                     </div>
                     <div className="d-flex py-2 border-bottom">
-                      <img className="img-sm rounded-circle" src={require("../../assets/images/faces/face4.jpg")} alt="profile" />
+                      <img className="img-sm rounded-circle" src={require("../../../assets/images/faces/face4.jpg")} alt="profile" />
                       <div className="wrapper ml-2">
                         <p className="mb-n1 font-weight-semibold">Brian Dean</p>
                         <small>162543</small>
