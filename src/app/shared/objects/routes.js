@@ -21,7 +21,7 @@ const Error500 = lazy(() => import('../../example/error-pages/Error500'));
 const Login = lazy(() => import('../../example/user-pages/Login'));
 const Register1 = lazy(() => import('../../example/user-pages/Register'));
 
-export const routes = [
+const routes = [
     {
         to: "/stocks",
         component: Stocks
@@ -75,3 +75,5 @@ export const routes = [
         component: Error500
     }
 ]
+
+export default routes;

@@ -2,6 +2,7 @@
   "name": "wbs-stocks",
   "version": "1.0.0",
   "private": true,
+  "proxy": "https://www.alphavantage.co/query",
   "dependencies": {
     "@fullcalendar/core": "^4.3.1",
     "@fullcalendar/daygrid": "^4.3.0",
@@ -11,6 +12,7 @@
     "@lourenci/react-kanban": "^0.13.0",
     "@mdi/font": "^4.2.95",
     "@tinymce/tinymce-react": "^3.3.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.3.1",
     "bosket": "^0.2.3",
     "brace": "^0.11.1",

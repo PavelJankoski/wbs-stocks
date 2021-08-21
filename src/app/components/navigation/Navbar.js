@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import LanguageDropdown from "../../shared/components/LanguageDropdown";
-import {languages} from "../../shared/objects/languages";
+import languages from "../../shared/objects/languages";
 
 class Navbar extends Component {
     toggleOffcanvas() {

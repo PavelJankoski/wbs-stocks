@@ -1,7 +1,7 @@
 import React, {Component, Suspense} from 'react';
 import {Switch, Redirect, Route} from 'react-router-dom';
 import Spinner from './shared/components/Spinner';
-import {routes} from "./shared/objects/routes";
+import routes from "./shared/objects/routes";
 
 
 class AppRoutes extends Component {
@@ -9,7 +9,7 @@ class AppRoutes extends Component {
         return (
             <Suspense fallback={<Spinner/>}>
                 <Switch>
-                    {routes.map((r, idx) => (
+                    {routes.map((r) => (
                         <Route key={r.to} exact path={r.to} component={r.component} />
                     ))}
                     <Redirect to="/stocks"/>

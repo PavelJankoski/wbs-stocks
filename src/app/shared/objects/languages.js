@@ -1,4 +1,4 @@
-export const languages = [
+const languages = [
     {
         label: "English",
         flag: "flag-icon-us",
@@ -10,3 +10,5 @@ export const languages = [
         tag: "mk"
     }
 ];
+
+export default languages;
