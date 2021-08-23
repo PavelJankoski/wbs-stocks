@@ -6,6 +6,9 @@ import Navbar from './components/navigation/Navbar';
 import Sidebar from './components/navigation/Sidebar';
 import SettingsPanel from './example/settings/SettingsPanel';
 import { withTranslation } from "react-i18next";
+// import {useDispatch} from "react-redux";
+// import * as actions from "./store/actions";
+// import stocksTimeSeries from "./shared/objects/stocksTimeSeries";
 
 const App = (props) => {
   const [isFullPageLayout, setIsFullPageLayout] = useState(false);

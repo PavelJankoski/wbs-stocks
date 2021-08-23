@@ -2,7 +2,7 @@ import axios from "axios";
 
 // https://www.alphavantage.co/documentation/
 const API_DRIVER = axios.create({
-    baseURL: "",
+    baseURL: "/query",
     params: {
         apikey: process.env.REACT_APP_ALPHAVANTAGE_APIKEY
     },
