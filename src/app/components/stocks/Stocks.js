@@ -6,6 +6,7 @@ import {Dropdown, ProgressBar} from 'react-bootstrap';
 import GaugeChart from 'react-gauge-chart';
 import {VectorMap} from "react-jvectormap"
 import {Link} from "react-router-dom";
+import MostPopularStocks from "./most-popular-stocks/MostPopularStocks";
 
 const mapData = {
   CN: 100000,
@@ -28,37 +29,9 @@ export class Stocks extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visitChartData: {},
-      impressionChartData: {},
-      conversionChartData: {},
-      downloadChartData: {},
       salesStatisticsChartData:{},
       netProfitChartData:{},
       totaltransactionChartData: {},
-      areaOptions : {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          yAxes: [{
-            display: false
-          }],
-          xAxes: [{ 
-            display: false
-          }]
-        },
-        legend: {
-          display: false
-        },
-        elements: {
-          point: {
-            radius: 0
-          },
-          line: {
-            tension: 0
-          }
-        },
-        stepsize: 100
-      },
       salesStaticsOptions : {
         responsive: true,
         animation: {
@@ -685,26 +658,6 @@ export class Stocks extends Component {
 
   componentDidMount(){
 
-    //your code
-    var ctx = document.getElementById('visitChart').getContext("2d")
-    var gradientBar1 = ctx.createLinearGradient(0, 0, 0, 181)
-    gradientBar1.addColorStop(1, 'rgba(110,123,247,0.7)')
-    gradientBar1.addColorStop(0, 'rgba(255,255,255,0)')
-
-    var ctx2 = document.getElementById('imoressionChart').getContext("2d")
-    var gradientBar2 = ctx2.createLinearGradient(0, 0, 0, 181)
-    gradientBar2.addColorStop(1, 'rgba(110,123,247,0.7)')
-    gradientBar2.addColorStop(0, 'rgba(255,255,255,0)')
-
-    var ctx3 = document.getElementById('conversionChart').getContext("2d")
-    var gradientBar3 = ctx3.createLinearGradient(0, 0, 0, 181)
-    gradientBar3.addColorStop(1, 'rgba(110,123,247,0.7)')
-    gradientBar3.addColorStop(0, 'rgba(255,255,255,0)')
-
-    var ctx4 = document.getElementById('downloadChart').getContext("2d")
-    var gradientBar4 = ctx4.createLinearGradient(0, 0, 0, 181)
-    gradientBar4.addColorStop(1, 'rgba(110,123,247,0.7)')
-    gradientBar4.addColorStop(0, 'rgba(255,255,255,0)')
 
     var ctx5 = document.getElementById('salesStatisticsChart').getContext("2d")
     var gradientBar5 = ctx5.createLinearGradient(0, 0, 0, 450)
@@ -721,52 +674,6 @@ export class Stocks extends Component {
     gradientBar7.addColorStop(1, '#fa3252')
     gradientBar7.addColorStop(0, '#fa5539')
 
-    
-
-    const visitData = {
-      labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7", "Day 8", "Day 9", "Day 10", "Day 11", "Day 12", "Day 13"],
-      datasets: [{
-        label: 'Profit',
-        data: [7, 6, 9, 7, 8, 6, 8, 5, 7, 8, 6, 7, 7],
-        borderColor: '#6d7cfc',
-        backgroundColor: gradientBar1,
-        borderWidth: 3,
-        fill: true
-      }]
-    };
-    const impressionData = {
-      labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7", "Day 8", "Day 9", "Day 10", "Day 11", "Day 12", "Day 13"],
-      datasets: [{
-        label: 'Profit',
-        data: [7, 6, 8, 5, 7, 8, 6, 7, 7, 6, 9, 7, 8],
-        borderColor: '#6d7cfc',
-        backgroundColor: gradientBar2,
-        borderWidth: 3,
-        fill: true
-      }]
-    };
-    const conversionData = {
-      labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7", "Day 8", "Day 9", "Day 10", "Day 11", "Day 12", "Day 13"],
-      datasets: [{
-        label: 'Profit',
-        data: [8, 6, 7, 8, 5, 7, 9, 7, 8, 7, 6, 7, 6],
-        borderColor: '#6d7cfc',
-        backgroundColor: gradientBar3,
-        borderWidth: 3,
-        fill: true
-      }]
-    };
-    const downloadData = {
-      labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7", "Day 8", "Day 9", "Day 10", "Day 11", "Day 12", "Day 13"],
-      datasets: [{
-        label: 'Profit',
-        data: [7, 6, 8, 5, 8, 6, 8, 7, 8, 6, 9, 7, 7],
-        borderColor: '#6d7cfc',
-        backgroundColor: gradientBar4,
-        borderWidth: 3,
-        fill: true
-      }]
-    };
   
 
     var Datas = [60, 75, 65, 130, 130, 145, 110, 145, 155, 149, 170];
@@ -849,7 +756,7 @@ export class Stocks extends Component {
         pointHitRadius: 7,
       }]
     };
-    this.setState({visitChartData: visitData, impressionChartData:impressionData, conversionChartData:conversionData, downloadChartData:downloadData, salesStatisticsChartData:salesStatisticsData, netProfitChartData:netProfitData, totaltransactionChartData:totaltransactionData} )
+    this.setState({salesStatisticsChartData:salesStatisticsData, netProfitChartData:netProfitData, totaltransactionChartData:totaltransactionData} )
   }
 
   toggleProBanner() {
@@ -875,64 +782,7 @@ export class Stocks extends Component {
           </div>
 
         </div>
-        <div className="row">
-          <div className="col-md-12 grid-margin">
-            <div className="card">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-xl-3 col-lg-6 col-sm-6 grid-margin-xl-0 grid-margin">
-                    <div className="d-flex">
-                      <div className="wrapper">
-                        <h3 className="mb-0 font-weight-semibold">32,451</h3>
-                        <h5 className="mb-0 font-weight-medium text-primary">Visits</h5>
-                        <p className="mb-0 text-muted">+14.00(+0.50%)</p>
-                      </div>
-                      <div className="wrapper my-auto ml-auto ml-lg-4">
-                        <Line ref='chart' data={this.state.visitChartData} options={this.state.areaOptions}  datasetKeyProvider={this.state.datasetKeyProvider} height={50} width={100} id="visitChart" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-xl-3 col-lg-6 col-sm-6 mt-md-0 mt-4 grid-margin-xl-0 grid-margin">
-                    <div className="d-flex">
-                      <div className="wrapper">
-                        <h3 className="mb-0 font-weight-semibold">15,236</h3>
-                        <h5 className="mb-0 font-weight-medium text-primary">Impressions</h5>
-                        <p className="mb-0 text-muted">+138.97(+0.54%)</p>
-                      </div>
-                      <div className="wrapper my-auto ml-auto ml-lg-4">
-                        <Line ref='chart' data={this.state.impressionChartData} options={this.state.areaOptions}  datasetKeyProvider={this.state.datasetKeyProvider} height={50} width={100} id="imoressionChart" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-xl-3 col-lg-6 col-sm-6 mt-md-0 mt-4 grid-margin-xl-0 grid-margin">
-                    <div className="d-flex">
-                      <div className="wrapper">
-                        <h3 className="mb-0 font-weight-semibold">7,688</h3>
-                        <h5 className="mb-0 font-weight-medium text-primary">Conversion</h5>
-                        <p className="mb-0 text-muted">+57.62(+0.76%)</p>
-                      </div>
-                      <div className="wrapper my-auto ml-auto ml-lg-4">
-                        <Line ref='chart' data={this.state.conversionChartData} options={this.state.areaOptions}  datasetKeyProvider={this.state.datasetKeyProvider} height={50} width={100} id="conversionChart" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-xl-3 col-lg-6 col-sm-6 mt-md-0 mt-4 grid-margin-xl-0 grid-margin">
-                    <div className="d-flex">
-                      <div className="wrapper">
-                        <h3 className="mb-0 font-weight-semibold">1,553</h3>
-                        <h5 className="mb-0 font-weight-medium text-primary">Downloads</h5>
-                        <p className="mb-0 text-muted">+138.97(+0.54%)</p>
-                      </div>
-                      <div className="wrapper my-auto ml-auto ml-lg-4">
-                        <Line ref='chart' data={this.state.downloadChartData} options={this.state.areaOptions}  datasetKeyProvider={this.state.datasetKeyProvider} height={50} width={100} id="downloadChart" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <MostPopularStocks />
         <div className="row">
           <div className="col-md-8 grid-margin stretch-card">
             <div className="card">
