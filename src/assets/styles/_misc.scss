@@ -88,7 +88,6 @@ code {
   display: flex;
   @extend .justify-content-between;
   @extend .align-items-center;
-  margin: 0 0 1.5rem 0; 
 
   @media (min-width: 768px) {
     display: block;
@@ -136,9 +135,8 @@ code {
 .page-header {
   display: flex;
   width: 100%;
-  padding-bottom: 15px;
   border-bottom: 1px solid $border-color;
-  margin-bottom: 15px;
+  padding-bottom: 8px;
 
   @media (max-width: 992px) {
       display: inline-block;
@@ -158,7 +156,6 @@ code {
   margin-bottom: 0;
   display: inline-flex;
   align-items: center;
-  margin-top: 4px;
   padding-left: 0;
 
   @media (min-width: 992px) {

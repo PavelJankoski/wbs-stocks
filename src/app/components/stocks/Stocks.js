@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 // import { Line, Doughnut, Bar, Radar } from 'react-chartjs-2';
-import { Line, Bar, Radar } from 'react-chartjs-2';
+import {Bar, Line, Radar} from 'react-chartjs-2';
 
-import { ProgressBar, Dropdown } from 'react-bootstrap';
+import {Dropdown, ProgressBar} from 'react-bootstrap';
 import GaugeChart from 'react-gauge-chart';
-import { VectorMap } from "react-jvectormap"
+import {VectorMap} from "react-jvectormap"
+import {Link} from "react-router-dom";
 
 const mapData = {
   CN: 100000,
@@ -863,55 +864,16 @@ export class Stocks extends Component {
               <h4 className="page-title">Dashboard</h4>
               <div className="quick-link-wrapper w-100 d-md-flex flex-md-wrap">
                 <ul className="quick-links">
-                  <li><a href="!#" onClick={evt =>evt.preventDefault()}>ICE Market data</a></li>
-                  <li><a href="!#" onClick={evt =>evt.preventDefault()}>Own analysis</a></li>
-                  <li><a href="!#" onClick={evt =>evt.preventDefault()}>Historic market data</a></li>
+                  <li><Link to="/stocks" onClick={evt =>evt.preventDefault()}>ICE Market data</Link></li>
+                  <li><Link to="/stocks" onClick={evt =>evt.preventDefault()}>Historic market data</Link></li>
                 </ul>
-                <ul className="quick-links ml-auto">
-                  <li><a href="!#" onClick={evt =>evt.preventDefault()}>Settings</a></li>
-                  <li><a href="!#" onClick={evt =>evt.preventDefault()}>Analytics</a></li>
-                  <li><a href="!#" onClick={evt =>evt.preventDefault()}>Watchlist</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-12">
-            <div className="page-header-toolbar">
-              <div className="btn-group toolbar-item" role="group" aria-label="Basic example">
-                <button type="button" className="btn btn-secondary"><i className="mdi mdi-chevron-left"></i></button>
-                <button type="button" className="btn btn-secondary">03/02/2019 - 20/08/2019</button>
-                <button type="button" className="btn btn-secondary"><i className="mdi mdi-chevron-right"></i></button>
-              </div>
-              <div className="filter-wrapper">
-                <div className="dropdown toolbar-item">
-                  <Dropdown>
-                    <Dropdown.Toggle variant="btn btn-secondary dropdown-toggle" id="dropdownMenuButton1">
-                    All Day
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      <Dropdown.Header>Last Day</Dropdown.Header>
-                      <Dropdown.Item>Last Month</Dropdown.Item>
-                      <Dropdown.Item>Last Year</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                <div className="ml-auto">
+                  <button type="button" className="btn btn-info btn-rounded">Export CSV</button>
                 </div>
-                <a href="!#" onClick={evt =>evt.preventDefault()} className="advanced-link toolbar-item">Advanced Options</a>
-              </div>
-              <div className="sort-wrapper justify-content-between">
-              <button type="button" className="btn btn-primary">New</button>
-                <Dropdown>
-                  <Dropdown.Toggle variant="btn btn-secondary dropdown-toggle  toolbar-item" id="dropdownMenuButton2">
-                    Export
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Header>Export as PDF</Dropdown.Header>
-                    <Dropdown.Item>Export as DOCX</Dropdown.Item>
-                    <Dropdown.Item>Export as CDR</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
               </div>
             </div>
           </div>
+
         </div>
         <div className="row">
           <div className="col-md-12 grid-margin">
