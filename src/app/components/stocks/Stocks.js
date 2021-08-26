@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// import { Line, Doughnut, Bar, Radar } from 'react-chartjs-2';
 import {Bar, Line, Radar} from 'react-chartjs-2';
 
 import {Dropdown, ProgressBar} from 'react-bootstrap';
@@ -7,6 +6,7 @@ import GaugeChart from 'react-gauge-chart';
 import {VectorMap} from "react-jvectormap"
 import {Link} from "react-router-dom";
 import MostPopularStocks from "./most-popular-stocks/MostPopularStocks";
+import StockTimeSeries from "./stock-timeseries/StockTimeSeries";
 
 const mapData = {
   CN: 100000,
@@ -29,62 +29,8 @@ export class Stocks extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      salesStatisticsChartData:{},
       netProfitChartData:{},
       totaltransactionChartData: {},
-      salesStaticsOptions : {
-        responsive: true,
-        animation: {
-          animateScale: true,
-          animateRotate: true
-        },
-        elements: {
-          point: {
-            radius: 3
-          },
-          line: {
-            tension: 0
-          }
-        },
-        layout: {
-          padding: {
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0
-          }
-        },
-        legend: false,
-        scales: {
-          xAxes: [{
-            display: false,
-            ticks: {
-              display: false,
-              beginAtZero: false
-            },
-            gridLines: {
-              drawBorder: false,
-              color: "#f8f8f8",
-              zeroLineColor: "#f8f8f8",
-            }
-          }],
-          yAxes: [{
-            ticks: {
-              max: 200,
-              min: 0,
-              stepSize: 50,
-              fontColor: "#8b9298",
-              beginAtZero: false
-            },
-            gridLines: {
-              color: "#f8f8f8",
-              zeroLineColor: "#f8f8f8",
-              display: true,
-              drawBorder: false
-            }
-          }]
-        }
-      },
       netProfitOptions : {
         scale: {
           ticks: {
@@ -193,153 +139,6 @@ export class Stocks extends Component {
     this.removeTodo = this.removeTodo.bind(this);
     this.inputChangeHandler = this.inputChangeHandler.bind(this); 
   }
-  changeChartOneData = (e) =>{
-    const clicked = e.target.id
-    if(this.state.active === clicked) { 
-        this.setState({active: ''});
-    } else {
-        this.setState({active: clicked})
-    }
-
-    var oldDataSet = this.state.datasets[0];
-    var oldDataSet1 = this.state.datasets[1];
-    var newData = [60, 75, 65, 130, 130, 145, 110, 145, 155, 149, 170];
-    var newData1 = [0, 25, 20, 40, 70, 52, 49, 90, 70, 94, 110, 135];
-    var newDataSet = {
-      ...oldDataSet
-    };
-    var newDataSet1 = {
-      // ...oldDataSet,
-      ...oldDataSet1
-    };
-
-    newDataSet.data = newData;
-    newDataSet1.data = newData1;
-    
-    // console.log('this is:', oldDataSet.data);
-    var newState = {
-      // ...data,
-      datasets: [newDataSet, newDataSet1]
-    };
-    try {
-      this.setState(
-        newState
-      );
-    } catch(e) {
-      throw Error(e);
-    }
-  }
-  changeChartTwoData = (e) =>{
-    const clicked = e.target.id
-    if(this.state.active === clicked) { 
-        this.setState({active: ''});
-    } else {
-        this.setState({active: clicked})
-    }
-    var oldDataSet = this.state.datasets[0];
-    var oldDataSet1 = this.state.datasets[1];
-    var newData = [130, 145, 155, 60, 75, 65, 130, 110, 145, 149, 170];
-    var newData1 = [0, 70, 52, 90, 25, 20, 40, 70, 49, 94, 110, 135];
-    var newDataSet = {
-      ...oldDataSet
-    };
-    var newDataSet1 = {
-      // ...oldDataSet,
-      ...oldDataSet1
-    };
-
-    newDataSet.data = newData;
-    newDataSet1.data = newData1;
-    
-    // console.log('this is:', oldDataSet.data);
-    console.log('this is:', newDataSet.data);
-    console.log('this is:', newDataSet1.data);
-    var newState = {
-      // ...data,
-      datasets: [newDataSet, newDataSet1]
-    };
-    try {
-      this.setState(
-        newState
-      );
-    } catch(e) {
-      throw Error(e);
-    }
-  }
-  changeChartThreeData = (e) =>{
-    const clicked = e.target.id
-    if(this.state.active === clicked) { 
-        this.setState({active: ''});
-    } else {
-        this.setState({active: clicked})
-    }
-    var oldDataSet = this.state.datasets[0];
-    var oldDataSet1 = this.state.datasets[1];
-    var newData = [130, 75, 65, 130, 110, 145, 155, 60, 145, 149, 170];
-    var newData1 = [0, 70, 52, 94, 110, 135, 90, 25, 20, 40, 70, 49];
-    var newDataSet = {
-      ...oldDataSet
-    };
-    var newDataSet1 = {
-      // ...oldDataSet,
-      ...oldDataSet1
-    };
-
-    newDataSet.data = newData;
-    newDataSet1.data = newData1;
-    
-    // console.log('this is:', oldDataSet.data);
-    console.log('this is:', newDataSet.data);
-    console.log('this is:', newDataSet1.data);
-    var newState = {
-      // ...data,
-      datasets: [newDataSet, newDataSet1]
-    };
-    try {
-      this.setState(
-        newState
-      );
-    } catch(e) {
-      throw Error(e);
-    }
-  }
-  changeChartFourData = (e) =>{
-    const clicked = e.target.id
-    if(this.state.active === clicked) { 
-        this.setState({active: ''});
-    } else {
-        this.setState({active: clicked})
-    }
-    var oldDataSet = this.state.datasets[0];
-    var oldDataSet1 = this.state.datasets[1];
-    var newData = [130, 145, 65, 130, 75, 145, 149, 170, 110, 155, 60];
-    var newData1 = [0, 70, 90, 25, 40, 20, 94, 110, 135, 70, 49, 52];
-    var newDataSet = {
-      ...oldDataSet
-    };
-    var newDataSet1 = {
-      // ...oldDataSet,
-      ...oldDataSet1
-    };
-
-    newDataSet.data = newData;
-    newDataSet1.data = newData1;
-    
-    // console.log('this is:', oldDataSet.data);
-    console.log('this is:', newDataSet.data);
-    console.log('this is:', newDataSet1.data);
-    var newState = {
-      // ...data,
-      datasets: [newDataSet, newDataSet1]
-    };
-    try {
-      this.setState(
-        newState
-      );
-    } catch(e) {
-      throw Error(e);
-    }
-  }
   statusChangedHandler(event, id) {
     const todo = {...this.state.todos[id]};
     todo.isCompleted = event.target.checked;
@@ -384,62 +183,6 @@ export class Stocks extends Component {
       });
   }
 
-  usersDoughnutChartData = {
-    datasets: [{
-      data: [80, 34, 100],
-      backgroundColor: [
-        "#19d895",
-        "#2196f3",
-        "#dde4eb"
-      ],
-      borderColor: [
-        "#19d895",
-        "#2196f3",
-        "#dde4eb"
-      ],
-    }],
-    labels: [
-      'Request',
-      'Email',
-    ]
-  };
-
-  usersDoughnutChartOptions = {
-    cutoutPercentage: 70,
-    animationEasing: "easeOutBounce",
-    animateRotate: true,
-    animateScale: false,
-    responsive: true,
-    maintainAspectRatio: true,
-    showScale: true,
-    legend: {
-      display: false
-    },
-    layout: {
-      padding: {
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0
-      }
-    }
-  };
-
-  amountDueBarData = {
-    labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7", "Day 8", "Day 9", "Day 10"],
-    datasets: [{
-      label: 'Profit',
-      data: [39, 19, 25, 16, 31, 39, 12, 18, 33, 24],
-      backgroundColor: [
-        '#2196f3','#2196f3','#2196f3','#2196f3','#2196f3','#2196f3','#2196f3','#2196f3','#2196f3','#2196f3',
-      ],
-      borderColor: [
-        '#2196f3','#2196f3','#2196f3','#2196f3','#2196f3','#2196f3','#2196f3','#2196f3','#2196f3','#2196f3',
-      ],
-      borderWidth: 2,
-      fill: true
-    }]
-  };
 
   amountDueBarOptions = {
     layout: {
@@ -659,52 +402,10 @@ export class Stocks extends Component {
   componentDidMount(){
 
 
-    var ctx5 = document.getElementById('salesStatisticsChart').getContext("2d")
-    var gradientBar5 = ctx5.createLinearGradient(0, 0, 0, 450)
-    gradientBar5.addColorStop(1, 'rgba(255,255,255, 0.0)')
-    gradientBar5.addColorStop(0, 'rgba(102,78,235, 0.2)')
-
-    var ctx6 = document.getElementById('salesStatisticsChart').getContext("2d")
-    var gradientBar6 = ctx6.createLinearGradient(0, 0, 0, 400)
-    gradientBar6.addColorStop(1, 'rgba(255, 255, 255, 0.01)')
-    gradientBar6.addColorStop(0, '#14c671')
-
     var ctx7 = document.getElementById('totaltransactionChart').getContext("2d")
     var gradientBar7 = ctx7.createLinearGradient(0, 100, 200, 0)
     gradientBar7.addColorStop(1, '#fa3252')
     gradientBar7.addColorStop(0, '#fa5539')
-
-  
-
-    var Datas = [60, 75, 65, 130, 130, 145, 110, 145, 155, 149, 170];
-    var Datas1 = [0, 25, 20, 40, 70, 52, 49, 90, 70, 94, 110, 135];
-
-
-
-
-  
-
-    const salesStatisticsData = {
-      labels: ["Jan 1", "Jan 7", "Jan 14", "Jan 21", "Jan 28", "Feb 4", "Feb 11", "Feb 18"],
-      datasets: [{
-        label: 'Revenue',
-        data: Datas,
-        borderColor: '#8862e0',
-        backgroundColor: gradientBar5,
-        borderWidth: 2,
-        fill: true
-      }, {
-        label: 'Sales',
-        data: Datas1,
-        borderColor: '#5ed2a1',
-        backgroundColor: gradientBar6,
-        borderWidth: 2,
-        fill: true
-      }]
-    };
-
-    this.setState(salesStatisticsData);
-
 
 
     const netProfitData = {
@@ -756,7 +457,7 @@ export class Stocks extends Component {
         pointHitRadius: 7,
       }]
     };
-    this.setState({salesStatisticsChartData:salesStatisticsData, netProfitChartData:netProfitData, totaltransactionChartData:totaltransactionData} )
+    this.setState({netProfitChartData:netProfitData, totaltransactionChartData:totaltransactionData} )
   }
 
   toggleProBanner() {
@@ -784,61 +485,7 @@ export class Stocks extends Component {
         </div>
         <MostPopularStocks />
         <div className="row">
-          <div className="col-md-8 grid-margin stretch-card">
-            <div className="card">
-              <div className="card-body">
-                <h4 className="card-title mb-0">Sales Statistics Overview</h4>
-                <div className="d-xl-flex flex-column flex-lg-row">
-                  <p>Lorem ipsum is placeholder text commonly used</p>
-                  <ul className="nav nav-tabs sales-mini-tabs ml-lg-auto mb-4 mb-md-0" role="tablist">
-                    <li className="nav-item">
-                      <button className={`nav-link ${this.state.active === "sales-statistics_switch_1"? 'active': ''}`} id="sales-statistics_switch_1" onClick={this.changeChartOneData} data-toggle="tab" role="tab" aria-selected="false">1D</button>
-                    </li>
-                    <li className="nav-item">
-                      <button className={`nav-link ${this.state.active === "sales-statistics_switch_2"? 'active': ''}`} id="sales-statistics_switch_2" onClick={this.changeChartTwoData} data-toggle="tab" role="tab" aria-selected="false">5D</button>
-                    </li>
-                    <li className="nav-item">
-                      <button className={`nav-link ${this.state.active === "sales-statistics_switch_3"? 'active': ''}`} id="sales-statistics_switch_3" onClick={this.changeChartThreeData} data-toggle="tab" role="tab" aria-selected="false">1M</button>
-                    </li>
-                    <li className="nav-item">
-                      <button className={`nav-link ${this.state.active === "sales-statistics_switch_4"? 'active': ''}`} id="sales-statistics_switch_4" onClick={this.changeChartFourData} data-toggle="tab" role="tab" aria-selected="false">1Y</button>
-                    </li>
-                  </ul>
-                </div>
-                <div className="d-xl-flex flex-column flex-lg-row">
-                  <div className="data-wrapper d-flex mt-2 mt-lg-0">
-                    <div className="wrapper pr-5">
-                      <h5 className="mb-0">Total Cost</h5>
-                      <div className="d-xl-flex align-items-center">
-                        <h4 className="font-weight-semibold mb-0">15,263</h4>
-                        <small className="ml-2 text-gray d-none d-lg-block"><b>89.5%</b> of 20,000 Total</small>
-                      </div>
-                    </div>
-                    <div className="wrapper">
-                      <h5 className="mb-0">Total Revenue</h5>
-                      <div className="d-xl-flex align-items-center">
-                        <h4 className="font-weight-semibold mb-0">$753,098</h4>
-                        <small className="ml-2 text-gray d-none d-lg-block"><b>10.5%</b> of 20,000 Total</small>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="ml-lg-auto" id="sales-statistics-legend">
-                  <div className="chartjs-legend line-legend">
-                    <ul>
-                      <li>
-                        <span className="bg-info"></span>Revenue
-                      </li>
-                      <li>
-                        <span className="bg-success"></span>Sales
-                      </li>
-                    </ul>
-                  </div>
-                  </div>
-                </div>
-                <Line data={this.state} options={this.state.salesStaticsOptions}  datasetKeyProvider={this.datasetKeyProvider} height={50} width={100} id="salesStatisticsChart" />               
-              </div>
-            </div>
-          </div>
+          <StockTimeSeries />
           <div className="col-md-4 grid-margin stretch-card">
             <div className="card">
               <div className="card-body d-flex flex-column">
