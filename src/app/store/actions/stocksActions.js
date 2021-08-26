@@ -1,6 +1,6 @@
 import StocksService from "../../api/stocksService";
 import * as actionTypes from '../actionTypes';
-import {calculateStockPercentage, popularStockObject} from "../../shared/utils/utils";
+import {calculateStockPercentage, toIsoDate} from "../../shared/utils/utils";
 
 export const fetchStocksByTimeSeries = (timeSeries, symbol) => {
     return (dispatch) => {
@@ -12,15 +12,14 @@ export const fetchStocksByTimeSeries = (timeSeries, symbol) => {
     }
 }
 
-export const fetchMostPopularStock = (timeSeries, symbol, interval) => {
+export const fetchMostPopularStock = (symbol) => {
     return (dispatch) => {
-        dispatch({type: actionTypes.SET_POPULAR_STOCKS_LOADING, value: true});
-        StocksService.fetchMostPopularStock(timeSeries, symbol, interval).then(res => {
+        dispatch({type: actionTypes.SET_POPULAR_STOCKS_LOADING, symbol: symbol, value: true});
+        StocksService.fetchMostPopularStock(symbol).then(res => {
             dispatch(
                 {
                     type: actionTypes.FETCH_MOST_POPULAR_STOCK_SUCCESS,
-                    payload: mapResponseToPopularStockData(res, interval, symbol),
-                    symbol: symbol
+                    payload: mapResponseToPopularStockData(res, symbol)
                 }
                 )
         }).catch(e => {
@@ -31,16 +30,16 @@ export const fetchMostPopularStock = (timeSeries, symbol, interval) => {
     }
 }
 
-const mapResponseToPopularStockData = (response, interval, symbol) => {
-    let data = response.data[`Time Series (${interval})`]
+const mapResponseToPopularStockData = (response, symbol) => {
+    let data = response.data.data
     const prices = [];
     const dateTimes = [];
-    for(let i = 9 ; i >= 0; i--) {
-        let currentDateTime = Object.keys(data)[i];
-        let currentPrice = parseFloat(data[currentDateTime]["4. close"]);
+    for(let i = data.length-1 ; i >= 0; i--) {
+        let currentDateTime = data[i].date
+        let currentPrice = parseFloat(data[i].open);
         prices.push(currentPrice);
-        dateTimes.push(currentDateTime);
+        dateTimes.push(toIsoDate(currentDateTime))
     }
-    return {chartData: popularStockObject(dateTimes, prices, symbol), stockPercentage: calculateStockPercentage(prices[0], prices[9])}
+    return {prices: prices, dateTimes: dateTimes, stockPercentage: calculateStockPercentage(prices[0], prices[9]), symbol: symbol}
 
 }

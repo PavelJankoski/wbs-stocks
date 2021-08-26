@@ -1,10 +1,9 @@
 import axios from "axios";
 
-// https://www.alphavantage.co/documentation/
 const API_DRIVER = axios.create({
-    baseURL: "/query",
+    baseURL: "/v1",
     params: {
-        apikey: process.env.REACT_APP_ALPHAVANTAGE_APIKEY
+        access_key: process.env.REACT_APP_MARKETSTACK_APIKEY
     },
     responseType: "json",
     headers: {

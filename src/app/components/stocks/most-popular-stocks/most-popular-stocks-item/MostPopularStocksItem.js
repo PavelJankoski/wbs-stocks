@@ -2,6 +2,7 @@ import React, {useMemo} from "react";
 import {Line} from "react-chartjs-2";
 import {datasetKeyProvider} from "../../../../shared/utils/utils";
 import PropTypes from "prop-types";
+import {Spinner} from "react-bootstrap";
 
 const MostPopularStocksItem = (props) => {
 
@@ -31,8 +32,8 @@ const MostPopularStocksItem = (props) => {
         }
     }, [])
     return (
-        !props.loading && Object.keys(props.stock.chartData).length !== 0 ? <div className="col-xl-3 col-lg-6 col-sm-6 mt-md-0 mt-4 grid-margin-xl-0 grid-margin">
-            <div className="d-flex">
+        <div className={`col-xl-3 col-lg-6 col-sm-6 mt-md-0 mt-4 ${props.loading ? "text-center" : ""} grid-margin-xl-0 grid-margin`}>
+            {!props.loading ? <div className="d-flex">
                 <div className="wrapper">
                     <h4 className="mb-0 font-weight-semibold">{props.stock.name}</h4>
                     <h5 className={`mb-0 font-weight-medium ${props.stock.stockPercentage < 0 ? "text-danger" : "text-success"}`}>{`${props.stock.stockPercentage}%`}</h5>
@@ -45,8 +46,8 @@ const MostPopularStocksItem = (props) => {
                               height={50}
                               width={100}  />
                 </div>
-            </div>
-        </div> : null
+            </div> : <Spinner variant={'primary'} animation="border" style={{width: "60px", height: "60px"}} />}
+        </div>
     )
 }
 

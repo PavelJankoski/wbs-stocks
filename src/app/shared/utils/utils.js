@@ -29,3 +29,11 @@ export const popularStockObject = (dateTimes, prices, symbol) => {
         }]
     }
 }
+
+export const toIsoDate = (date) => {
+    return new Date(date)
+        .toISOString()
+        .replace(/T/, ' ')
+        .replace(/\..+/, '')
+}
+

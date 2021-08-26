@@ -1,6 +1,6 @@
 import initialPopularStock from "../../shared/objects/initialPopularStock";
 import * as actionTypes from '../actionTypes';
-import {updateObject} from "../../shared/utils/utils";
+import {popularStockObject, updateObject} from "../../shared/utils/utils";
 
 const initialState = {
     mostPopular: {
@@ -15,9 +15,9 @@ const updatePopularStocks = (state, action) => {
     return updateObject(state,
         {
             mostPopular: updateObject(state.mostPopular,
-                {[`${action.symbol}`]: updateObject(state.mostPopular[`${action.symbol}`],
+                {[`${action.payload.symbol}`]: updateObject(state.mostPopular[`${action.payload.symbol}`],
                         {
-                        chartData: action.payload.chartData,
+                        chartData: popularStockObject(action.payload.dateTimes, action.payload.prices, action.payload.symbol),
                         stockPercentage: action.payload.stockPercentage
                     })
                 })
