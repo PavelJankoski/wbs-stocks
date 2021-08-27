@@ -487,7 +487,7 @@ export class Stocks extends Component {
                                     <li><Link to="/stocks" onClick={evt => evt.preventDefault()}>Historic market
                                         data</Link></li>
                                 </ul>
-                                <div className="ml-auto">
+                                <div className="ml-auto text-right">
                                     <button type="button" className="btn btn-info btn-rounded">Export CSV</button>
                                 </div>
                             </div>
