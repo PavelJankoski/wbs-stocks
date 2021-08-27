@@ -1,4 +1,5 @@
 export {
     fetchStocksForInterval,
-    fetchMostPopularStock
+    fetchMostPopularStock,
+    fetchLatestStockValues
 } from './stocksActions';

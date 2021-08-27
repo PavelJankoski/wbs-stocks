@@ -33,7 +33,7 @@ const MostPopularStocksItem = (props) => {
     }, [])
     return (
         <div className={`col-xl-3 col-lg-6 col-sm-6 mt-md-0 mt-4 ${props.loading ? "text-center" : ""} grid-margin-xl-0 grid-margin`}>
-            {!props.loading ? <div className="d-flex">
+            {!props.loading && Object.keys(props.stock.chartData).length !== 0 ? <div className="d-flex">
                 <div className="wrapper">
                     <h4 className="mb-0 font-weight-semibold">{props.stock.name}</h4>
                     <h5 className={`mb-0 font-weight-medium ${props.stock.stockPercentage < 0 ? "text-danger" : "text-success"}`}>{`${props.stock.stockPercentage}%`}</h5>

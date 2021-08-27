@@ -16,7 +16,8 @@ const initialState = {
         stockPercentage: 0.0,
         lastData: {},
         loading: true
-    }
+    },
+    stocksTableData: []
 }
 
 const updatePopularStocks = (state, action) => {
@@ -69,6 +70,10 @@ const setStockInIntervalLoading = (state, action) => {
             )})
 }
 
+const updateLatestStocks = (state, action) => {
+    return updateObject(state, {stocksTableData: action.payload})
+}
+
 const stocksReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_MOST_POPULAR_STOCK_SUCCESS:
@@ -79,6 +84,8 @@ const stocksReducer = (state = initialState, action) => {
             return updateStockInInterval(state, action);
         case actionTypes.SET_INTERVAL_STOCK_LOADING:
             return setStockInIntervalLoading(state, action);
+        case actionTypes.FETCH_LATEST_STOCK_VALUES_SUCCESS:
+            return updateLatestStocks(state, action);
         default:
             return state;
     }

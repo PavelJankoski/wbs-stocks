@@ -25,14 +25,10 @@ const MostPopularStocks = () => {
     )
 
     return (
-        <div className="row">
-            <div className="col-md-12 grid-margin">
-                <div className="card">
-                    <div className="card-body">
-                        <div className="row">
-                            {renderPopularStocksItems}
-                        </div>
-                    </div>
+        <div className="card">
+            <div className="card-body">
+                <div className="row">
+                    {renderPopularStocksItems}
                 </div>
             </div>
         </div>

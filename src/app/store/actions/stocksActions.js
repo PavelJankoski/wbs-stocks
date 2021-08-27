@@ -1,6 +1,7 @@
 import StocksService from "../../api/stocksService";
 import * as actionTypes from '../actionTypes';
 import {calculateStockPercentage, toIsoDate} from "../../shared/utils/utils";
+import latestStocksArray from "../../shared/objects/latestStocksArray";
 
 export const fetchMostPopularStock = (symbol) => {
     return (dispatch) => {
@@ -38,6 +39,16 @@ export const fetchStocksForInterval = (symbol, interval, limit) => {
     }
 }
 
+export const fetchLatestStockValues = (symbols) => {
+    return (dispatch) => {
+        StocksService.fetchLatestStockValues(symbols).then(res => {
+            dispatch(mapResponseToLatestStocks(res.data.data));
+        }).catch(e => {
+            console.log(e);
+        })
+    }
+}
+
 const mapResponseToPopularStockData = (response, symbol) => {
     let data = response.data.data
     const prices = [];
@@ -50,4 +61,19 @@ const mapResponseToPopularStockData = (response, symbol) => {
     }
     return {prices: prices, dateTimes: dateTimes, stockPercentage: calculateStockPercentage(prices[0], prices[9]), symbol: symbol, lastData: data[0]}
 
+}
+
+const mapResponseToLatestStocks = (data) => {
+    const latestStocksArr = [];
+    data.forEach(s => {
+        let name = latestStocksArray.find(sym => sym.shortName === s.symbol).name;
+        let calculatedPercentage = calculateStockPercentage(s.open, s.close);
+        latestStocksArr.push({
+            name: name,
+            shortName: s.symbol,
+            change: calculatedPercentage,
+            latestPrice: s.close
+        })
+    })
+    return {type: actionTypes.FETCH_LATEST_STOCK_VALUES_SUCCESS, payload: latestStocksArr};
 }
