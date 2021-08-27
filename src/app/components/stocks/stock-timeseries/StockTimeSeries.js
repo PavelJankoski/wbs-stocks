@@ -14,7 +14,9 @@ const StockTimeSeries = (props) => {
 
 
     useEffect(() => {
-        dispatch(actions.fetchStocksForInterval(props.selectedStock.shortName, active.interval, 10));
+        if(Object.keys(props.selectedStock).length > 0) {
+            dispatch(actions.fetchStocksForInterval(props.selectedStock.shortName, active.interval, 10));
+        }
     }, [active, dispatch, props.selectedStock])
 
     const timeSeriesStockOptions = useMemo(() => {
