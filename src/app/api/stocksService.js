@@ -13,12 +13,12 @@ const StocksService = {
         })
     },
     // Use stockInterval object for interval constants
-    fetchMostPopularStock: (symbol) => {
+    fetchStocksIntraday: (symbols, interval = "24hour", limit = 10) => {
         return API_DRIVER.get('/intraday', {
             params: {
-                symbols: symbol,
-                interval: "24hour",
-                limit: 10
+                symbols: symbols,
+                interval: interval,
+                limit: limit
             }
         })
 }

@@ -16,14 +16,14 @@ export const calculateStockPercentage = (oldPrice, newPrice) => {
     return calculatedPercentage.toFixed(2);
 }
 
-export const popularStockObject = (dateTimes, prices, symbol) => {
+export const stockChartObject = (dateTimes, prices, symbol, borderColor = '#6d7cfc', backgroundColor = 'rgb(248,249,255)') => {
     return {
         labels: dateTimes,
         datasets: [{
             label: symbol,
             data: prices,
-            borderColor: '#6d7cfc',
-            backgroundColor: 'rgb(248,249,255)',
+            borderColor: borderColor,
+            backgroundColor: backgroundColor,
             borderWidth: 3,
             fill: true
         }]
@@ -37,3 +37,6 @@ export const toIsoDate = (date) => {
         .replace(/\..+/, '')
 }
 
+export const formatStringToDecimal = (value) => {
+    return value !== null ? parseFloat(value).toFixed(2) : "";
+}

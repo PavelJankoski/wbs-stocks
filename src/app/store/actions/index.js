@@ -1,4 +1,4 @@
 export {
-    fetchStocksByTimeSeries,
+    fetchStocksForInterval,
     fetchMostPopularStock
 } from './stocksActions';

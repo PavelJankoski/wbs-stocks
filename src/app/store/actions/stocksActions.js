@@ -2,20 +2,10 @@ import StocksService from "../../api/stocksService";
 import * as actionTypes from '../actionTypes';
 import {calculateStockPercentage, toIsoDate} from "../../shared/utils/utils";
 
-export const fetchStocksByTimeSeries = (timeSeries, symbol) => {
-    return (dispatch) => {
-        StocksService.fetchDataForTimeSeries(timeSeries, symbol).then(res => {
-            // TODO: dispatch action to reducer
-        }).catch(e => {
-            console.log(e);
-        })
-    }
-}
-
 export const fetchMostPopularStock = (symbol) => {
     return (dispatch) => {
         dispatch({type: actionTypes.SET_POPULAR_STOCKS_LOADING, symbol: symbol, value: true});
-        StocksService.fetchMostPopularStock(symbol).then(res => {
+        StocksService.fetchStocksIntraday(symbol).then(res => {
             dispatch(
                 {
                     type: actionTypes.FETCH_MOST_POPULAR_STOCK_SUCCESS,
@@ -30,6 +20,24 @@ export const fetchMostPopularStock = (symbol) => {
     }
 }
 
+export const fetchStocksForInterval = (symbol, interval, limit) => {
+    return (dispatch) => {
+        dispatch({type: actionTypes.SET_INTERVAL_STOCK_LOADING, value: true});
+        StocksService.fetchStocksIntraday(symbol, interval, limit).then(res => {
+            dispatch(
+                {
+                    type: actionTypes.FETCH_STOCK_IN_INTERVAL_SUCCESS,
+                    payload: mapResponseToPopularStockData(res, symbol)
+                }
+            )
+        }).catch(e => {
+            console.log(e);
+        }).finally(() => {
+            dispatch({type: actionTypes.SET_INTERVAL_STOCK_LOADING, value: false});
+        })
+    }
+}
+
 const mapResponseToPopularStockData = (response, symbol) => {
     let data = response.data.data
     const prices = [];
@@ -40,6 +48,6 @@ const mapResponseToPopularStockData = (response, symbol) => {
         prices.push(currentPrice);
         dateTimes.push(toIsoDate(currentDateTime))
     }
-    return {prices: prices, dateTimes: dateTimes, stockPercentage: calculateStockPercentage(prices[0], prices[9]), symbol: symbol}
+    return {prices: prices, dateTimes: dateTimes, stockPercentage: calculateStockPercentage(prices[0], prices[9]), symbol: symbol, lastData: data[0]}
 
 }
