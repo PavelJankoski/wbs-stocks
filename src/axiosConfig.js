@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_DRIVER = axios.create({
+export const API_DRIVER_MS = axios.create({
     baseURL: "/v1",
     params: {
         access_key: process.env.REACT_APP_MARKETSTACK_APIKEY
@@ -8,7 +8,17 @@ const API_DRIVER = axios.create({
     responseType: "json",
     headers: {
         'Access-Control-Allow-Origin': '*'
-    },
+    }
 });
 
-export default API_DRIVER;
+export const API_DRIVER_FH = axios.create({
+    baseURL: "/api/v1",
+    params: {
+        token: process.env.REACT_APP_FINNHUB_APIKEY
+    },
+    responseType: "json",
+    headers: {
+        'Access-Control-Allow-Origin': '*'
+    }
+})
+

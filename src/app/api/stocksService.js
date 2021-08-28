@@ -1,11 +1,11 @@
-import API_DRIVER from "../../axiosConfig";
+import {API_DRIVER_MS} from "../../axiosConfig";
 
 
 const StocksService = {
     // Use stocksTimeSeries object for timeSeries constants
     // example: https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=IBM&apikey=demo
     fetchDataForTimeSeries: (timeSeries, symbol) => {
-        return API_DRIVER.get('', {
+        return API_DRIVER_MS.get('', {
             params: {
                 function: `TIME_SERIES_${timeSeries}`,
                 symbol: symbol
@@ -14,7 +14,7 @@ const StocksService = {
     },
     // Use stockInterval object for interval constants
     fetchStocksIntraday: (symbols, interval = "24hour", limit = 10) => {
-        return API_DRIVER.get('/intraday', {
+        return API_DRIVER_MS.get('/intraday', {
             params: {
                 symbols: symbols,
                 interval: interval,
@@ -23,7 +23,7 @@ const StocksService = {
         })
     },
     fetchLatestStockValues: (symbols) => {
-        return API_DRIVER.get('/eod/latest', {
+        return API_DRIVER_MS.get('/eod/latest', {
             params: {
                 symbols: symbols
             }
