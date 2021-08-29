@@ -22,3 +22,10 @@ export const API_DRIVER_FH = axios.create({
     }
 })
 
+export const API_DRIVER_CG = axios.create({
+    baseURL: "https://api.coingecko.com/api/v3",
+    responseType: "json",
+    headers: {
+        'Access-Control-Allow-Origin': '*'
+    },
+});

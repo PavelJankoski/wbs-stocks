@@ -495,7 +495,7 @@ export class Stocks extends Component {
                     </div>
 
                 </div>
-                <div className="row">
+               {/* <div className="row">
                     <div className="col-md-12 grid-margin">
                         <MostPopularStocks />
                     </div>
@@ -507,7 +507,7 @@ export class Stocks extends Component {
                     <div className="col-md-4 grid-margin stretch-card">
                         <StockTable selectedStock={this.state.selectedStock} handleOnTableRowClick={this.handleOnTableRowClick}/>
                     </div>
-                </div>
+                </div>*/}
                 <div className="row">
                     <div className="col-md-8">
                         <div className="row">

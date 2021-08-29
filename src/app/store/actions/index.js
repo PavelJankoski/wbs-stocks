@@ -3,3 +3,8 @@ export {
     fetchMostPopularStock,
     fetchLatestStockValues
 } from './stocksActions';
+
+export {
+    fetchCoinsMarketData,
+    fetchExchanges
+} from './cryptocurrenciesActions'
