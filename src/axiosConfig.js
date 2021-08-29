@@ -1,4 +1,6 @@
 import axios from "axios";
+import axiosRetry from 'axios-retry';
+import axiosRetryConfig from "./app/shared/objects/axiosRetryConfig";
 
 export const API_DRIVER_MS = axios.create({
     baseURL: "/v1",
@@ -10,6 +12,8 @@ export const API_DRIVER_MS = axios.create({
         'Access-Control-Allow-Origin': '*'
     }
 });
+
+axiosRetry(API_DRIVER_MS, axiosRetryConfig);
 
 export const API_DRIVER_FH = axios.create({
     baseURL: "/api/v1",
