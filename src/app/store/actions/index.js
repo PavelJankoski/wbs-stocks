@@ -1,7 +1,8 @@
 export {
     fetchStocksForInterval,
     fetchMostPopularStock,
-    fetchLatestStockValues
+    fetchLatestStockValues,
+    searchStocks
 } from './stocksActions';
 
 export {

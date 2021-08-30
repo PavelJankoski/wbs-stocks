@@ -23,8 +23,8 @@ class Sidebar extends Component {
     return (
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <div className="text-center sidebar-brand-wrapper d-flex align-items-center">
-          <Link className="sidebar-brand brand-logo" to='/stocks'><img src={require("../../../assets/images/logo.png")} alt="logo" /></Link>
-          <Link className="sidebar-brand brand-logo-mini pt-3" to='/dashboard'><img src={require("../../../assets/images/logo-mini.png" )} alt="logo" /></Link>
+          <Link className="sidebar-brand brand-logo" to='/stocks'><img src={require("../../../../assets/images/logo.png")} alt="logo" /></Link>
+          <Link className="sidebar-brand brand-logo-mini pt-3" to='/dashboard'><img src={require("../../../../assets/images/logo-mini.png" )} alt="logo" /></Link>
         </div>
         <ul className="nav">
       

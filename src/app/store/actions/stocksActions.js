@@ -49,6 +49,19 @@ export const fetchLatestStockValues = (symbols) => {
     }
 }
 
+export const searchStocks = (searchText) => {
+    return (dispatch) => {
+        dispatch({type: actionTypes.SET_SEARCH_STOCKS_LOADING, value: true});
+        StocksService.searchStocks(searchText).then(res => {
+            dispatch(mapResponseToSearchedStocks(res.data.result))
+        }).catch(e => {
+            console.log(e);
+        }).finally(() => {
+            dispatch({type: actionTypes.SET_SEARCH_STOCKS_LOADING, value: false});
+        })
+    }
+}
+
 const mapResponseToPopularStockData = (response, symbol) => {
     let data = response.data.data
     const prices = [];
@@ -76,4 +89,13 @@ const mapResponseToLatestStocks = (data) => {
         })
     })
     return {type: actionTypes.FETCH_LATEST_STOCK_VALUES_SUCCESS, payload: latestStocksArr};
+}
+
+const mapResponseToSearchedStocks = (data) => {
+    return {type: actionTypes.SEARCH_STOCKS_SUCCESS, payload: data.splice(0, 5).map(s => {
+        return {
+            name: s.description,
+            symbol: s.symbol
+        }
+        })}
 }

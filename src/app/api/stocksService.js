@@ -1,4 +1,4 @@
-import {API_DRIVER_MS} from "../../axiosConfig";
+import {API_DRIVER_FH, API_DRIVER_MS} from "../../axiosConfig";
 
 
 const StocksService = {
@@ -26,6 +26,13 @@ const StocksService = {
         return API_DRIVER_MS.get('/eod/latest', {
             params: {
                 symbols: symbols
+            }
+        })
+    },
+    searchStocks: (searchText) => {
+        return API_DRIVER_FH.get('/search', {
+            params: {
+                q: searchText
             }
         })
     }

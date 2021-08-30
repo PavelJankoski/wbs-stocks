@@ -17,7 +17,9 @@ const initialState = {
         lastData: {},
         loading: true
     },
-    stocksTableData: []
+    stocksTableData: [],
+    searchedStocks: [],
+    searchStocksLoading: false
 }
 
 const updatePopularStocks = (state, action) => {
@@ -74,6 +76,15 @@ const updateLatestStocks = (state, action) => {
     return updateObject(state, {stocksTableData: action.payload})
 }
 
+const updateSearchStocksData = (state, action) => {
+    return updateObject(state, {searchedStocks: action.payload})
+}
+
+const setSearchStocksLoading = (state, action) => {
+    return updateObject(state, {searchStocksLoading: action.value})
+}
+
+
 const stocksReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_MOST_POPULAR_STOCK_SUCCESS:
@@ -86,6 +97,10 @@ const stocksReducer = (state = initialState, action) => {
             return setStockInIntervalLoading(state, action);
         case actionTypes.FETCH_LATEST_STOCK_VALUES_SUCCESS:
             return updateLatestStocks(state, action);
+        case actionTypes.SEARCH_STOCKS_SUCCESS:
+            return updateSearchStocksData(state, action);
+        case actionTypes.SET_SEARCH_STOCKS_LOADING:
+            return setSearchStocksLoading(state, action);
         default:
             return state;
     }
