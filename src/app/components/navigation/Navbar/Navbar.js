@@ -5,6 +5,7 @@ import languages from "../../../shared/objects/languages";
 import SearchAutocomplete from "./SearchAutocomplete/SearchAutocomplete";
 import {useDispatch, useSelector} from "react-redux";
 import * as actions from '../../../store/actions';
+import * as actionTypes from '../../../store/actionTypes';
 
 const Navbar = () => {
     const searchLoading = useSelector((state) => state.stocksReducer.searchStocksLoading);
@@ -25,6 +26,9 @@ const Navbar = () => {
             setTimer(setTimeout(() =>
                 dispatch(actions.searchStocks(searchText)), 1500)
             );
+        }
+        else {
+            dispatch({type: actionTypes.SEARCH_STOCKS_SUCCESS, payload: []})
         }
     }
 
