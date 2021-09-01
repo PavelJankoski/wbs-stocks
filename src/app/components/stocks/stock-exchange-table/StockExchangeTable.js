@@ -8,12 +8,13 @@ import * as actions from '../../../store/actions';
 const StockExchangeTable = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [searchText, setSearchText] = useState("");
     const [timer, setTimer] = useState(0);
     const stockExchanges = useSelector((state) => state.stocksReducer.stockExchanges, shallowEqual);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(actions.fetchStockExchanges(rowsPerPage, rowsPerPage * page));
+        dispatch(actions.fetchStockExchanges(rowsPerPage, rowsPerPage * page, searchText));
     }, [dispatch, page, rowsPerPage])
 
     const onTableRowClick = useCallback((rowData, rowMeta) => {
@@ -27,7 +28,8 @@ const StockExchangeTable = () => {
         setTimer(setTimeout(() => {
                     setPage(0);
                     setRowsPerPage(5);
-                    dispatch(actions.fetchStockExchanges(stockExchanges.total, 0, searchText));
+                    setSearchText(searchText);
+                    dispatch(actions.fetchStockExchanges(5, 0, searchText));
         }, 1500)
         );
     }
