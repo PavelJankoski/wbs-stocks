@@ -19,7 +19,6 @@ export const fetchExchanges = () => {
     return (dispatch) => {
         dispatch({type: actionTypes.SET_EXCHANGES_LOADING, value: true});
         CryptocurrenciesService.fetchExchangesList().then(res => {
-            debugger
             dispatch(mapResponseToExchanges(res.data));
         }).catch(e => {
             console.log(e);
@@ -50,7 +49,6 @@ const mapResponseToCoinsMarketData = (data) => {
 
 const mapResponseToExchanges = (data) => {
     const exchangesArr = [];
-    debugger
     data.forEach(exchange => {
         exchangesArr.push({
             id: exchange.id,

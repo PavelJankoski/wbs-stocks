@@ -341,7 +341,7 @@
     overflow: auto;
     right: -$sidebar-width-lg;
     transition: all 0.25s ease-out;
-
+    z-index: 1000;
     &.active {
       right: 0;
     }

@@ -35,6 +35,15 @@ const StocksService = {
                 q: searchText
             }
         })
+    },
+    fetchStockExchanges: (limit, offset, search) => {
+        return API_DRIVER_MS.get('/exchanges', {
+            params: {
+                limit: limit,
+                offset: offset,
+                ...(search !== "" ? {search: search} : {})
+            }
+        })
     }
 }
 

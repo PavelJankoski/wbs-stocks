@@ -62,6 +62,28 @@ export const searchStocks = (searchText) => {
     }
 }
 
+export const fetchStockExchanges = (limit, offset, search = "") => {
+    return (dispatch) => {
+        StocksService.fetchStockExchanges(limit, offset, search).then((res) => {
+            const payload = res.data.data.map(e => {
+                return {
+                    name: e.name,
+                    acronym: e.acronym,
+                    mic: e.mic,
+                    country: e.country,
+                    city: e.city,
+                    website: e.website
+                }
+            })
+            dispatch({type: actionTypes.FETCH_STOCKS_EXCHANGES_SUCCESS, payload: payload, total: res.data.pagination.total})
+        }).catch((e) => {
+            console.log(e);
+        }).finally(() => {
+
+        })
+    }
+}
+
 const mapResponseToPopularStockData = (response, symbol) => {
     let data = response.data.data
     const prices = [];

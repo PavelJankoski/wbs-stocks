@@ -19,6 +19,10 @@ const initialState = {
     },
     stocksTableData: [],
     searchedStocks: [],
+    stockExchanges: {
+        data: [],
+        total: 0
+    },
     searchStocksLoading: false
 }
 
@@ -84,6 +88,10 @@ const setSearchStocksLoading = (state, action) => {
     return updateObject(state, {searchStocksLoading: action.value})
 }
 
+const setStocksExchanges = (state, action) => {
+    return updateObject(state, {stockExchanges: updateObject(state.stockExchanges, {data: action.payload, total: action.total})});
+}
+
 
 const stocksReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -101,6 +109,8 @@ const stocksReducer = (state = initialState, action) => {
             return updateSearchStocksData(state, action);
         case actionTypes.SET_SEARCH_STOCKS_LOADING:
             return setSearchStocksLoading(state, action);
+        case actionTypes.FETCH_STOCKS_EXCHANGES_SUCCESS:
+            return setStocksExchanges(state, action);
         default:
             return state;
     }
