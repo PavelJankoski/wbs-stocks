@@ -1,0 +1,27 @@
+$twoCardSize: 720px;
+$threeCardSize: 1300px;
+$fourCardSize: 1600px;
+$fiveCardSize: 1850px;
+
+#cards{
+  display: grid;
+  grid-row-gap: 1rem;
+  grid-column-gap: 0;
+  justify-items: center;
+
+  @media (min-width: $twoCardSize) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: $threeCardSize) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: $fourCardSize) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (min-width: $fiveCardSize) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}

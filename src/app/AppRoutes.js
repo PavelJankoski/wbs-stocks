@@ -1,6 +1,6 @@
 import React, {Component, Suspense} from 'react';
-import {Switch, Redirect, Route} from 'react-router-dom';
-import Spinner from './shared/components/Spinner';
+import {Redirect, Route, Switch} from 'react-router-dom';
+import Spinner from './shared/components/spinner/Spinner';
 import routes from "./shared/objects/routes";
 
 

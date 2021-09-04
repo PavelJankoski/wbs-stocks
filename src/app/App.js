@@ -3,7 +3,7 @@ import {withRouter} from 'react-router-dom';
 import './App.scss';
 import AppRoutes from './AppRoutes';
 import Navbar from './components/navigation/Navbar/Navbar';
-import Sidebar from './components/navigation/Sidebar/Sidebar';
+import Sidebar from './components/navigation/sidebar/Sidebar';
 import SettingsPanel from './example/settings/SettingsPanel';
 import {withTranslation} from "react-i18next";
 
