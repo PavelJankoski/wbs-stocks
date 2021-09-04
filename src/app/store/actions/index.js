@@ -1,10 +1,16 @@
 export {
     fetchStocksForInterval,
     fetchMostPopularStock,
-    fetchLatestStockValues
+    fetchLatestStockValues,
+    searchStocks,
+    fetchStockExchanges
 } from './stocksActions';
 
 export {
     fetchCoinsMarketData,
     fetchExchanges
-} from './cryptocurrenciesActions'
+} from './cryptocurrenciesActions';
+
+export {
+    fetchStocksMarketNews
+} from './newsActions';

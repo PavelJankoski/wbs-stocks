@@ -4,6 +4,8 @@ const Stocks = lazy(() => import('../../components/stocks/Stocks'));
 const Dashboard = lazy(() => import('../../example/dashboard/Dashboard'));
 const Cryptocurrency = lazy(() => import('../../components/cryptocurrency/Cryptocurrency'));
 const CoinDetails = lazy(() => import('../../components/cryptocurrency/coin-details/CoinDetails'))
+const CryptocurrencyNews = lazy(() => import('../../components/news/cryptocurrency/CryptocurrencyNews'));
+const StocksNews = lazy(() => import('../../components/news/stocks/StocksNews'));
 
 const Buttons = lazy(() => import('../../example/basic-ui/Buttons'));
 const Dropdowns = lazy(() => import('../../example/basic-ui/Dropdowns'));
@@ -30,6 +32,14 @@ const routes = [
     {
         to: "/cryptocurrency",
         component: Cryptocurrency
+    },
+    {
+        to: "/news/stocks-market",
+        component: StocksNews
+    },
+    {
+        to: "/news/cryptocurrency-market",
+        component: CryptocurrencyNews
     },
     {
         to: "/dashboard",

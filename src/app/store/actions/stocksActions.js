@@ -49,6 +49,41 @@ export const fetchLatestStockValues = (symbols) => {
     }
 }
 
+export const searchStocks = (searchText) => {
+    return (dispatch) => {
+        dispatch({type: actionTypes.SET_SEARCH_STOCKS_LOADING, value: true});
+        StocksService.searchStocks(searchText).then(res => {
+            dispatch(mapResponseToSearchedStocks(res.data.result))
+        }).catch(e => {
+            console.log(e);
+        }).finally(() => {
+            dispatch({type: actionTypes.SET_SEARCH_STOCKS_LOADING, value: false});
+        })
+    }
+}
+
+export const fetchStockExchanges = (limit, offset, search = "") => {
+    return (dispatch) => {
+        StocksService.fetchStockExchanges(limit, offset, search).then((res) => {
+            const payload = res.data.data.map(e => {
+                return {
+                    name: e.name,
+                    acronym: e.acronym,
+                    mic: e.mic,
+                    country: e.country,
+                    city: e.city,
+                    website: e.website
+                }
+            })
+            dispatch({type: actionTypes.FETCH_STOCKS_EXCHANGES_SUCCESS, payload: payload, total: res.data.pagination.total})
+        }).catch((e) => {
+            console.log(e);
+        }).finally(() => {
+
+        })
+    }
+}
+
 const mapResponseToPopularStockData = (response, symbol) => {
     let data = response.data.data
     const prices = [];
@@ -76,4 +111,13 @@ const mapResponseToLatestStocks = (data) => {
         })
     })
     return {type: actionTypes.FETCH_LATEST_STOCK_VALUES_SUCCESS, payload: latestStocksArr};
+}
+
+const mapResponseToSearchedStocks = (data) => {
+    return {type: actionTypes.SEARCH_STOCKS_SUCCESS, payload: data.splice(0, 5).map(s => {
+        return {
+            name: s.description,
+            symbol: s.symbol
+        }
+        })}
 }

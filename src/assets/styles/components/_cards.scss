@@ -3,10 +3,40 @@
 .card {
   border: none;
   box-shadow: $card-shadow-color;
+  .card-img-top {
+    height: 196px;
+  }
   .card-body {
     padding: $card-padding-y $card-padding-x;
     + .card-body {
       padding-top: 1rem;
+    }
+    .card-text {
+      display: -webkit-box;
+      max-width: 200px;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-source {
+      display: inline-block;
+      position: absolute;
+      top: 162px;
+      left: 0;
+      padding: 5px 10px;
+      border-radius: 3px;
+      background-color: $sidebar-gradient-color-1;
+      color: #fff;
+    }
+    .card-date {
+      width: 51px;
+      padding: 10px;
+      text-align: center;
+      border-radius: 50%;
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      background-color: $sidebar-gradient-color-1;
     }
     .card-icon-indicator {		
       width: 45px;		

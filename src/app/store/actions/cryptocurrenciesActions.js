@@ -64,7 +64,6 @@ const mapResponseToCoinsMarketData = (data) => {
 
 const mapResponseToExchanges = (data) => {
     const exchangesArr = [];
-    debugger
     data.forEach(exchange => {
         exchangesArr.push({
             id: exchange.id,

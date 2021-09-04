@@ -8,7 +8,7 @@ import {Spinner} from "react-bootstrap";
 import PropTypes from "prop-types";
 
 const StockTimeSeries = (props) => {
-    const [active, setActive] = useState(stockIntervals[0]);
+    const [active, setActive] = useState(stockIntervals[1]);
     const dispatch = useDispatch();
     const stockInInterval = useSelector((state) => state.stocksReducer.stockInInterval, shallowEqual)
 

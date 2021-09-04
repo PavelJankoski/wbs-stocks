@@ -21,6 +21,8 @@ const Cryptocurrency = () => {
                 return <CoinsTable coinsData={coinsTableData}/>
             case EXCHANGES:
                 return <ExchangesTable exchanges={exchangesTableData}/>
+            default:
+                return null;
         }
     }
 

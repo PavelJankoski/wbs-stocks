@@ -1,6 +1,6 @@
 import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
-import { initReactI18next } from "react-i18next";
+import {initReactI18next} from "react-i18next";
 
 i18n
   .use(LanguageDetector)
@@ -11,13 +11,15 @@ i18n
               translations: {
                   "overview-dashboard": "Overview dashboard",
                   "cryptocurrency": "Cryptocurrency",
-                  "stocks": "Stocks"
+                  "stocks": "Stocks",
+                  "news": "News"
               }
           },
           mk: {
               translations: {
                   "cryptocurrency": "Криптовалути",
-                  "stocks": "Берза"
+                  "stocks": "Берза",
+                  "news": "Новости"
               }
           }
       },
