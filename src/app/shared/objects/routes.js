@@ -3,6 +3,7 @@ import {lazy} from "react";
 const Stocks = lazy(() => import('../../components/stocks/Stocks'));
 const Dashboard = lazy(() => import('../../example/dashboard/Dashboard'));
 const Cryptocurrency = lazy(() => import('../../components/cryptocurrency/Cryptocurrency'));
+const CoinDetails = lazy(() => import('../../components/cryptocurrency/coin-details/CoinDetails'))
 
 const Buttons = lazy(() => import('../../example/basic-ui/Buttons'));
 const Dropdowns = lazy(() => import('../../example/basic-ui/Dropdowns'));
@@ -33,6 +34,10 @@ const routes = [
     {
         to: "/dashboard",
         component: Dashboard
+    },
+    {
+        to: "/coin/:coin_id",
+        component: CoinDetails
     },
     {
         to: "/basic-ui/buttons",

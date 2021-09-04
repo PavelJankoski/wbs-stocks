@@ -1,5 +1,8 @@
 import CryptocurrenciesService from "../../api/cryptocurrenciesService";
 import * as actionTypes from "../actionTypes";
+import {FETCH_COIN_DETAILS_SUCCESS} from "../actionTypes";
+import socialNetworks from "../../shared/objects/socialNetworks";
+import {Currency} from "../../shared/objects/currencies";
 
 export const fetchCoinsMarketData = () => {
     return (dispatch) => {
@@ -19,7 +22,6 @@ export const fetchExchanges = () => {
     return (dispatch) => {
         dispatch({type: actionTypes.SET_EXCHANGES_LOADING, value: true});
         CryptocurrenciesService.fetchExchangesList().then(res => {
-            debugger
             dispatch(mapResponseToExchanges(res.data));
         }).catch(e => {
             console.log(e);
@@ -29,6 +31,18 @@ export const fetchExchanges = () => {
     }
 }
 
+export const fetchCoinDetails = (id) => {
+    return (dispatch) => {
+        CryptocurrenciesService.fetchCoinDetails(id).then(res => {
+            console.log(res.data)
+            dispatch(mapResponseToCoinDetails(res.data))
+        }).catch(e => {
+            console.log(e)
+        }).finally(() => {
+
+        })
+    }
+}
 
 const mapResponseToCoinsMarketData = (data) => {
     const coinsArr = [];
@@ -62,4 +76,37 @@ const mapResponseToExchanges = (data) => {
         })
     })
     return {type: actionTypes.FETCH_EXCHANGES_SUCCESS, payload: exchangesArr};
+}
+
+const mapResponseToCoinDetails = (data) => {
+
+    const coinDetails = {
+        symbol: data.symbol,
+        name: data.name,
+        image: data.image['thumb'],
+        marketCapRank: data.market_cap_rank,
+        hashingAlgorithm: data.hashing_algorithm,
+        links: {
+            homePageUrl: data.links.homepage[0],
+            blockChainSitesUrls: data.links.blockchain_site,
+            communityUrls: [...data.links.official_forum_url, ...data.links.chat_url, data.links.subreddit_url],
+            socialNetworksUrls: {
+                twitterLink: data.links.twitter_screen_name ? `${socialNetworks.find(s => s.name === 'twitter').url}${data.links.twitter_screen_name}` : "",
+                facebookLink: data.links.facebook_username ? `${socialNetworks.find(s => s.name === 'facebook').url}${data.links.facebook_username}` : ""
+            },
+            reposUrls: [...data.links.repos_url['github']]
+        },
+        marketData: {
+            currentPrice: {
+                [`${Currency.EUR}`]: data.market_data.current_price[Currency.EUR.toLowerCase()],
+                [`${Currency.GBP}`]: data.market_data.current_price[Currency.GBP.toLowerCase()],
+                [`${Currency.USD}`]: data.market_data.current_price[Currency.USD.toLowerCase()],
+
+            },
+            totalSupply: data.market_data['total_supply'],
+            maxSupply: data.market_data['max_supply'],
+            circulationSupply: data.market_data['circulating_supply']
+        }
+    }
+    return {type: FETCH_COIN_DETAILS_SUCCESS, payload: coinDetails};
 }

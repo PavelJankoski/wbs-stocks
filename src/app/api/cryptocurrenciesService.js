@@ -19,6 +19,14 @@ const CryptocurrenciesService = {
                 per_size: pageSize
             }
         })
+    },
+
+    fetchCoinDetails: (id) => {
+        return API_DRIVER_CG.get(`/coins/${id}`, {
+            params: {
+                tickers: false
+            }
+        })
     }
 }
 

@@ -1,14 +1,19 @@
 import React from "react";
 import CoinTableRow from "./coin-table-row/CoinTableRow";
 import PropTypes from "prop-types";
+import {withRouter} from "react-router-dom";
 
 const CoinsTable = (props) => {
+
+    const handleOnTableRowClick = (coin) => {
+        props.history.push(`/coin/${coin.id}`);
+    }
 
     const renderTableData = props.coinsData.map((coin) => (
         <CoinTableRow key={coin.id}
                       name={coin.name}
                       coinIcon={coin.coinIcon}
-                      handleOnTableRowClick={() => props.handleOnTableRowClick(coin)}
+                      handleOnTableRowClick={() => handleOnTableRowClick(coin)}
                       symbol={coin.symbol}
                       priceChangePercentage1h={coin.priceChangePercentage1h}
                       priceChangePercentage24h={coin.priceChangePercentage24h}
@@ -39,8 +44,7 @@ const CoinsTable = (props) => {
 }
 
 CoinsTable.propTypes = {
-    coinsData: PropTypes.array,
-    handleOnTableRowClick: PropTypes.func
+    coinsData: PropTypes.array
 }
 
-export default CoinsTable;
+export default withRouter(CoinsTable);
