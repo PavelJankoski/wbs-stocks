@@ -12,9 +12,8 @@ const CoinDetails = (props) => {
     const coinDetails = useSelector((state) => state.cryptocurrenciesReducer.coinDetails, shallowEqual)
 
     useEffect(() => {
-        debugger
         dispatch(fetchCoinDetails(coin_id))
-    }, [dispatch])
+    }, [dispatch, coin_id])
 
     return (
         <div>

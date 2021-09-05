@@ -38,8 +38,8 @@ const SearchAutocomplete = (props) => {
 
     return(
         <Dropdown className={"ml-auto search-form d-none d-md-block"}>
-            <Dropdown.Toggle as={"div"} className="autocomplete-dropdown-toggle form-group">
-                <input type="search" onChange={props.onSearchChange} className="form-control" placeholder="Search Here"/>
+            <Dropdown.Toggle as={"div"} className="autocomplete-dropdown-toggle">
+                <input type="search" onChange={props.onSearchChange} className="form-control" placeholder={props.inputPlaceholder}/>
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
@@ -53,7 +53,8 @@ SearchAutocomplete.propTypes = {
     loading: PropTypes.bool,
     autocompleteData: PropTypes.array,
     onSearchChange: PropTypes.func,
-    onItemClick: PropTypes.func
+    onItemClick: PropTypes.func,
+    inputPlaceholder: PropTypes.string
 }
 
 export default SearchAutocomplete;
