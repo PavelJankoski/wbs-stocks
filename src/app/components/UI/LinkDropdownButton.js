@@ -12,8 +12,10 @@ const LinkDropdownButton = (props) => {
 
     return (
         props.links?.length > 1 ?
-            <DropdownButton className="ml-2  border-0" variant={"light"} as={ButtonGroup}  title={props.title}>{renderDropdownItems}</DropdownButton> :
-            <a href={props.links[0]} target="_blank" rel="noopener noreferrer" className="btn btn-light ml-2 ">
+            <DropdownButton className="ml-2 mt-2 mt-sm-0 border-0" variant={"light"} as={ButtonGroup}
+                            title={props.title}>{renderDropdownItems}</DropdownButton> :
+            <a href={props.links[0]} target="_blank" rel="noopener noreferrer"
+               className="btn btn-light ml-2 mt-2 mt-sm-0 ">
                 {props.title}
             </a>
     )

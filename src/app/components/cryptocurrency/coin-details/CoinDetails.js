@@ -8,7 +8,7 @@ import NumberFormat from "react-number-format";
 import LinkDropdownButton from "../../UI/LinkDropdownButton";
 import CoinTimeSeries from "../coin-timeseries/CoinTimeSeries";
 
-const CoinDetails = (props) => {
+const CoinDetails = () => {
 
     const {coin_id} = useParams()
     const dispatch = useDispatch()
@@ -46,13 +46,14 @@ const CoinDetails = (props) => {
                         <LinkDropdownButton title={"Explorers"} links={coinDetails.links.blockChainSitesUrls}/>
                         <LinkDropdownButton title={"Community"} links={coinDetails.links.communityUrls}/>
                         <LinkDropdownButton title={"Repos"} links={coinDetails.links.reposUrls}/>
+                        <LinkDropdownButton title={"Social"} links={coinDetails.links.socialNetworksUrls}/>
                     </div>
                 </div>
                 <div className="row mt-4">
                     <div className="col-xl-4 col-12">
                         <NumberFormat style={{fontSize: 70}} decimalScale={2} displayType={"text"} prefix={'$'}
                                       thousandSeparator={true}
-                                      value={coinDetails.priceData.currentPrice[`${Currency.USD}`]}/>
+                                      value={coinDetails.priceData.currentPrice[Currency.USD]}/>
                     </div>
                     <div className="col-xl-2 col-lg-3 col-sm-6 col-12 mb-3 mt-4 border-right-lg">
                         <div>
@@ -60,7 +61,7 @@ const CoinDetails = (props) => {
                             <NumberFormat decimalScale={2} displayType={"text"} prefix={'$'}
                                           thousandSeparator={true}
                                           style={{fontWeight: 1000, fontSize: 20}}
-                                          value={coinDetails.marketData.marketCap[`${Currency.USD}`]}/>
+                                          value={coinDetails.marketData.marketCap[Currency.USD]}/>
                         </div>
                         <div className="d-flex mt-2">
                             <Badge variant={"light"} className="p-2 align-self-center">24h</Badge>
@@ -68,21 +69,21 @@ const CoinDetails = (props) => {
                                           thousandSeparator={true}
                                           className={`${coinDetails.marketData.marketCapChangePercentage24h >= 0 ? "text-success" : "text-danger"} ml-2`}
                                           style={{fontWeight: 1000, fontSize: 20}}
-                                          value={coinDetails.marketData.marketCapChangePercentage24h[`${Currency.USD}`]}/>
+                                          value={coinDetails.marketData.marketCapChangePercentage24h[Currency.USD]}/>
                         </div>
                     </div>
-                    {coinDetails.marketData.fullyDilutedMarketCap[`${Currency.USD}`] &&
+                    {coinDetails.marketData.fullyDilutedMarketCap[Currency.USD] &&
                     <div className="col-xl-2 col-lg-3 col-sm-6 col-12 mb-3 mt-4 border-right-lg">
                         <p className="h5">Fully Diluted Market Cap</p>
                         <NumberFormat decimalScale={2} displayType={"text"} prefix={'$'}
                                       thousandSeparator={true}
                                       style={{fontWeight: 1000, fontSize: 20}}
-                                      value={coinDetails.marketData.fullyDilutedMarketCap[`${Currency.USD}`]}/>
+                                      value={coinDetails.marketData.fullyDilutedMarketCap[Currency.USD]}/>
                     </div>}
                     <div className="col-xl-2 col-lg-3 col-sm-6 col-12 mb-3 mt-4 border-right-lg">
                         <div className="d-flex">
                             <p className="h5">Volume</p>
-                            <Badge variant={"light"} className="p-2 ml-2 align-self-center text-gray">24h</Badge>
+                            <Badge variant={"secondary"} className="p-1 ml-2 align-self-center text-gray">24h</Badge>
                         </div>
                         <NumberFormat decimalScale={2} displayType={"text"} prefix={'$'}
                                       thousandSeparator={true}
@@ -118,40 +119,75 @@ const CoinDetails = (props) => {
                     </div>
                 </div>
 
-                <div className="row mt-4 mb-4">
-                    <div className="col-lg-8 col-12">
+                <div className="row mt-4">
+                    <div className="col-xl-8 col-12">
                         <CoinTimeSeries coinId={coin_id}/>
                     </div>
 
-                    <div className="col-lg-4 col-12">
-                        <div className="card">
-                            <div className="card-body bg-card" style={{borderRadius: 30, backgroundColor: "#f2f2f2"}}>
-                                <p className="h3 font-weight-bold mb-5">Price Details</p>
-
-                                <div className="d-flex pb-4 border-bottom">
-                                    <p className="h5">{coinDetails.name} Price</p>
-                                    <NumberFormat decimalScale={2} displayType={"text"}
-                                                  prefix={'$'}
-                                                  thousandSeparator={true}
-                                                  className="m-auto"
-                                                  value={coinDetails.priceData.currentPrice[`${Currency.USD}`]}/>
-                                </div>
-                                <div className="d-flex pt-4 pb-4 border-bottom">
-                                    <div className="d-flex">
-                                        <p className="h5">Price change</p>
-                                        <Badge variant={"secondary"} className="p-2 ml-2 align-self-center">24h</Badge>
+                    <div className="col-xl-4 col-12 mt-xl-0 mt-4">
+                        <div className="card" style={{borderRadius: 30, backgroundColor: "#f2f2f2"}}>
+                            <div className="card-body">
+                                <p className="h3 font-weight-bold">Price Details</p>
+                                <div className="row">
+                                    <div className="col-md-6 col-12 mt-5">
+                                        <p className="m-0" style={{fontSize: 18}}>{coinDetails.name} Price</p>
+                                        <NumberFormat decimalScale={2} displayType={"text"}
+                                                      prefix={'$'}
+                                                      thousandSeparator={true}
+                                                      className="font-weight-bold"
+                                                      style={{fontSize: 20}}
+                                                      value={coinDetails.priceData.currentPrice[Currency.USD]}/>
                                     </div>
-                                    <NumberFormat decimalScale={2} displayType={"text"}
-                                                  prefix={'$'}
-                                                  thousandSeparator={true}
-                                                  value={coinDetails.priceData.priceChange24h[`${Currency.USD}`]}/>
-                                    <NumberFormat decimalScale={2} displayType={"text"}
-                                                  suffix={'%'}
-                                                  thousandSeparator={true}
-                                                  className={`${coinDetails.priceData.priceChangePercentage24h >= 0 ? "text-success" : "text-danger"}`}
-                                                  value={coinDetails.priceData.priceChangePercentage24h[`${Currency.USD}`]}/>
+                                    <div className="col-md-6 col-12 mt-5 text-md-right">
+                                        <div className="d-flex justify-content-md-end m-0">
+                                            <p className="m-0" style={{fontSize: 18}}>Price change</p>
+                                            <p className="badge badge-secondary align-self-center p-1 ml-2 m-0">24h</p>
+                                        </div>
+                                        <NumberFormat decimalScale={2} displayType={"text"}
+                                                      prefix={'$'}
+                                                      thousandSeparator={true}
+                                                      style={{fontSize: 20}}
+                                                      className="font-weight-bold"
+                                                      value={coinDetails.priceData.priceChange24h[Currency.USD]}/>
+                                        <NumberFormat decimalScale={2} displayType={"text"}
+                                                      suffix={'%'}
+                                                      thousandSeparator={true}
+                                                      style={{fontSize: 20}}
+                                                      className={`${coinDetails.priceData.priceChangePercentage24h >= 0 ? "text-success" : "text-danger"} font-weight-bold ml-2`}
+                                                      value={coinDetails.priceData.priceChangePercentage24h[Currency.USD]}/>
+                                    </div>
                                 </div>
-
+                                <div className="row">
+                                    <div className="col-md-6 col-12 mt-5">
+                                        <p className="m-0" style={{fontSize: 18}}>24H High</p>
+                                        <NumberFormat decimalScale={2} displayType={"text"}
+                                                      prefix={'$'}
+                                                      thousandSeparator={true}
+                                                      className="font-weight-bold"
+                                                      style={{fontSize: 20}}
+                                                      value={coinDetails.priceData.high24h[Currency.USD]}/>
+                                    </div>
+                                    <div className="col-md-6 col-12 mt-5 text-md-right">
+                                        <p className="m-0" style={{fontSize: 18}}>24H Low</p>
+                                        <NumberFormat decimalScale={2} displayType={"text"}
+                                                      prefix={'$'}
+                                                      thousandSeparator={true}
+                                                      className="font-weight-bold"
+                                                      style={{fontSize: 20}}
+                                                      value={coinDetails.priceData.low24h[Currency.USD]}/>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-6 col-12 mt-5">
+                                        <p className="m-0">All Time High</p>
+                                        <NumberFormat decimalScale={2} displayType={"text"}
+                                                      prefix={'$'}
+                                                      thousandSeparator={true}
+                                                      className="font-weight-bold"
+                                                      style={{fontSize: 20}}
+                                                      value={coinDetails.priceData.ath[Currency.USD]}/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

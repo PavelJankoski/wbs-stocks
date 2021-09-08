@@ -108,6 +108,7 @@ const mapResponseToExchanges = (data) => {
 
 const mapResponseToCoinDetails = (data) => {
 
+    debugger
     const coinDetails = {
         symbol: data.symbol,
         name: data.name,
@@ -119,10 +120,9 @@ const mapResponseToCoinDetails = (data) => {
             homePageUrls: data.links.homepage.filter(l => l !== ""),
             blockChainSitesUrls: data.links.blockchain_site.filter(l => l !== ""),
             communityUrls: [...data.links.official_forum_url.filter(l => l !== ""), ...data.links.chat_url.filter(l => l !== ""), data.links.subreddit_url],
-            socialNetworksUrls: {
-                twitterLink: data.links.twitter_screen_name ? `${socialNetworks.find(s => s.name === 'twitter').url}${data.links.twitter_screen_name}` : "",
-                facebookLink: data.links.facebook_username ? `${socialNetworks.find(s => s.name === 'facebook').url}${data.links.facebook_username}` : ""
-            },
+            socialNetworksUrls: [data.links.twitter_screen_name ? `${socialNetworks.find(s => s.name === 'twitter').url}${data.links.twitter_screen_name}` : "",
+                data.links.facebook_username ? `${socialNetworks.find(s => s.name === 'facebook').url}${data.links.facebook_username}` : ""
+            ],
             reposUrls: [...data.links.repos_url['github'].filter(l => l !== ""), ...data.links.repos_url['bitbucket'].filter(l => l !== "")]
         },
         marketData: {
