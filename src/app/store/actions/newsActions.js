@@ -29,11 +29,13 @@ export const fetchCompanyNews = (symbol) => {
 
 export const fetchCryptocurrenciesNews = () => {
     return (dispatch) => {
+        dispatch({type: actionTypes.SET_CRYPTO_NEWS_LOADING, value: true});
         NewsService.fetchNews('crypto').then(res => {
             dispatch({type: actionTypes.FETCH_CRYPTOCURRENCY_NEWS_SUCCESS, payload: res.data});
         }).catch(e => {
             console.log(e);
         }).finally(() => {
+            dispatch({type: actionTypes.SET_CRYPTO_NEWS_LOADING, value: false});
         })
     }
 }

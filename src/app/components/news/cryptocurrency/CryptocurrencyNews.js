@@ -1,11 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import * as actions from '../../../store/actions';
 import NewsCard from "../news-card/NewsCard";
 import TwoButtonsPagination from "../../UI/pagination/TwoButtonsPagination";
+import {Spinner} from "react-bootstrap";
 
 const CryptocurrencyNews = () => {
     const cryptoNews = useSelector((state) => state.newsReducer.cryptocurrencyNews, shallowEqual);
+    const cryptoNewsLoading = useSelector((state) => state.newsReducer.cryptoNewsLoading, shallowEqual);
     const [page, setPage] = useState(0);
     const cardsPerPage = 15;
     const dispatch = useDispatch();
@@ -44,16 +46,35 @@ const CryptocurrencyNews = () => {
         )
     })
     return (
-        <div>
-            <div id="cards">
-                {renderCryptoNews}
+        <div className="h-100">
+            <div className="row page-title-header">
+                <div className="col-12">
+                    <div className="page-header">
+                        <div className="row w-100">
+                            <div className="col-12 col-md-5 align-self-center">
+                                <h4 className="page-title font-weight-medium">Crypto news</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="mt-5 mb-3 text-center">
-                <TwoButtonsPagination previousDisabled={page === 0}
-                                      nextDisabled={page * cardsPerPage + cardsPerPage >= cryptoNews.length - 1}
-                                      handleOnPreviousClick={handleOnPreviousClick}
-                                      handleOnNextClick={handleOnNextClick}/>
-            </div>
+
+            {
+                !cryptoNewsLoading ? <Fragment>
+                        <div id="cards">{renderCryptoNews}</div>
+                        <div className="mt-5 mb-3 text-center">
+                            <TwoButtonsPagination previousDisabled={page === 0}
+                                                  nextDisabled={page * cardsPerPage + cardsPerPage >= cryptoNews.length - 1}
+                                                  handleOnPreviousClick={handleOnPreviousClick}
+                                                  handleOnNextClick={handleOnNextClick}/>
+                        </div>
+                    </Fragment> :
+                    <div className="d-flex justify-content-center h-100 align-items-center">
+                        <Spinner variant={'primary'}
+                                 animation="border"
+                                 style={{width: "100px", height: "100px"}}/>
+                    </div>
+            }
         </div>
 
 
