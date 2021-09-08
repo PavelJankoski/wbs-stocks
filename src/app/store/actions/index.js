@@ -8,9 +8,13 @@ export {
 
 export {
     fetchCoinsMarketData,
-    fetchExchanges
+    fetchExchanges,
+    fetchCoinDetails,
+    fetchCoinOHCLData,
+    fetchCoinMarketChartData
 } from './cryptocurrenciesActions';
 
 export {
-    fetchStocksMarketNews
+    fetchStocksMarketNews,
+    fetchCryptocurrenciesNews
 } from './newsActions';
