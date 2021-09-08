@@ -11,7 +11,10 @@ export {
     fetchExchanges,
     fetchCoinDetails,
     fetchCoinOHCLData,
-    fetchCoinMarketChartData
+    fetchCoinMarketChartData,
+    cleanUpCoinDetails,
+    cleanUpCoinOHCLTimeSeries,
+    cleanUpCoinMarketChartTimeSeries
 } from './cryptocurrenciesActions';
 
 export {

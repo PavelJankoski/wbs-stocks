@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {useParams} from "react-router-dom";
-import {cleanUpCoinDetails, fetchCoinDetails} from "../../../store/actions/cryptocurrenciesActions";
+import {cleanUpCoinDetails, fetchCoinDetails} from "../../../store/actions";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {Badge, Image} from "react-bootstrap";
 import {Currency} from "../../../shared/objects/currencies";
@@ -54,7 +54,7 @@ const CoinDetails = (props) => {
                                       thousandSeparator={true}
                                       value={coinDetails.priceData.currentPrice[`${Currency.USD}`]}/>
                     </div>
-                    <div className="col-xl-2 col-lg-3 col-12 mb-3 mt-4 border-right-lg">
+                    <div className="col-xl-2 col-lg-3 col-sm-6 col-12 mb-3 mt-4 border-right-lg">
                         <div>
                             <p className="h5">Market Cap</p>
                             <NumberFormat decimalScale={2} displayType={"text"} prefix={'$'}
@@ -72,14 +72,14 @@ const CoinDetails = (props) => {
                         </div>
                     </div>
                     {coinDetails.marketData.fullyDilutedMarketCap[`${Currency.USD}`] &&
-                    <div className="col-lg-2 col-sm-12 col-md-3 mb-3 mt-4 border-right-lg">
+                    <div className="col-xl-2 col-lg-3 col-sm-6 col-12 mb-3 mt-4 border-right-lg">
                         <p className="h5">Fully Diluted Market Cap</p>
                         <NumberFormat decimalScale={2} displayType={"text"} prefix={'$'}
                                       thousandSeparator={true}
                                       style={{fontWeight: 1000, fontSize: 20}}
                                       value={coinDetails.marketData.fullyDilutedMarketCap[`${Currency.USD}`]}/>
                     </div>}
-                    <div className="col-xl-2 col-lg-3 col-12 mb-3 mt-4 border-right-lg">
+                    <div className="col-xl-2 col-lg-3 col-sm-6 col-12 mb-3 mt-4 border-right-lg">
                         <div className="d-flex">
                             <p className="h5">Volume</p>
                             <Badge variant={"light"} className="p-2 ml-2 align-self-center text-gray">24h</Badge>
@@ -89,7 +89,7 @@ const CoinDetails = (props) => {
                                       style={{fontWeight: 1000, fontSize: 20}}
                                       value={coinDetails.marketData.totalVolume[`${Currency.USD}`]}/>
                     </div>
-                    <div className="col-xl-2 col-lg-3 col-12 mt-4 mb-3">
+                    <div className="col-xl-2 col-lg-3 col-sm-6 col-12 mt-4 mb-3">
                         <div>
                             <p className="h5">Circulating Supply</p>
                             <NumberFormat decimalScale={2} displayType={"text"}
@@ -124,8 +124,8 @@ const CoinDetails = (props) => {
                     </div>
 
                     <div className="col-lg-4 col-12">
-                        <div className="card border-light">
-                            <div className="card-body">
+                        <div className="card">
+                            <div className="card-body bg-card" style={{borderRadius: 30, backgroundColor: "#f2f2f2"}}>
                                 <p className="h3 font-weight-bold mb-5">Price Details</p>
 
                                 <div className="d-flex pb-4 border-bottom">
@@ -139,7 +139,7 @@ const CoinDetails = (props) => {
                                 <div className="d-flex pt-4 pb-4 border-bottom">
                                     <div className="d-flex">
                                         <p className="h5">Price change</p>
-                                        <Badge variant={"light"} className="p-2 ml-2 align-self-center">24h</Badge>
+                                        <Badge variant={"secondary"} className="p-2 ml-2 align-self-center">24h</Badge>
                                     </div>
                                     <NumberFormat decimalScale={2} displayType={"text"}
                                                   prefix={'$'}

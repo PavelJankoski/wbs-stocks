@@ -198,8 +198,11 @@ const mapResponseToCoinDetails = (data) => {
 const mapResponseToCoinOHCLData = (data) => {
     const ohclDataArr = [{data: []}]
     data.forEach(item => {
+
+        let date = new Date(item[0]).toLocaleDateString()
+        let time = new Date(item[0]).toLocaleTimeString()
         ohclDataArr[0].data.push({
-            x: new Date(item[0]),
+            x: [`${date} ${time}`],
             y: item.slice(1, 5)
         })
     })
@@ -225,5 +228,17 @@ const mapResponseToCoinMarketChartData = (data) => {
 export const cleanUpCoinDetails = () => {
     return {
         type: actionTypes.FETCH_COIN_DETAILS_SUCCESS, payload: null
+    }
+}
+
+export const cleanUpCoinOHCLTimeSeries = () => {
+    return {
+        type: actionTypes.FETCH_COIN_OHCL_DATA_SUCCESS, payload: []
+    }
+}
+
+export const cleanUpCoinMarketChartTimeSeries = () => {
+    return {
+        type: actionTypes.FETCH_COIN_MARKET_CHART_DATA_SUCCESS, payload: []
     }
 }
