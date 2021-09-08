@@ -16,5 +16,6 @@ export {
 
 export {
     fetchStocksMarketNews,
-    fetchCryptocurrenciesNews
+    fetchCryptocurrenciesNews,
+    fetchCompanyNews
 } from './newsActions';

@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
-import {Link} from "react-router-dom";
-import LanguageDropdown from "./LanguageDropdown/LanguageDropdown";
+import {Link, withRouter} from "react-router-dom";
+import LanguageDropdown from "./language-dropdown/LanguageDropdown";
 import languages from "../../../shared/objects/languages";
-import SearchAutocomplete from "./SearchAutocomplete/SearchAutocomplete";
+import SearchAutocomplete from "./search-autocomplete/SearchAutocomplete";
 import {useDispatch, useSelector} from "react-redux";
 import * as actions from '../../../store/actions';
 import * as actionTypes from '../../../store/actionTypes';
 
-const Navbar = () => {
+const Navbar = (props) => {
     const searchLoading = useSelector((state) => state.stocksReducer.searchStocksLoading);
     const searchAutocompleteData = useSelector((state) => state.stocksReducer.searchedStocks);
     const dispatch = useDispatch();
@@ -48,10 +48,11 @@ const Navbar = () => {
                     <i className="mdi mdi-menu"/>
                 </button>
 
-                <SearchAutocomplete loading={searchLoading}
+                {props.location.pathname === "/stocks" ? <SearchAutocomplete loading={searchLoading}
+                                    inputPlaceholder={"Search..."}
                                     autocompleteData={searchAutocompleteData}
                                     onSearchChange={onSearchInputChange}
-                                    onItemClick={onSearchItemClick}/>
+                                    onItemClick={onSearchItemClick}/> : null}
 
                 <ul className="navbar-nav navbar-nav-right header-links align-self-center">
                     <li className="nav-item dropdown language-dropdown">
@@ -68,4 +69,4 @@ const Navbar = () => {
     );
 }
 
-export default Navbar;
+export default withRouter(Navbar);

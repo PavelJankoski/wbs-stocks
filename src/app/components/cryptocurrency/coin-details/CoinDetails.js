@@ -21,7 +21,7 @@ const CoinDetails = (props) => {
             debugger
             dispatch(cleanUpCoinDetails())
         }
-    }, [dispatch])
+    }, [dispatch, coin_id])
 
     return (
         coinDetails &&

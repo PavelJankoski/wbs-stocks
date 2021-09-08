@@ -4,7 +4,6 @@ import StockExchangeTable from "./stock-exchange-table/StockExchangeTable";
 import MostPopularStocks from "./most-popular-stocks/MostPopularStocks";
 import StockTimeSeries from "./stock-timeseries/StockTimeSeries";
 import StockTable from "./stock-table/StockTable";
-import PageHeader from "../../shared/components/page-header/PageHeader";
 
 const Stocks = () => {
     const [selectedStock, setSelectedStock] = useState(latestStocksArray[0]);
@@ -15,7 +14,13 @@ const Stocks = () => {
 
     return (
         <div>
-            <PageHeader title="Dashboard" />
+            <div className="row page-title-header">
+                <div className="col-12">
+                    <div className="page-header">
+                        <h4 className="page-title font-weight-medium">Dashboard</h4>
+                    </div>
+                </div>
+            </div>
             <div className="row">
                 <div className="col-md-12 grid-margin">
                     <MostPopularStocks/>

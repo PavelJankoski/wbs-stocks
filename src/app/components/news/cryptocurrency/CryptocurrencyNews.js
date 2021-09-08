@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import * as actions from '../../../store/actions';
 import NewsCard from "../news-card/NewsCard";
-import PageHeader from "../../../shared/components/page-header/PageHeader";
 import TwoButtonsPagination from "../../UI/pagination/TwoButtonsPagination";
 
 const CryptocurrencyNews = () => {
@@ -46,7 +45,6 @@ const CryptocurrencyNews = () => {
     })
     return (
         <div>
-            <PageHeader title="Crypto news"/>
             <div id="cards">
                 {renderCryptoNews}
             </div>
