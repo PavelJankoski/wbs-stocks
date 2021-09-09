@@ -1,7 +1,5 @@
 import * as actionTypes from '../actionTypes';
 import {stockChartObject, updateObject} from "../../shared/utils/utils";
-import {FETCH_COIN_MARKET_CHART_DATA_SUCCESS} from "../actionTypes";
-import lineColors from "../../shared/objects/lineColors";
 
 const initialState = {
     coinsTableData: [],

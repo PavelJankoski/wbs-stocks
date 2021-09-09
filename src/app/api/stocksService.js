@@ -1,4 +1,4 @@
-import {API_DRIVER_FH, API_DRIVER_MS} from "../../axiosConfig";
+import {API_DRIVER_AV, API_DRIVER_FH, API_DRIVER_MS} from "../../axiosConfig";
 
 
 const StocksService = {
@@ -42,6 +42,13 @@ const StocksService = {
                 limit: limit,
                 offset: offset,
                 ...(search !== "" ? {search: search} : {})
+            }
+        })
+    },
+    fetchCompanyOverview: (symbol) => {
+        return API_DRIVER_AV.get('', {params: {
+                function: "OVERVIEW",
+                symbol: symbol
             }
         })
     }

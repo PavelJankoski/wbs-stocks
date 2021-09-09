@@ -3,7 +3,6 @@ import * as actionTypes from "../actionTypes";
 import socialNetworks from "../../shared/objects/socialNetworks";
 import {Currency} from "../../shared/objects/currencies";
 import {toIsoDate} from "../../shared/utils/utils";
-import {forEach} from "react-bootstrap/ElementChildren";
 
 export const fetchCoinsMarketData = () => {
     return (dispatch) => {
