@@ -7,7 +7,6 @@ import ReactApexChart from "react-apexcharts";
 import cryptoTimeSeriesCharts from "../../../shared/objects/cryptoTimeSeriesCharts";
 import {datasetKeyProvider} from "../../../shared/utils/utils";
 import {Line} from "react-chartjs-2";
-import * as Zoom from "chartjs-plugin-zoom"
 
 const CoinTimeSeries = (props) => {
     const [active, setActive] = useState(cryptoIntervals[0]);
@@ -120,9 +119,9 @@ const CoinTimeSeries = (props) => {
 
     const renderCandlestickIcon = chart === cryptoTimeSeriesCharts.candlestick ?
         <img
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAbUlEQVRIiWNgGHFA70zhf70zhf+JVc9ES8cwMDAwMBKrEJerL5n04zWD5j4YtYB0C0hNhiRbQG0AT2LEJkOYOmLF6e8DmAtwuQgdEPL50E+mLOgC1EyiDAz09AGpkUssoLkPqAZwFTFDxwcDBgC4yDKiS/O5DwAAAABJRU5ErkJggg=="/>
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAbUlEQVRIiWNgGHFA70zhf70zhf+JVc9ES8cwMDAwMBKrEJerL5n04zWD5j4YtYB0C0hNhiRbQG0AT2LEJkOYOmLF6e8DmAtwuQgdEPL50E+mLOgC1EyiDAz09AGpkUssoLkPqAZwFTFDxwcDBgC4yDKiS/O5DwAAAABJRU5ErkJggg==" alt=""/>
         : <img
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAbUlEQVRIiWNgGHHA2Nj4v7Gx8X9i1TPR0jEMDAwMjMQqxOXqs2fP4jWD5j4YtYB0C0hNhiRbQG0AT2LEJkOYOmLF6e8DmAtwuQgdEPL50E+mLOgC1EyiDAz09AGpkUssoLkPqAZwFTFDxwcDBgA6ey220zLCoAAAAABJRU5ErkJggg=="/>
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAbUlEQVRIiWNgGHHA2Nj4v7Gx8X9i1TPR0jEMDAwMjMQqxOXqs2fP4jWD5j4YtYB0C0hNhiRbQG0AT2LEJkOYOmLF6e8DmAtwuQgdEPL50E+mLOgC1EyiDAz09AGpkUssoLkPqAZwFTFDxwcDBgA6ey220zLCoAAAAABJRU5ErkJggg==" alt=""/>
 
 
     const renderLineIcon = chart === cryptoTimeSeriesCharts.candlestick ?
