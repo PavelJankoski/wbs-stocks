@@ -7,6 +7,7 @@ import {Currency} from "../../../shared/objects/currencies";
 import NumberFormat from "react-number-format";
 import LinkDropdownButton from "../../UI/LinkDropdownButton";
 import CoinTimeSeries from "../coin-timeseries/CoinTimeSeries";
+import CoinAbstract from "./CoinAbstract";
 
 const CoinDetails = () => {
 
@@ -18,7 +19,6 @@ const CoinDetails = () => {
     useEffect(() => {
         dispatch(fetchCoinDetails(coin_id))
         return function cleanup() {
-            debugger
             dispatch(cleanUpCoinDetails())
         }
     }, [dispatch, coin_id])
@@ -125,7 +125,7 @@ const CoinDetails = () => {
                     </div>
 
                     <div className="col-xl-4 col-12 mt-xl-0 mt-4">
-                        <div className="card" style={{borderRadius: 30, backgroundColor: "#f2f2f2"}}>
+                        <div className="card" style={{borderRadius: 30, backgroundColor: "#f5f5f5"}}>
                             <div className="card-body">
                                 <p className="h3 font-weight-bold">Price Details</p>
                                 <div className="row">
@@ -193,12 +193,9 @@ const CoinDetails = () => {
                     </div>
                 </div>
 
-                <div className="row">
+                <div className="row mt-4">
                     <div className="col-lg-8 col-12">
-                        <p className="h2 font-weight-medium">About {coinDetails.name}</p>
-                        <span style={{fontSize: 20}}>
-                            {coinDetails.description}
-                        </span>
+                        <CoinAbstract coinName={coinDetails.name}/>
                     </div>
                 </div>
             </div>
