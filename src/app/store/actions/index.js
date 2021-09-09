@@ -3,7 +3,9 @@ export {
     fetchMostPopularStock,
     fetchLatestStockValues,
     searchStocks,
-    fetchStockExchanges
+    fetchStockExchanges,
+    getBasicDetails,
+    getStockDetails
 } from './stocksActions';
 
 export {

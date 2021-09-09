@@ -32,4 +32,17 @@ export const API_DRIVER_CG = axios.create({
     headers: {
         'Access-Control-Allow-Origin': '*'
     },
-});
+})
+
+export const API_DRIVER_AV = axios.create({
+    baseURL: "https://www.alphavantage.co",
+    // params: {
+    //     apikey: process.env.REACT_APP_ALPHAVANTAGE_APIKEY
+    // },
+    responseType: "json",
+    headers: {
+        'Access-Control-Allow-Origin': '*'
+    }
+    })
+
+;

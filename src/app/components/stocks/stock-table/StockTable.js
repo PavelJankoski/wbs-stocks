@@ -8,7 +8,6 @@ import PropTypes from "prop-types";
 const StockTable = (props) => {
     const dispatch = useDispatch();
     const stocksTableData = useSelector((state) => state.stocksReducer.stocksTableData, shallowEqual);
-
     useEffect(() => {
         const symbolsJoined = latestStocksArray.map(s => s.shortName).join(",");
         dispatch(actions.fetchLatestStockValues(symbolsJoined));

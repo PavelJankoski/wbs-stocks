@@ -48,7 +48,24 @@ export const fetchLatestStockValues = (symbols) => {
         })
     }
 }
-
+export const  getBasicDetails = (symbol) => {
+    return (dispatch) => {
+        StocksService.getBasicDetails(symbol).then(res=> {
+            dispatch(mapResponseToDetails(res.data));
+        }).catch(e=>{
+            console.log(e)
+        })
+    }
+}
+export const getStockDetails = (func, symbol, apikey) => {
+    return (dispatch) => {
+        StocksService.getStocksDetails(func,symbol,apikey).then(res=> {
+            dispatch(mapResponseToStocksDetails(res.data));
+        }).catch(e=>{
+            console.log(e)
+        })
+    }
+}
 export const searchStocks = (searchText) => {
     return (dispatch) => {
         dispatch({type: actionTypes.SET_SEARCH_STOCKS_LOADING, value: true});
@@ -96,6 +113,14 @@ const mapResponseToPopularStockData = (response, symbol) => {
     }
     return {prices: prices, dateTimes: dateTimes, stockPercentage: calculateStockPercentage(prices[0], prices[9]), symbol: symbol, lastData: data[0]}
 
+}
+
+const mapResponseToStocksDetails = (data) => {
+    return {type: actionTypes.FETCH_STOCKS_DETAILS, payload: data}
+}
+
+const mapResponseToDetails = (data) => {
+    return {type: actionTypes.FETCH_DETAILS_DATA, payload: data}
 }
 
 const mapResponseToLatestStocks = (data) => {

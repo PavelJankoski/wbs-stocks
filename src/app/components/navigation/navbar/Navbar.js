@@ -34,6 +34,7 @@ const Navbar = (props) => {
 
     const onSearchItemClick = (symbol) => {
         // TODO: Navigate to symbol route
+        props.history.push("/stocks/details/"+symbol)
     }
 
     return (

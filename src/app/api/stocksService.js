@@ -1,4 +1,4 @@
-import {API_DRIVER_FH, API_DRIVER_MS} from "../../axiosConfig";
+import {API_DRIVER_AV, API_DRIVER_FH, API_DRIVER_MS} from "../../axiosConfig";
 
 
 const StocksService = {
@@ -42,6 +42,22 @@ const StocksService = {
                 limit: limit,
                 offset: offset,
                 ...(search !== "" ? {search: search} : {})
+            }
+        })
+    },
+    getBasicDetails: (symbol) => {
+        return API_DRIVER_FH.get('/stock/profile2', {
+            params: {
+                symbol: symbol
+            }
+        })
+    },
+    getStocksDetails: (func,symbol,apikey) => {
+        return API_DRIVER_AV.get('/query' , {
+            params: {
+                function: func,
+                symbol: symbol,
+                apikey: apikey
             }
         })
     }

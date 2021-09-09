@@ -18,7 +18,9 @@ const initialState = {
         loading: true
     },
     stocksTableData: [],
+    detailsData: [],
     searchedStocks: [],
+    detailsStockData: [],
     stockExchanges: {
         data: [],
         total: 0
@@ -92,6 +94,14 @@ const setStocksExchanges = (state, action) => {
     return updateObject(state, {stockExchanges: updateObject(state.stockExchanges, {data: action.payload, total: action.total})});
 }
 
+const setDetailsData = (state, action) => {
+    return updateObject(state, {detailsData: action.payload})
+}
+
+const setStockDetailsData = (state,action) => {
+    return updateObject(state, {detailsStockData: action.payload})
+}
+
 
 const stocksReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -111,6 +121,10 @@ const stocksReducer = (state = initialState, action) => {
             return setSearchStocksLoading(state, action);
         case actionTypes.FETCH_STOCKS_EXCHANGES_SUCCESS:
             return setStocksExchanges(state, action);
+        case actionTypes.FETCH_DETAILS_DATA:
+            return setDetailsData(state, action);
+        case actionTypes.FETCH_STOCKS_DETAILS:
+            return setStockDetailsData(state,action);
         default:
             return state;
     }
