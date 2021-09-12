@@ -1,4 +1,5 @@
 import {API_DRIVER_CG} from "../../axiosConfig";
+import {Currency} from "../shared/objects/currencies";
 
 const CryptocurrenciesService = {
     fetchCoinsMarketData: (vsCurrency = 'usd', page = 1, pageSize = 100) => {
@@ -25,6 +26,22 @@ const CryptocurrenciesService = {
         return API_DRIVER_CG.get(`/coins/${id}`, {
             params: {
                 tickers: false
+            }
+        })
+    },
+    fetchCoinOHCLData: (id, days, vsCurrency = Currency.USD) => {
+        return API_DRIVER_CG.get(`/coins/${id}/ohlc`, {
+            params: {
+                vs_currency: vsCurrency,
+                days: days
+            }
+        })
+    },
+    fetchCoinMarketChartData: (id, days, vsCurrency = Currency.USD) => {
+        return API_DRIVER_CG.get(`/coins/${id}/market_chart`, {
+            params: {
+                vs_currency: vsCurrency,
+                days: days
             }
         })
     }

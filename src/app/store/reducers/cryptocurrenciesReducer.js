@@ -1,39 +1,15 @@
 import * as actionTypes from '../actionTypes';
-import {updateObject} from "../../shared/utils/utils";
-import {Currency} from "../../shared/objects/currencies";
+import {stockChartObject, updateObject} from "../../shared/utils/utils";
 
 const initialState = {
     coinsTableData: [],
     coinsTableLoading: false,
     exchangesTableData: [],
     exchangesTableLoading: false,
-    coinDetails: {
-        symbol: '',
-        name: '',
-        image: '',
-        marketCapRank: 0,
-        hashingAlgorithm: '',
-        links: {
-            homePageUrl: '',
-            blockChainSitesUrls: '',
-            communityUrls: [],
-            socialNetworksUrls: {
-                twitterLink: '',
-                facebookLink: ''
-            },
-            reposUrls: []
-        },
-        marketData: {
-            currentPrice: {
-                [`${Currency.EUR}`]: 0,
-                [`${Currency.GBP}`]: 0,
-                [`${Currency.USD}`]: 0,
-
-            },
-            totalSupply: 0,
-            maxSupply: 0,
-            circulationSupply: 0
-        }
+    coinDetails: null,
+    coinOHCLData: [],
+    coinMarketChartData: {
+        chartData: {}
     }
 }
 
@@ -61,6 +37,19 @@ const updateCoinDetails = (state, action) => {
     return updateObject(state, {coinDetails: action.payload})
 }
 
+const updateCoinOHCLData = (state, action) => {
+    return updateObject(state, {coinOHCLData: action.payload})
+}
+
+const updateCoinMarketChartData = (state, action) => {
+    return updateObject(state, {
+        coinMarketChartData:
+            updateObject(state.coinMarketChartData, {
+                chartData: stockChartObject(action.payload.dateTimes, action.payload.prices)
+            })
+    })
+}
+
 const cryptocurrenciesReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_COINS_MARKET_DATA_SUCCESS:
@@ -73,6 +62,10 @@ const cryptocurrenciesReducer = (state = initialState, action) => {
             return setExchangesLoading(state, action)
         case actionTypes.FETCH_COIN_DETAILS_SUCCESS:
             return updateCoinDetails(state, action)
+        case actionTypes.FETCH_COIN_OHCL_DATA_SUCCESS:
+            return updateCoinOHCLData(state, action)
+        case actionTypes.FETCH_COIN_MARKET_CHART_DATA_SUCCESS:
+            return updateCoinMarketChartData(state, action)
         default:
             return state;
     }

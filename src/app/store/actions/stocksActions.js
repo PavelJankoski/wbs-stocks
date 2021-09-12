@@ -48,6 +48,17 @@ export const fetchLatestStockValues = (symbols) => {
         })
     }
 }
+
+export const  fetchAnnualReports = (symbol) => {
+    return (dispatch) => {
+        StocksService.annualReportsCompanyPerYear(symbol).then(res=> {
+            dispatch(mapResponseToReport(res.data));
+        }).catch(e=>{
+            console.log(e)
+        })
+    }
+}
+
 export const  getBasicDetails = (symbol) => {
     return (dispatch) => {
         StocksService.getBasicDetails(symbol).then(res=> {
@@ -57,10 +68,24 @@ export const  getBasicDetails = (symbol) => {
         })
     }
 }
-export const getStockDetails = (func, symbol, apikey) => {
+export const getStockDetails = (symbol) => {
     return (dispatch) => {
-        StocksService.getStocksDetails(func,symbol,apikey).then(res=> {
+        StocksService.fetchCompanyOverview(symbol).then(res=> {
             dispatch(mapResponseToStocksDetails(res.data));
+        }).catch(e=>{
+            console.log(e)
+        })
+    }
+}
+export const epsCompanyPerYear = (symbol) => {
+    return (dispatch) => {
+        StocksService.epsCompanyPerYear(symbol).then(res=> {
+            dispatch(
+                {
+                    type: actionTypes.EPS_COMPANY_PER_YEAR,
+                    payload: mapResponseToEps(res.data, symbol)
+                }
+            )
         }).catch(e=>{
             console.log(e)
         })
@@ -114,6 +139,19 @@ const mapResponseToPopularStockData = (response, symbol) => {
     return {prices: prices, dateTimes: dateTimes, stockPercentage: calculateStockPercentage(prices[0], prices[9]), symbol: symbol, lastData: data[0]}
 
 }
+const mapResponseToEps = (data,symbol) => {
+
+    let earnings = data.annualEarnings;
+    const pricePerShare = [];
+    const dateTimes = [];
+    for(let i = earnings.length-1 ; i >= 0; i--) {
+        let currentDateTime = earnings[i].fiscalDateEnding;
+        let currentPrice = parseFloat(earnings[i].reportedEPS);
+        pricePerShare.push(currentPrice);
+        dateTimes.push(toIsoDate(currentDateTime))
+    }
+    return {pricePerShare: pricePerShare, dateTimes: dateTimes, stockPercentage: calculateStockPercentage(pricePerShare[0], pricePerShare[9]), symbol: symbol, lastData: earnings[0]}
+}
 
 const mapResponseToStocksDetails = (data) => {
     return {type: actionTypes.FETCH_STOCKS_DETAILS, payload: data}
@@ -121,6 +159,10 @@ const mapResponseToStocksDetails = (data) => {
 
 const mapResponseToDetails = (data) => {
     return {type: actionTypes.FETCH_DETAILS_DATA, payload: data}
+}
+
+const mapResponseToReport = (data) => {
+    return {type: actionTypes.FETCH_REPORTS_DATA, payload: data}
 }
 
 const mapResponseToLatestStocks = (data) => {

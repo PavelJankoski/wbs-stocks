@@ -45,6 +45,25 @@ const StocksService = {
             }
         })
     },
+    fetchCompanyOverview: (symbol) => {
+        return API_DRIVER_AV.get('', {params: {
+                function: "OVERVIEW",
+                symbol: symbol
+            }
+        })
+    },
+    epsCompanyPerYear: (symbol) => {
+        return API_DRIVER_AV.get('', {params: {
+                function: "EARNINGS",
+                symbol: symbol
+            }})
+    },
+    annualReportsCompanyPerYear: (symbol) => {
+        return API_DRIVER_AV.get('', {params: {
+                function: "INCOME_STATEMENT",
+                symbol: symbol
+            }})
+    },
     getBasicDetails: (symbol) => {
         return API_DRIVER_FH.get('/stock/profile2', {
             params: {
@@ -52,15 +71,6 @@ const StocksService = {
             }
         })
     },
-    getStocksDetails: (func,symbol,apikey) => {
-        return API_DRIVER_AV.get('/query' , {
-            params: {
-                function: func,
-                symbol: symbol,
-                apikey: apikey
-            }
-        })
-    }
 }
 
 export default StocksService;

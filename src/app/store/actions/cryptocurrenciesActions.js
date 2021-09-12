@@ -1,8 +1,8 @@
 import CryptocurrenciesService from "../../api/cryptocurrenciesService";
 import * as actionTypes from "../actionTypes";
-import {FETCH_COIN_DETAILS_SUCCESS} from "../actionTypes";
 import socialNetworks from "../../shared/objects/socialNetworks";
 import {Currency} from "../../shared/objects/currencies";
+import {toIsoDate} from "../../shared/utils/utils";
 
 export const fetchCoinsMarketData = () => {
     return (dispatch) => {
@@ -36,6 +36,34 @@ export const fetchCoinDetails = (id) => {
         CryptocurrenciesService.fetchCoinDetails(id).then(res => {
             console.log(res.data)
             dispatch(mapResponseToCoinDetails(res.data))
+        }).catch(e => {
+            console.log(e)
+        }).finally(() => {
+
+        })
+    }
+}
+
+export const fetchCoinOHCLData = (id, days = 7) => {
+    return (dispatch) => {
+        CryptocurrenciesService.fetchCoinOHCLData(id, days).then(res => {
+            debugger
+            dispatch(mapResponseToCoinOHCLData(res.data))
+        }).catch(e => {
+            console.log(e)
+        }).finally(() => {
+
+        })
+    }
+}
+
+export const fetchCoinMarketChartData = (id, days = 7) => {
+    return (dispatch) => {
+        CryptocurrenciesService.fetchCoinMarketChartData(id, days).then(res => {
+            dispatch({
+                type: actionTypes.FETCH_COIN_MARKET_CHART_DATA_SUCCESS,
+                payload: mapResponseToCoinMarketChartData(res.data.prices)
+            })
         }).catch(e => {
             console.log(e)
         }).finally(() => {
@@ -79,33 +107,137 @@ const mapResponseToExchanges = (data) => {
 
 const mapResponseToCoinDetails = (data) => {
 
+    debugger
     const coinDetails = {
         symbol: data.symbol,
         name: data.name,
-        image: data.image['thumb'],
+        image: data.image['small'],
         marketCapRank: data.market_cap_rank,
         hashingAlgorithm: data.hashing_algorithm,
+        description: data.description.en,
         links: {
-            homePageUrl: data.links.homepage[0],
-            blockChainSitesUrls: data.links.blockchain_site,
-            communityUrls: [...data.links.official_forum_url, ...data.links.chat_url, data.links.subreddit_url],
-            socialNetworksUrls: {
-                twitterLink: data.links.twitter_screen_name ? `${socialNetworks.find(s => s.name === 'twitter').url}${data.links.twitter_screen_name}` : "",
-                facebookLink: data.links.facebook_username ? `${socialNetworks.find(s => s.name === 'facebook').url}${data.links.facebook_username}` : ""
-            },
-            reposUrls: [...data.links.repos_url['github']]
+            homePageUrls: data.links.homepage.filter(l => l !== ""),
+            blockChainSitesUrls: data.links.blockchain_site.filter(l => l !== ""),
+            communityUrls: [...data.links.official_forum_url.filter(l => l !== ""), ...data.links.chat_url.filter(l => l !== ""), data.links.subreddit_url],
+            socialNetworksUrls: [data.links.twitter_screen_name ? `${socialNetworks.find(s => s.name === 'twitter').url}${data.links.twitter_screen_name}` : "",
+                data.links.facebook_username ? `${socialNetworks.find(s => s.name === 'facebook').url}${data.links.facebook_username}` : ""
+            ],
+            reposUrls: [...data.links.repos_url['github'].filter(l => l !== ""), ...data.links.repos_url['bitbucket'].filter(l => l !== "")]
         },
         marketData: {
-            currentPrice: {
-                [`${Currency.EUR}`]: data.market_data.current_price[Currency.EUR.toLowerCase()],
-                [`${Currency.GBP}`]: data.market_data.current_price[Currency.GBP.toLowerCase()],
-                [`${Currency.USD}`]: data.market_data.current_price[Currency.USD.toLowerCase()],
-
-            },
             totalSupply: data.market_data['total_supply'],
             maxSupply: data.market_data['max_supply'],
-            circulationSupply: data.market_data['circulating_supply']
+            circulatingSupply: data.market_data['circulating_supply'],
+            marketCap: {
+                [`${Currency.EUR}`]: data.market_data.market_cap[Currency.EUR],
+                [`${Currency.GBP}`]: data.market_data.market_cap[Currency.GBP],
+                [`${Currency.USD}`]: data.market_data.market_cap[Currency.USD]
+            },
+            marketCapChange24h: {
+                [`${Currency.EUR}`]: data.market_data.market_cap_change_24h_in_currency[Currency.EUR],
+                [`${Currency.GBP}`]: data.market_data.market_cap_change_24h_in_currency[Currency.GBP],
+                [`${Currency.USD}`]: data.market_data.market_cap_change_24h_in_currency[Currency.USD]
+            },
+            marketCapChangePercentage24h: {
+                [`${Currency.EUR}`]: data.market_data.market_cap_change_percentage_24h_in_currency[Currency.EUR],
+                [`${Currency.GBP}`]: data.market_data.market_cap_change_percentage_24h_in_currency[Currency.GBP],
+                [`${Currency.USD}`]: data.market_data.market_cap_change_percentage_24h_in_currency[Currency.USD]
+            },
+            fullyDilutedMarketCap: {
+                [`${Currency.EUR}`]: data.market_data.fully_diluted_valuation[Currency.EUR],
+                [`${Currency.GBP}`]: data.market_data.fully_diluted_valuation[Currency.GBP],
+                [`${Currency.USD}`]: data.market_data.fully_diluted_valuation[Currency.USD]
+            },
+            totalVolume: {
+                [`${Currency.EUR}`]: data.market_data.total_volume[Currency.EUR],
+                [`${Currency.GBP}`]: data.market_data.total_volume[Currency.GBP],
+                [`${Currency.USD}`]: data.market_data.total_volume[Currency.USD]
+            }
+        },
+        priceData: {
+            currentPrice: {
+                [`${Currency.EUR}`]: data.market_data.current_price[Currency.EUR],
+                [`${Currency.GBP}`]: data.market_data.current_price[Currency.GBP],
+                [`${Currency.USD}`]: data.market_data.current_price[Currency.USD]
+            },
+            ath: {
+                [`${Currency.EUR}`]: data.market_data.ath[Currency.EUR],
+                [`${Currency.GBP}`]: data.market_data.ath[Currency.GBP],
+                [`${Currency.USD}`]: data.market_data.ath[Currency.USD]
+            },
+            athDate: {
+                [`${Currency.USD}`]: data.market_data.ath_date[Currency.USD]
+            },
+            high24h: {
+                [`${Currency.EUR}`]: data.market_data.high_24h[Currency.EUR],
+                [`${Currency.GBP}`]: data.market_data.high_24h[Currency.GBP],
+                [`${Currency.USD}`]: data.market_data.high_24h[Currency.USD]
+            },
+            low24h: {
+                [`${Currency.EUR}`]: data.market_data.low_24h[Currency.EUR],
+                [`${Currency.GBP}`]: data.market_data.low_24h[Currency.GBP],
+                [`${Currency.USD}`]: data.market_data.low_24h[Currency.USD]
+            },
+            priceChange24h: {
+                [`${Currency.EUR}`]: data.market_data.price_change_24h_in_currency[Currency.EUR],
+                [`${Currency.GBP}`]: data.market_data.price_change_24h_in_currency[Currency.GBP],
+                [`${Currency.USD}`]: data.market_data.price_change_24h_in_currency[Currency.USD]
+            },
+            priceChangePercentage24h: {
+                [`${Currency.EUR}`]: data.market_data.price_change_percentage_24h_in_currency[Currency.EUR],
+                [`${Currency.GBP}`]: data.market_data.price_change_percentage_24h_in_currency[Currency.GBP],
+                [`${Currency.USD}`]: data.market_data.price_change_percentage_24h_in_currency[Currency.USD]
+            }
         }
     }
-    return {type: FETCH_COIN_DETAILS_SUCCESS, payload: coinDetails};
+    debugger
+    return {type: actionTypes.FETCH_COIN_DETAILS_SUCCESS, payload: coinDetails};
+}
+
+const mapResponseToCoinOHCLData = (data) => {
+    const ohclDataArr = [{data: []}]
+    data.forEach(item => {
+
+        let date = new Date(item[0]).toLocaleDateString()
+        let time = new Date(item[0]).toLocaleTimeString()
+        ohclDataArr[0].data.push({
+            x: [`${date} ${time}`],
+            y: item.slice(1, 5)
+        })
+    })
+    debugger
+    return {type: actionTypes.FETCH_COIN_OHCL_DATA_SUCCESS, payload: ohclDataArr}
+}
+
+const mapResponseToCoinMarketChartData = (data) => {
+    const prices = [];
+    const dateTimes = [];
+    data.forEach(item => {
+        let currentDateTime = new Date(item[0]);
+        let currentPrice = parseFloat(item[1]);
+        prices.push(currentPrice);
+        dateTimes.push(toIsoDate(currentDateTime))
+    })
+    return {
+        prices: prices,
+        dateTimes: dateTimes
+    }
+}
+
+export const cleanUpCoinDetails = () => {
+    return {
+        type: actionTypes.FETCH_COIN_DETAILS_SUCCESS, payload: null
+    }
+}
+
+export const cleanUpCoinOHCLTimeSeries = () => {
+    return {
+        type: actionTypes.FETCH_COIN_OHCL_DATA_SUCCESS, payload: []
+    }
+}
+
+export const cleanUpCoinMarketChartTimeSeries = () => {
+    return {
+        type: actionTypes.FETCH_COIN_MARKET_CHART_DATA_SUCCESS, payload: []
+    }
 }

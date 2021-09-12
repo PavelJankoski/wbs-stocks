@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 const NewsCard = (props) => {
 
     return (
-        <div className="card" style={{width: "18rem"}}>
-            <img className="card-img-top" src={props.image} alt={props.title} />
+        <div className="card m-3">
+            <img className="card-img-top" src={props.image} alt={props.title}/>
             <div className="card-body">
                 <div className="card-source">
                     {props.source}
@@ -14,10 +14,11 @@ const NewsCard = (props) => {
                     <h4 className="mb-0 text-white">{props.day}</h4>
                     <p className="mb-0 text-uppercase text-white">{props.month}</p>
                 </div>
-                    <h5 className="card-title">{props.title}</h5>
-                    <p className="card-text">{props.description}</p>
-                    <a href={props.link} target="_blank" rel="noopener noreferrer" className="btn btn-info btn-block">Read more <i className="mdi mdi-arrow-right"/></a>
-                </div>
+                <h5 className="card-title">{props.title}</h5>
+                <p className="card-text">{props.description}</p>
+                <a href={props.link} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-block">Read
+                    more <i className="mdi mdi-arrow-right"/></a>
+            </div>
         </div>
     )
 }

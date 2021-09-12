@@ -21,6 +21,13 @@ const initialState = {
     detailsData: [],
     searchedStocks: [],
     detailsStockData: [],
+    reportsData: [],
+    epsCompany: {
+        symbol: '',
+        chartData: {},
+        stockPercentage: 0.0,
+        lastData: {}
+    },
     stockExchanges: {
         data: [],
         total: 0
@@ -68,7 +75,20 @@ const updateStockInInterval = (state, action) => {
                 lastData: action.payload.lastData
             })})
 }
-
+const setEpsData = (state,action) => {
+    let borderColor = lineColors.error.borderColor;
+    let backgroundColor = lineColors.error.backgroundColor;
+    if(action.payload.stockPercentage>=0) {
+        borderColor = lineColors.success.borderColor
+        backgroundColor = lineColors.success.backgroundColor;
+    }
+    return updateObject(state, {epsCompany: updateObject(state.epsCompany,{
+            symbol: action.payload.symbol,
+            chartData: stockChartObject(action.payload.dateTimes, action.payload.pricePerShare, action.payload.symbol, borderColor, backgroundColor),
+            stockPercentage: action.payload.stockPercentage,
+            lastData: action.payload.lastData
+        })})
+}
 const setStockInIntervalLoading = (state, action) => {
     return updateObject(state, {stockInInterval:
             updateObject(state.stockInInterval,
@@ -102,6 +122,9 @@ const setStockDetailsData = (state,action) => {
     return updateObject(state, {detailsStockData: action.payload})
 }
 
+const setReportsData = (state,action) => {
+    return updateObject(state, {reportsData: action.payload})
+}
 
 const stocksReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -125,6 +148,10 @@ const stocksReducer = (state = initialState, action) => {
             return setDetailsData(state, action);
         case actionTypes.FETCH_STOCKS_DETAILS:
             return setStockDetailsData(state,action);
+        case actionTypes.EPS_COMPANY_PER_YEAR:
+            return setEpsData(state,action);
+        case actionTypes.FETCH_REPORTS_DATA:
+            return setReportsData(state,action);
         default:
             return state;
     }

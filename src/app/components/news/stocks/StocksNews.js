@@ -76,7 +76,7 @@ const StocksNews = () => {
                     <div className="page-header">
                         <div className="row w-100">
                             <div className="col-12 col-md-5 align-self-center">
-                                <h4 className="page-title font-weight-medium">Socks market news</h4>
+                                <h4 className="page-title font-weight-medium">Stocks market news</h4>
                             </div>
                             <div className="col-12 col-md-7">
                                 <SearchAutocomplete loading={searchLoading}

@@ -5,15 +5,24 @@ export {
     searchStocks,
     fetchStockExchanges,
     getBasicDetails,
-    getStockDetails
+    getStockDetails,
+    epsCompanyPerYear,
+    fetchAnnualReports
 } from './stocksActions';
 
 export {
     fetchCoinsMarketData,
-    fetchExchanges
+    fetchExchanges,
+    fetchCoinDetails,
+    fetchCoinOHCLData,
+    fetchCoinMarketChartData,
+    cleanUpCoinDetails,
+    cleanUpCoinOHCLTimeSeries,
+    cleanUpCoinMarketChartTimeSeries
 } from './cryptocurrenciesActions';
 
 export {
     fetchStocksMarketNews,
+    fetchCryptocurrenciesNews,
     fetchCompanyNews
 } from './newsActions';
