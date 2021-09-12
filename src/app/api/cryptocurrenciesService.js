@@ -1,4 +1,4 @@
-import {API_DRIVER_CG} from "../../axiosConfig";
+import {API_DRIVER_BACKEND, API_DRIVER_CG} from "../../axiosConfig";
 import {Currency} from "../shared/objects/currencies";
 
 const CryptocurrenciesService = {
@@ -28,6 +28,9 @@ const CryptocurrenciesService = {
                 tickers: false
             }
         })
+    },
+    fetchCoinAbstract: (name) => {
+        return API_DRIVER_BACKEND.get(`/cryptocurrency/${name}`)
     },
     fetchCoinOHCLData: (id, days, vsCurrency = Currency.USD) => {
         return API_DRIVER_CG.get(`/coins/${id}/ohlc`, {

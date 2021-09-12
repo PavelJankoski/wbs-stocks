@@ -10,7 +10,8 @@ const initialState = {
     coinOHCLData: [],
     coinMarketChartData: {
         chartData: {}
-    }
+    },
+    coinAbstract: null
 }
 
 const updateCoinsMarketData = (state, action) => {
@@ -50,6 +51,10 @@ const updateCoinMarketChartData = (state, action) => {
     })
 }
 
+const updateCoinAbstract = (state, action) => {
+    return updateObject(state, {coinAbstract: action.payload})
+}
+
 const cryptocurrenciesReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_COINS_MARKET_DATA_SUCCESS:
@@ -66,6 +71,8 @@ const cryptocurrenciesReducer = (state = initialState, action) => {
             return updateCoinOHCLData(state, action)
         case actionTypes.FETCH_COIN_MARKET_CHART_DATA_SUCCESS:
             return updateCoinMarketChartData(state, action)
+        case actionTypes.FETCH_COIN_ABSTRACT_SUCCESS:
+            return updateCoinAbstract(state, action)
         default:
             return state;
     }
