@@ -8,7 +8,7 @@ const initialState = {
         TSLA: {...initialPopularStock, name: "Tesla Inc"},
         AAPL: {...initialPopularStock, name: "Apple Inc"},
         MSFT: {...initialPopularStock, name: "Microsoft Corp"},
-        IBM : {...initialPopularStock, name: "IBM"}
+        IBM: {...initialPopularStock, name: "IBM"}
     },
     stockInInterval: {
         symbol: '',
@@ -32,18 +32,37 @@ const initialState = {
         data: [],
         total: 0
     },
-    searchStocksLoading: false
+    searchStocksLoading: false,
+
+    productsWikiLinks: {
+        data: null,
+        loading: true
+    },
+    servicesWikiLinks: {
+        data: null,
+        loading: true
+    },
+    developmentsWikiLinks: {
+        data: null,
+        loading: true
+    },
+    recommendationTrends: {
+        labels: null,
+        datasets: null
+    },
+    recommendationTrendsLoading: true
 }
 
 const updatePopularStocks = (state, action) => {
     return updateObject(state,
         {
             mostPopular: updateObject(state.mostPopular,
-                {[`${action.payload.symbol}`]: updateObject(state.mostPopular[`${action.payload.symbol}`],
+                {
+                    [`${action.payload.symbol}`]: updateObject(state.mostPopular[`${action.payload.symbol}`],
                         {
-                        chartData: stockChartObject(action.payload.dateTimes, action.payload.prices, action.payload.symbol),
-                        stockPercentage: action.payload.stockPercentage
-                    })
+                            chartData: stockChartObject(action.payload.dateTimes, action.payload.prices, action.payload.symbol),
+                            stockPercentage: action.payload.stockPercentage
+                        })
                 })
         })
 }
@@ -52,7 +71,8 @@ const setPopularStocksLoading = (state, action) => {
     return updateObject(state,
         {
             mostPopular: updateObject(state.mostPopular,
-                {[`${action.symbol}`]: updateObject(state.mostPopular[`${action.symbol}`],
+                {
+                    [`${action.symbol}`]: updateObject(state.mostPopular[`${action.symbol}`],
                         {
                             loading: action.value
                         })
@@ -63,39 +83,45 @@ const setPopularStocksLoading = (state, action) => {
 const updateStockInInterval = (state, action) => {
     let borderColor = lineColors.error.borderColor;
     let backgroundColor = lineColors.error.backgroundColor;
-    if(action.payload.stockPercentage>=0) {
+    if (action.payload.stockPercentage >= 0) {
         borderColor = lineColors.success.borderColor
         backgroundColor = lineColors.success.backgroundColor;
     }
-    return updateObject(state, {stockInInterval:
+    return updateObject(state, {
+        stockInInterval:
             updateObject(state.stockInInterval, {
                 symbol: action.payload.symbol,
                 chartData: stockChartObject(action.payload.dateTimes, action.payload.prices, action.payload.symbol, borderColor, backgroundColor),
                 stockPercentage: action.payload.stockPercentage,
                 lastData: action.payload.lastData
-            })})
+            })
+    })
 }
-const setEpsData = (state,action) => {
+const setEpsData = (state, action) => {
     let borderColor = lineColors.error.borderColor;
     let backgroundColor = lineColors.error.backgroundColor;
-    if(action.payload.stockPercentage>=0) {
+    if (action.payload.stockPercentage >= 0) {
         borderColor = lineColors.success.borderColor
         backgroundColor = lineColors.success.backgroundColor;
     }
-    return updateObject(state, {epsCompany: updateObject(state.epsCompany,{
+    return updateObject(state, {
+        epsCompany: updateObject(state.epsCompany, {
             symbol: action.payload.symbol,
             chartData: stockChartObject(action.payload.dateTimes, action.payload.pricePerShare, action.payload.symbol, borderColor, backgroundColor),
             stockPercentage: action.payload.stockPercentage,
             lastData: action.payload.lastData
-        })})
+        })
+    })
 }
 const setStockInIntervalLoading = (state, action) => {
-    return updateObject(state, {stockInInterval:
+    return updateObject(state, {
+        stockInInterval:
             updateObject(state.stockInInterval,
                 {
-                loading: action.value
-            }
-            )})
+                    loading: action.value
+                }
+            )
+    })
 }
 
 const updateLatestStocks = (state, action) => {
@@ -111,19 +137,84 @@ const setSearchStocksLoading = (state, action) => {
 }
 
 const setStocksExchanges = (state, action) => {
-    return updateObject(state, {stockExchanges: updateObject(state.stockExchanges, {data: action.payload, total: action.total})});
+    return updateObject(state, {
+        stockExchanges: updateObject(state.stockExchanges, {
+            data: action.payload,
+            total: action.total
+        })
+    });
 }
 
 const setDetailsData = (state, action) => {
     return updateObject(state, {detailsData: action.payload})
 }
 
-const setStockDetailsData = (state,action) => {
+const setStockDetailsData = (state, action) => {
     return updateObject(state, {detailsStockData: action.payload})
 }
 
-const setReportsData = (state,action) => {
+const setReportsData = (state, action) => {
     return updateObject(state, {reportsData: action.payload})
+}
+
+const setCompanyProductsWikiLinks = (state, action) => {
+    return updateObject(state, {
+        productsWikiLinks: updateObject(state.productsWikiLinks, {
+            data: action.payload
+        })
+    })
+}
+
+const setCompanyProductsWikiLinksLoading = (state, action) => {
+    return updateObject(state, {
+        productsWikiLinks: updateObject(state.productsWikiLinks, {
+            loading: action.value
+        })
+    })
+}
+
+const setCompanyServicesWikiLinks = (state, action) => {
+    return updateObject(state, {
+        servicesWikiLinks: updateObject(state.servicesWikiLinks, {
+            data: action.payload
+        })
+    })
+}
+
+const setCompanyServicesWikiLinksLoading = (state, action) => {
+    return updateObject(state, {
+        servicesWikiLinks: updateObject(state.servicesWikiLinks, {
+            loading: action.value
+        })
+    })
+}
+
+const setCompanyDevelopmentsWikiLinks = (state, action) => {
+    return updateObject(state, {
+        developmentsWikiLinks: updateObject(state.developmentsWikiLinks, {
+            data: action.payload
+        })
+    })
+}
+
+const setCompanyDevelopmentsWikiLinksLoading = (state, action) => {
+    return updateObject(state, {
+        developmentsWikiLinks: updateObject(state.developmentsWikiLinks, {
+            loading: action.value
+        })
+    })
+}
+
+const setCompanyRecommendationTrends = (state, action) => {
+    return updateObject(state, {
+        recommendationTrends: action.payload
+    })
+}
+
+const setCompanyRecommendationTrendsLoading = (state, action) => {
+    return updateObject(state, {
+        recommendationTrendsLoading: action.value
+    })
 }
 
 const stocksReducer = (state = initialState, action) => {
@@ -147,11 +238,27 @@ const stocksReducer = (state = initialState, action) => {
         case actionTypes.FETCH_DETAILS_DATA:
             return setDetailsData(state, action);
         case actionTypes.FETCH_STOCKS_DETAILS:
-            return setStockDetailsData(state,action);
+            return setStockDetailsData(state, action);
         case actionTypes.EPS_COMPANY_PER_YEAR:
-            return setEpsData(state,action);
+            return setEpsData(state, action);
         case actionTypes.FETCH_REPORTS_DATA:
-            return setReportsData(state,action);
+            return setReportsData(state, action);
+        case actionTypes.FETCH_COMPANY_PRODUCTS_WIKI_LINKS_SUCCESS:
+            return setCompanyProductsWikiLinks(state, action);
+        case actionTypes.FETCH_COMPANY_PRODUCTS_WIKI_LINKS_LOADING:
+            return setCompanyProductsWikiLinksLoading(state, action);
+        case actionTypes.FETCH_COMPANY_SERVICES_WIKI_LINKS_SUCCESS:
+            return setCompanyServicesWikiLinks(state, action);
+        case actionTypes.FETCH_COMPANY_SERVICES_WIKI_LINKS_LOADING:
+            return setCompanyServicesWikiLinksLoading(state, action);
+        case actionTypes.FETCH_COMPANY_DEVELOPMENTS_WIKI_LINKS_SUCCESS:
+            return setCompanyDevelopmentsWikiLinks(state, action);
+        case actionTypes.FETCH_COMPANY_DEVELOPMENTS_WIKI_LINKS_LOADING:
+            return setCompanyDevelopmentsWikiLinksLoading(state, action);
+        case actionTypes.FETCH_COMPANY_RECOMMENDATION_TRENDS_SUCCESS:
+            return setCompanyRecommendationTrends(state, action);
+        case actionTypes.FETCH_COMPANY_RECOMMENDATION_TRENDS_LOADING:
+            return setCompanyRecommendationTrendsLoading(state, action);
         default:
             return state;
     }

@@ -12,7 +12,7 @@ export const fetchMostPopularStock = (symbol) => {
                     type: actionTypes.FETCH_MOST_POPULAR_STOCK_SUCCESS,
                     payload: mapResponseToPopularStockData(res, symbol)
                 }
-                )
+            )
         }).catch(e => {
             console.log(e);
         }).finally(() => {
@@ -49,44 +49,110 @@ export const fetchLatestStockValues = (symbols) => {
     }
 }
 
-export const  fetchAnnualReports = (symbol) => {
+export const fetchAnnualReports = (symbol) => {
     return (dispatch) => {
-        StocksService.annualReportsCompanyPerYear(symbol).then(res=> {
+        StocksService.annualReportsCompanyPerYear(symbol).then(res => {
             dispatch(mapResponseToReport(res.data));
-        }).catch(e=>{
+        }).catch(e => {
             console.log(e)
         })
     }
 }
 
-export const  getBasicDetails = (symbol) => {
+export const getBasicDetails = (symbol) => {
     return (dispatch) => {
-        StocksService.getBasicDetails(symbol).then(res=> {
+        StocksService.getBasicDetails(symbol).then(res => {
             dispatch(mapResponseToDetails(res.data));
-        }).catch(e=>{
+        }).catch(e => {
             console.log(e)
         })
     }
 }
 export const getStockDetails = (symbol) => {
     return (dispatch) => {
-        StocksService.fetchCompanyOverview(symbol).then(res=> {
+        StocksService.fetchCompanyOverview(symbol).then(res => {
             dispatch(mapResponseToStocksDetails(res.data));
-        }).catch(e=>{
+        }).catch(e => {
             console.log(e)
         })
     }
 }
+
+export const fetchCompanyProductsWikiLinks = (name) => {
+    return (dispatch) => {
+        dispatch({type: actionTypes.FETCH_COMPANY_PRODUCTS_WIKI_LINKS_LOADING, value: true})
+        let parsedName = name.replace(" ", "_")
+        StocksService.fetchCompanyProductsWikiLinks(parsedName).then(res => {
+            dispatch({
+                type: actionTypes.FETCH_COMPANY_PRODUCTS_WIKI_LINKS_SUCCESS,
+                payload: res.data
+            });
+        }).catch(e => {
+            console.log(e)
+        }).finally(() => {
+            dispatch({type: actionTypes.FETCH_COMPANY_PRODUCTS_WIKI_LINKS_LOADING, value: false})
+        })
+    }
+}
+
+export const fetchCompanyServicesWikiLinks = (name) => {
+    return (dispatch) => {
+        dispatch({type: actionTypes.FETCH_COMPANY_SERVICES_WIKI_LINKS_LOADING, value: true})
+        let parsedName = name.replace(" ", "_")
+        StocksService.fetchCompanyServicesWikiLinks(parsedName).then(res => {
+            dispatch({
+                type: actionTypes.FETCH_COMPANY_SERVICES_WIKI_LINKS_SUCCESS,
+                payload: res.data
+            });
+        }).catch(e => {
+            console.log(e)
+        }).finally(() => {
+            dispatch({type: actionTypes.FETCH_COMPANY_SERVICES_WIKI_LINKS_LOADING, value: false})
+        })
+    }
+}
+
+export const fetchCompanyDevelopmentsWikiLinks = (name) => {
+    return (dispatch) => {
+        dispatch({type: actionTypes.FETCH_COMPANY_DEVELOPMENTS_WIKI_LINKS_LOADING, value: true})
+        let parsedName = name.replace(" ", "_")
+        StocksService.fetchCompanyDevelopmentsWikiLinks(parsedName).then(res => {
+            dispatch({
+                type: actionTypes.FETCH_COMPANY_DEVELOPMENTS_WIKI_LINKS_SUCCESS,
+                payload: res.data
+            });
+        }).catch(e => {
+            console.log(e)
+        }).finally(() => {
+            dispatch({type: actionTypes.FETCH_COMPANY_DEVELOPMENTS_WIKI_LINKS_LOADING, value: false})
+        })
+    }
+}
+
+export const fetchCompanyRecommendationTrends = (symbol) => {
+    return (dispatch) => {
+        dispatch({type: actionTypes.FETCH_COMPANY_RECOMMENDATION_TRENDS_LOADING, value: true})
+        StocksService.fetchCompanyRecommendationTrends(symbol).then(res => {
+            debugger
+            dispatch(mapResponseToRecommendationTrendsData(res.data));
+        }).catch(e => {
+            console.log(e)
+        }).finally(() => {
+            dispatch({type: actionTypes.FETCH_COMPANY_RECOMMENDATION_TRENDS_LOADING, value: false})
+        })
+    }
+}
+
 export const epsCompanyPerYear = (symbol) => {
     return (dispatch) => {
-        StocksService.epsCompanyPerYear(symbol).then(res=> {
+        StocksService.epsCompanyPerYear(symbol).then(res => {
             dispatch(
                 {
                     type: actionTypes.EPS_COMPANY_PER_YEAR,
                     payload: mapResponseToEps(res.data, symbol)
                 }
             )
-        }).catch(e=>{
+        }).catch(e => {
             console.log(e)
         })
     }
@@ -117,7 +183,11 @@ export const fetchStockExchanges = (limit, offset, search = "") => {
                     website: e.website
                 }
             })
-            dispatch({type: actionTypes.FETCH_STOCKS_EXCHANGES_SUCCESS, payload: payload, total: res.data.pagination.total})
+            dispatch({
+                type: actionTypes.FETCH_STOCKS_EXCHANGES_SUCCESS,
+                payload: payload,
+                total: res.data.pagination.total
+            })
         }).catch((e) => {
             console.log(e);
         }).finally(() => {
@@ -130,27 +200,39 @@ const mapResponseToPopularStockData = (response, symbol) => {
     let data = response.data.data
     const prices = [];
     const dateTimes = [];
-    for(let i = data.length-1 ; i >= 0; i--) {
+    for (let i = data.length - 1; i >= 0; i--) {
         let currentDateTime = data[i].date
         let currentPrice = parseFloat(data[i].open);
         prices.push(currentPrice);
         dateTimes.push(toIsoDate(currentDateTime))
     }
-    return {prices: prices, dateTimes: dateTimes, stockPercentage: calculateStockPercentage(prices[0], prices[9]), symbol: symbol, lastData: data[0]}
+    return {
+        prices: prices,
+        dateTimes: dateTimes,
+        stockPercentage: calculateStockPercentage(prices[0], prices[9]),
+        symbol: symbol,
+        lastData: data[0]
+    }
 
 }
-const mapResponseToEps = (data,symbol) => {
+const mapResponseToEps = (data, symbol) => {
 
     let earnings = data.annualEarnings;
     const pricePerShare = [];
     const dateTimes = [];
-    for(let i = earnings.length-1 ; i >= 0; i--) {
+    for (let i = earnings.length - 1; i >= 0; i--) {
         let currentDateTime = earnings[i].fiscalDateEnding;
         let currentPrice = parseFloat(earnings[i].reportedEPS);
         pricePerShare.push(currentPrice);
         dateTimes.push(toIsoDate(currentDateTime))
     }
-    return {pricePerShare: pricePerShare, dateTimes: dateTimes, stockPercentage: calculateStockPercentage(pricePerShare[0], pricePerShare[9]), symbol: symbol, lastData: earnings[0]}
+    return {
+        pricePerShare: pricePerShare,
+        dateTimes: dateTimes,
+        stockPercentage: calculateStockPercentage(pricePerShare[0], pricePerShare[9]),
+        symbol: symbol,
+        lastData: earnings[0]
+    }
 }
 
 const mapResponseToStocksDetails = (data) => {
@@ -181,10 +263,66 @@ const mapResponseToLatestStocks = (data) => {
 }
 
 const mapResponseToSearchedStocks = (data) => {
-    return {type: actionTypes.SEARCH_STOCKS_SUCCESS, payload: data.splice(0, 5).map(s => {
-        return {
-            name: s.description,
-            symbol: s.symbol
-        }
-        })}
+    return {
+        type: actionTypes.SEARCH_STOCKS_SUCCESS, payload: data.splice(0, 5).map(s => {
+            return {
+                name: s.description,
+                symbol: s.symbol
+            }
+        })
+    }
+}
+
+const mapResponseToRecommendationTrendsData = (data) => {
+    let datasets = [];
+    let strongBuyData = []
+    let buyData = []
+    let holdData = []
+    let sellData = []
+    let strongSellData = []
+    let labels = []
+
+    data.forEach(s => {
+        strongBuyData.push(s.strongBuy)
+        buyData.push(s.buy)
+        holdData.push(s.hold)
+        sellData.push(s.sell)
+        strongSellData.push(s.strongSell)
+        labels.push(s.period)
+    })
+
+    datasets.push({
+        label: 'Strong Sell',
+        data: strongSellData,
+        backgroundColor: '#770000',
+        borderWidth: 0
+    })
+    datasets.push({
+        label: 'Sell',
+        data: sellData,
+        backgroundColor: '#fc0000',
+        borderWidth: 0
+    })
+    datasets.push({
+        label: 'Hold',
+        data: holdData,
+        backgroundColor: '#d27b00',
+        borderWidth: 0
+    })
+    datasets.push({
+        label: 'Buy',
+        data: buyData,
+        backgroundColor: '#2ebe00',
+        borderWidth: 0
+    })
+    datasets.push({
+        label: 'Strong Buy',
+        data: strongBuyData,
+        backgroundColor: '#075600',
+        borderWidth: 0
+    })
+    return {
+        type: actionTypes.FETCH_COMPANY_RECOMMENDATION_TRENDS_SUCCESS,
+        payload: {datasets: datasets, labels: labels}
+    };
 }

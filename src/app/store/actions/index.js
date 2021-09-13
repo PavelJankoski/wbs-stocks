@@ -7,7 +7,11 @@ export {
     getBasicDetails,
     getStockDetails,
     epsCompanyPerYear,
-    fetchAnnualReports
+    fetchAnnualReports,
+    fetchCompanyProductsWikiLinks,
+    fetchCompanyServicesWikiLinks,
+    fetchCompanyDevelopmentsWikiLinks,
+    fetchCompanyRecommendationTrends
 } from './stocksActions';
 
 export {

@@ -6,6 +6,9 @@ import {datasetKeyProvider} from "../../../shared/utils/utils";
 
 import {Table, TableBody, TableCell, TableHead, TableRow} from "@material-ui/core";
 import NumberFormat from "react-number-format";
+import CompanyWikiLinks from "./CompanyWikiLinks";
+import {Spinner} from "react-bootstrap";
+import RecommendationTrends from "./RecommendationTrends";
 
 const Details = (props) => {
     const dispatch = useDispatch();
@@ -13,6 +16,20 @@ const Details = (props) => {
     const stockDetails = useSelector((state) => state.stocksReducer.detailsStockData, shallowEqual);
     const eps = useSelector((state) => state.stocksReducer.epsCompany, shallowEqual);
     const reports = useSelector((state) => state.stocksReducer.reportsData, shallowEqual);
+    const productsWikiLinks = useSelector((state) => state.stocksReducer.productsWikiLinks.data, shallowEqual);
+    const productsWikiLinksLoading = useSelector((state) => state.stocksReducer.productsWikiLinks.loading, shallowEqual);
+    const servicesWikiLinks = useSelector((state) => state.stocksReducer.servicesWikiLinks.data, shallowEqual);
+    const servicesWikiLinksLoading = useSelector((state) => state.stocksReducer.servicesWikiLinks.loading, shallowEqual);
+    const developmentsWikiLinks = useSelector((state) => state.stocksReducer.developmentsWikiLinks.data, shallowEqual);
+    const developmentsWikiLinksLoading = useSelector((state) => state.stocksReducer.developmentsWikiLinks.loading, shallowEqual);
+    const recommendationTrends = useSelector((state) => state.stocksReducer.recommendationTrends, shallowEqual);
+    const recommendationTrendsLoading = useSelector((state) => state.stocksReducer.recommendationTrendsLoading, shallowEqual);
+
+    const renderSpinner = <div className="h-100 d-flex align-self-center align-items-center justify-content-center">
+        <Spinner
+            variant={'primary'} animation="border" style={{width: "100px", height: "100px"}}/></div>
+
+
     useEffect(() => {
         dispatch(actions.getBasicDetails(props.match.params.symbol));
 
@@ -27,6 +44,19 @@ const Details = (props) => {
     useEffect(() => {
         dispatch(actions.fetchAnnualReports(props.match.params.symbol));
     }, [dispatch])
+
+    useEffect(() => {
+        dispatch(actions.fetchCompanyRecommendationTrends(props.match.params.symbol));
+    }, [dispatch])
+
+    useEffect(() => {
+        if (details?.shortName !== undefined) {
+            dispatch(actions.fetchCompanyProductsWikiLinks(details.shortName));
+            dispatch(actions.fetchCompanyServicesWikiLinks(details.shortName));
+            dispatch(actions.fetchCompanyDevelopmentsWikiLinks(details.shortName));
+        }
+    }, [dispatch, details])
+
 
     const timeSeriesStockOptions = useMemo(() => {
         return {
@@ -78,16 +108,11 @@ const Details = (props) => {
     }, [])
 
     const divStyle = {
-        width: '85%',
         height: '40%',
-        marginLeft: 'auto',
-        marginRight: 'auto',
         marginTop: '10px'
     };
     const firstRow = {
         marginTop: '10px',
-        marginLeft: '110px',
-
     }
     const styleImg = {
         width: '200px',
@@ -105,22 +130,23 @@ const Details = (props) => {
                             <img style={styleImg} src={details.logo} alt="logo"/>
                         </div>
 
-                        <div className="col-sm" style={{marginRight:'200px',marginTop:"40px"}}>
+                        <div className="col-sm" style={{marginTop: "40px"}}>
 
                             <div><span><b>Country: </b></span>{details.country}</div>
-                            <div style={{marginTop:'10px'}}><span><b>Industry: </b></span>{details.finnhubIndustry}</div>
-                            <div style={{marginTop:'10px'}}><span><b>Currency: </b></span>{details.currency}</div>
-                            <div style={{marginTop:'10px'}}><span><b>Website:</b> </span><a
+                            <div style={{marginTop: '10px'}}><span><b>Industry: </b></span>{details.finnhubIndustry}
+                            </div>
+                            <div style={{marginTop: '10px'}}><span><b>Currency: </b></span>{details.currency}</div>
+                            <div style={{marginTop: '10px'}}><span><b>Website:</b> </span><a
                                 href={details.weburl}>{details.weburl}</a></div>
 
                         </div>
-                        <div className="col-sm" style={{marginRight:'300px',marginTop:"40px"}}>
+                        <div className="col-sm" style={{marginTop: "40px"}}>
                             <div><span><b>Exchange: </b></span>{details.exchange}</div>
-                            <div style={{marginTop:'10px'}}>
+                            <div style={{marginTop: '10px'}}>
                                 <span><b>Share Outstanding: </b></span>{details.shareOutstanding}</div>
-                            <div style={{marginTop:'10px'}}><span><b>Initial Public Offering: </b></span>{details.ipo}
+                            <div style={{marginTop: '10px'}}><span><b>Initial Public Offering: </b></span>{details.ipo}
                             </div>
-                            <div style={{marginTop:'10px'}}><span><b>Market Capitalization: </b></span> <NumberFormat
+                            <div style={{marginTop: '10px'}}><span><b>Market Capitalization: </b></span> <NumberFormat
                                 value={details.marketCapitalization} decimalScale={2}
                                 displayType={'text'}
                                 thousandSeparator={true}
@@ -134,97 +160,145 @@ const Details = (props) => {
             <div className="row" style={firstRow}>
                 <div className="col-md-7 grid-margin stretch-card">
                     <div className="card">
-                        <h4 style={{marginLeft: '10px', marginTop: "10px"}}>About Us</h4>
-                        <div style={{
-                            textAlign: 'left',
-                            fontSize: '1.2em',
-                            marginLeft: '2px'
-                        }}>{stockDetails.Description}</div>
+                        <div className="card-body">
+                            <h3>About Us</h3>
+                            <div style={{
+                                textAlign: 'left',
+                                fontSize: '1.2em',
+                                marginLeft: '2px'
+                            }}>{stockDetails.Description}</div>
+                        </div>
+
                     </div>
                 </div>
-                <div className="col-md-4 grid-margin stretch-card">
+                <div className="col-md-5 grid-margin stretch-card">
                     <div className="card">
-                        <h4 style={{marginLeft: "10px", marginTop: "10px"}}>Annual Reports for Last Year</h4>
-                        {reports.annualReports &&
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="left" style={{fontWeight: 'bold'}}>Details</TableCell>
-                                    <TableCell align="left" style={{fontWeight: 'bold'}}>Values</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell align="left" style={{fontWeight: 'bold'}}>Cost of revenue</TableCell>
-                                    <TableCell style={{fontWeight: 'bold'}} align="left"> <NumberFormat
-                                        value={reports.annualReports[0].costOfRevenue} decimalScale={2}
-                                        displayType={'text'}
-                                        thousandSeparator={true}
-                                        prefix={'$'}/></TableCell>
-                                </TableRow>
-                                <TableRow style={{fontWeight: 'bold'}}>
-                                    <TableCell align="left" style={{fontWeight: 'bold'}}>Gross Profit</TableCell>
-                                    <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
-                                        value={reports.annualReports[0].grossProfit} decimalScale={2}
-                                        displayType={'text'}
-                                        thousandSeparator={true}
-                                        prefix={'$'}/></TableCell>
-                                </TableRow>
-                                <TableRow style={{fontWeight: 'bold'}}>
-                                    <TableCell align="left" style={{fontWeight: 'bold'}}>Net income</TableCell>
-                                    <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
-                                        value={reports.annualReports[0].netIncome} decimalScale={2} displayType={'text'}
-                                        thousandSeparator={true}
-                                        prefix={'$'}/></TableCell>
-                                </TableRow>
-                                <TableRow style={{fontWeight: 'bold'}}>
-                                    <TableCell align="left" style={{fontWeight: 'bold'}}>Total Revenue</TableCell>
-                                    <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
-                                        value={reports.annualReports[0].totalRevenue} decimalScale={2}
-                                        displayType={'text'}
-                                        thousandSeparator={true}
-                                        prefix={'$'}/></TableCell>
-                                </TableRow>
-                                <TableRow style={{fontWeight: 'bold'}}>
-                                    <TableCell align="left" style={{fontWeight: 'bold'}}>Operating income</TableCell>
-                                    <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
-                                        value={reports.annualReports[0].operatingIncome} decimalScale={2}
-                                        displayType={'text'}
-                                        thousandSeparator={true}
-                                        prefix={'$'}/></TableCell>
-                                </TableRow>
-                                <TableRow style={{fontWeight: 'bold'}}>
-                                    <TableCell align="left" style={{fontWeight: 'bold'}}>Income Before tax</TableCell>
-                                    <TableCell align="left" style={{fontWeight: 'bold'}}>
-                                        <NumberFormat value={reports.annualReports[0].incomeBeforeTax} decimalScale={2}
-                                                      displayType={'text'} thousandSeparator={true}
-                                                      prefix={'$'}/></TableCell>
-                                </TableRow>
-                                <TableRow style={{fontWeight: 'bold'}}>
-                                    <TableCell align="left" style={{fontWeight: 'bold'}}>income tax expense</TableCell>
-                                    <TableCell align="left" style={{fontWeight: 'bold'}}>
-                                        <NumberFormat value={reports.annualReports[0].incomeTaxExpense} decimalScale={2}
-                                                      displayType={'text'} thousandSeparator={true}
-                                                      prefix={'$'}/>
-                                    </TableCell>
-                                </TableRow>
+                        <div className="card-body">
+                            <h3>Annual Reports for Last Year</h3>
+                            {reports.annualReports &&
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell align="left" style={{fontWeight: 'bold'}}>Details</TableCell>
+                                        <TableCell align="left" style={{fontWeight: 'bold'}}>Values</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell align="left" style={{fontWeight: 'bold'}}>Cost of revenue</TableCell>
+                                        <TableCell style={{fontWeight: 'bold'}} align="left"> <NumberFormat
+                                            value={reports.annualReports[0].costOfRevenue} decimalScale={2}
+                                            displayType={'text'}
+                                            thousandSeparator={true}
+                                            prefix={'$'}/></TableCell>
+                                    </TableRow>
+                                    <TableRow style={{fontWeight: 'bold'}}>
+                                        <TableCell align="left" style={{fontWeight: 'bold'}}>Gross Profit</TableCell>
+                                        <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
+                                            value={reports.annualReports[0].grossProfit} decimalScale={2}
+                                            displayType={'text'}
+                                            thousandSeparator={true}
+                                            prefix={'$'}/></TableCell>
+                                    </TableRow>
+                                    <TableRow style={{fontWeight: 'bold'}}>
+                                        <TableCell align="left" style={{fontWeight: 'bold'}}>Net income</TableCell>
+                                        <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
+                                            value={reports.annualReports[0].netIncome} decimalScale={2}
+                                            displayType={'text'}
+                                            thousandSeparator={true}
+                                            prefix={'$'}/></TableCell>
+                                    </TableRow>
+                                    <TableRow style={{fontWeight: 'bold'}}>
+                                        <TableCell align="left" style={{fontWeight: 'bold'}}>Total Revenue</TableCell>
+                                        <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
+                                            value={reports.annualReports[0].totalRevenue} decimalScale={2}
+                                            displayType={'text'}
+                                            thousandSeparator={true}
+                                            prefix={'$'}/></TableCell>
+                                    </TableRow>
+                                    <TableRow style={{fontWeight: 'bold'}}>
+                                        <TableCell align="left" style={{fontWeight: 'bold'}}>Operating
+                                            income</TableCell>
+                                        <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
+                                            value={reports.annualReports[0].operatingIncome} decimalScale={2}
+                                            displayType={'text'}
+                                            thousandSeparator={true}
+                                            prefix={'$'}/></TableCell>
+                                    </TableRow>
+                                    <TableRow style={{fontWeight: 'bold'}}>
+                                        <TableCell align="left" style={{fontWeight: 'bold'}}>Income Before
+                                            tax</TableCell>
+                                        <TableCell align="left" style={{fontWeight: 'bold'}}>
+                                            <NumberFormat value={reports.annualReports[0].incomeBeforeTax}
+                                                          decimalScale={2}
+                                                          displayType={'text'} thousandSeparator={true}
+                                                          prefix={'$'}/></TableCell>
+                                    </TableRow>
+                                    <TableRow style={{fontWeight: 'bold'}}>
+                                        <TableCell align="left" style={{fontWeight: 'bold'}}>income tax
+                                            expense</TableCell>
+                                        <TableCell align="left" style={{fontWeight: 'bold'}}>
+                                            <NumberFormat value={reports.annualReports[0].incomeTaxExpense}
+                                                          decimalScale={2}
+                                                          displayType={'text'} thousandSeparator={true}
+                                                          prefix={'$'}/>
+                                        </TableCell>
+                                    </TableRow>
 
-                            </TableBody>
-                        </Table>
-                        }
+                                </TableBody>
+                            </Table>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-            <div className="row" style={{marginLeft: '110px'}}>
-                <div className="col-7">
+            <div className="row">
+                <div className="col-xl-7">
                     <div className="card">
-                        <h4 style={{marginLeft: "10px", marginTop: "10px"}}>Earnings Per Share(EPS)</h4>
-                        <div>
-                            <Line data={eps.chartData}
-                                  options={timeSeriesStockOptions}
-                                  datasetKeyProvider={datasetKeyProvider}
-                                  height={50}
-                                  width={100}/>
+                        <div className="card-body">
+                            <h3>Earnings Per Share(EPS)</h3>
+                            <div>
+                                <Line data={eps.chartData}
+                                      options={timeSeriesStockOptions}
+                                      datasetKeyProvider={datasetKeyProvider}
+                                      height={200}/>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div className="col-xl-5 mt-xl-0 mt-4">
+                    <div className="card">
+                        <div className="card-body">
+                            {recommendationTrendsLoading ? renderSpinner :
+                                <RecommendationTrends data={recommendationTrends}/>}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="row mt-5">
+                <div className="col-3">
+                    <div className="card">
+                        <div className="card-body">
+                            {productsWikiLinksLoading ? renderSpinner :
+                                <CompanyWikiLinks wikiLinks={productsWikiLinks} title="Products:"/>}
+                        </div>
+                    </div>
+                </div>
+                <div className="col-3">
+                    <div className="card">
+                        <div className="card-body">
+                            {servicesWikiLinksLoading ? renderSpinner :
+                                <CompanyWikiLinks wikiLinks={servicesWikiLinks} title="Services:"/>}
+                        </div>
+                    </div>
+                </div>
+                <div className="col-3">
+                    <div className="card">
+                        <div className="card-body">
+                            {developmentsWikiLinksLoading ? renderSpinner :
+                                <CompanyWikiLinks wikiLinks={developmentsWikiLinks} title="Developments:"/>}
                         </div>
                     </div>
                 </div>
