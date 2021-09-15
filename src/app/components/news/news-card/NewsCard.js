@@ -6,7 +6,7 @@ const NewsCard = (props) => {
     return (
         <div className="card m-3">
             <img className="card-img-top" src={props.image} alt={props.title}/>
-            <div className="card-body">
+            <div className="card-body d-flex flex-column">
                 <div className="card-source">
                     {props.source}
                 </div>
@@ -14,9 +14,21 @@ const NewsCard = (props) => {
                     <h4 className="mb-0 text-white">{props.day}</h4>
                     <p className="mb-0 text-uppercase text-white">{props.month}</p>
                 </div>
-                <h5 className="card-title">{props.title}</h5>
-                <p className="card-text">{props.description}</p>
-                <a href={props.link} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-block">Read
+                <h5 className="card-title" style={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "-webkit-box",
+                    webkitLineClamp: 2,
+                    webkitBoxOrient: "vertical"
+                }}>{props.title}</h5>
+                <p className="card-text" style={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "-webkit-box",
+                    webkitLineClamp: 4,
+                    webkitBoxOrient: "vertical"
+                }}>{props.description}</p>
+                <a href={props.link} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-block mt-auto">Read
                     more <i className="mdi mdi-arrow-right"/></a>
             </div>
         </div>
