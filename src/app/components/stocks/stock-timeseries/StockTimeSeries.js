@@ -82,7 +82,7 @@ const StockTimeSeries = (props) => {
 
         <div className="card">
             {!stockInInterval.loading ? <div className="card-body">
-                <h4 className="mb-0 font-weight-medium"><Link className="text-black" to={`/stocks/details/${props.selectedStock.shortName}`}>{props.selectedStock.name}</Link></h4>
+                <h1 className="mb-0 font-weight-medium"><Link className="text-black" to={`/stocks/details/${props.selectedStock.shortName}`}>{props.selectedStock.name}</Link></h1>
                 <div className="d-xl-flex flex-column flex-lg-row">
                     <p>
                         O:<span className="text-info">{formatStringToDecimal(stockInInterval.lastData?.open)} </span>

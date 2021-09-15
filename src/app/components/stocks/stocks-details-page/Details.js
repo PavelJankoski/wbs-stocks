@@ -128,7 +128,7 @@ const Details = (props) => {
         <div>
             <div className="card" style={divStyle}>
                 <div className="card-body">
-                    <h1 className="page-title font-weight-medium">{details.name}</h1>
+                    <h1 className="font-weight-medium">{details.name}</h1>
                     <div className="row">
                         <div className="col">
                             <img style={styleImg} src={details.logo} alt="logo"/>

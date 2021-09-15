@@ -3,7 +3,7 @@ import React from "react";
 
 const CompanyWikiLinks = (props) => {
 
-    const renderItems = props.wikiLinks.map(item => (
+    const renderItems = () => props.wikiLinks.map(item => (
         <li><a href={item} target="_blank"  rel="noopener noreferrer">{item.split("/").at(-1)}</a></li>))
 
     return (
