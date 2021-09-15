@@ -2,6 +2,7 @@ import initialPopularStock from "../../shared/objects/initialPopularStock";
 import * as actionTypes from '../actionTypes';
 import {stockChartObject, updateObject} from "../../shared/utils/utils";
 import lineColors from "../../shared/objects/lineColors";
+import {FETCH_COMPANY_DESIGNS_WIKI_LINKS_LOADING} from "../actionTypes";
 
 const initialState = {
     mostPopular: {
@@ -43,6 +44,10 @@ const initialState = {
         loading: true
     },
     developmentsWikiLinks: {
+        data: null,
+        loading: true
+    },
+    designsWikiLinks: {
         data: null,
         loading: true
     },
@@ -205,6 +210,22 @@ const setCompanyDevelopmentsWikiLinksLoading = (state, action) => {
     })
 }
 
+const setCompanyDesignsWikiLinks = (state, action) => {
+    return updateObject(state, {
+        designsWikiLinks: updateObject(state.designsWikiLinks, {
+            data: action.payload
+        })
+    })
+}
+
+const setCompanyDesignsWikiLinksLoading = (state, action) => {
+    return updateObject(state, {
+        designsWikiLinks: updateObject(state.designsWikiLinks, {
+            loading: action.value
+        })
+    })
+}
+
 const setCompanyRecommendationTrends = (state, action) => {
     return updateObject(state, {
         recommendationTrends: action.payload
@@ -255,6 +276,10 @@ const stocksReducer = (state = initialState, action) => {
             return setCompanyDevelopmentsWikiLinks(state, action);
         case actionTypes.FETCH_COMPANY_DEVELOPMENTS_WIKI_LINKS_LOADING:
             return setCompanyDevelopmentsWikiLinksLoading(state, action);
+        case actionTypes.FETCH_COMPANY_DESIGNS_WIKI_LINKS_SUCCESS:
+            return setCompanyDesignsWikiLinks(state, action);
+        case actionTypes.FETCH_COMPANY_DESIGNS_WIKI_LINKS_LOADING:
+            return setCompanyDesignsWikiLinksLoading(state, action);
         case actionTypes.FETCH_COMPANY_RECOMMENDATION_TRENDS_SUCCESS:
             return setCompanyRecommendationTrends(state, action);
         case actionTypes.FETCH_COMPANY_RECOMMENDATION_TRENDS_LOADING:

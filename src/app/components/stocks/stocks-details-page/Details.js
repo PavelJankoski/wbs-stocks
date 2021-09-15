@@ -22,6 +22,8 @@ const Details = (props) => {
     const servicesWikiLinksLoading = useSelector((state) => state.stocksReducer.servicesWikiLinks.loading, shallowEqual);
     const developmentsWikiLinks = useSelector((state) => state.stocksReducer.developmentsWikiLinks.data, shallowEqual);
     const developmentsWikiLinksLoading = useSelector((state) => state.stocksReducer.developmentsWikiLinks.loading, shallowEqual);
+    const designsWikiLinks = useSelector((state) => state.stocksReducer.designsWikiLinks.data, shallowEqual);
+    const designsWikiLinksLoading = useSelector((state) => state.stocksReducer.designsWikiLinks.loading, shallowEqual);
     const recommendationTrends = useSelector((state) => state.stocksReducer.recommendationTrends, shallowEqual);
     const recommendationTrendsLoading = useSelector((state) => state.stocksReducer.recommendationTrendsLoading, shallowEqual);
 
@@ -50,13 +52,15 @@ const Details = (props) => {
     }, [dispatch])
 
     useEffect(() => {
-        if (details?.shortName !== undefined) {
-            dispatch(actions.fetchCompanyProductsWikiLinks(details.shortName));
-            dispatch(actions.fetchCompanyServicesWikiLinks(details.shortName));
-            dispatch(actions.fetchCompanyDevelopmentsWikiLinks(details.shortName));
+        debugger
+        if (details?.name !== undefined) {
+            debugger
+            dispatch(actions.fetchCompanyProductsWikiLinks(details.name));
+            dispatch(actions.fetchCompanyServicesWikiLinks(details.name));
+            dispatch(actions.fetchCompanyDevelopmentsWikiLinks(details.name));
+            dispatch(actions.fetchCompanyDesignsWikiLinks(details.name))
         }
     }, [dispatch, details])
-
 
     const timeSeriesStockOptions = useMemo(() => {
         return {
@@ -278,7 +282,7 @@ const Details = (props) => {
             </div>
 
             <div className="row mt-5">
-                <div className="col-3">
+                <div className="col-lg-3 col-sm-6 col-12">
                     <div className="card">
                         <div className="card-body">
                             {productsWikiLinksLoading ? renderSpinner :
@@ -286,7 +290,7 @@ const Details = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className="col-3">
+                <div className="col-lg-3 col-sm-6 col-12">
                     <div className="card">
                         <div className="card-body">
                             {servicesWikiLinksLoading ? renderSpinner :
@@ -294,11 +298,19 @@ const Details = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className="col-3">
+                <div className="col-lg-3 col-sm-6 col-12">
                     <div className="card">
                         <div className="card-body">
                             {developmentsWikiLinksLoading ? renderSpinner :
                                 <CompanyWikiLinks wikiLinks={developmentsWikiLinks} title="Developments:"/>}
+                        </div>
+                    </div>
+                </div>
+                <div className="col-lg-3 col-sm-6 col-12">
+                    <div className="card">
+                        <div className="card-body">
+                            {designsWikiLinksLoading ? renderSpinner :
+                                <CompanyWikiLinks wikiLinks={designsWikiLinks} title="Designs:"/>}
                         </div>
                     </div>
                 </div>

@@ -11,6 +11,7 @@ export {
     fetchCompanyProductsWikiLinks,
     fetchCompanyServicesWikiLinks,
     fetchCompanyDevelopmentsWikiLinks,
+    fetchCompanyDesignsWikiLinks,
     fetchCompanyRecommendationTrends
 } from './stocksActions';
 

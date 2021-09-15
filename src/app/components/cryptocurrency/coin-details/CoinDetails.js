@@ -50,7 +50,7 @@ const CoinDetails = () => {
                     </div>
                 </div>
                 <div className="row mt-4">
-                    <div className="col-xl-4 col-12">
+                    <div className="col-xl-3 col-12">
                         <NumberFormat style={{fontSize: 70}} decimalScale={2} displayType={"text"} prefix={'$'}
                                       thousandSeparator={true}
                                       value={coinDetails.priceData.currentPrice[Currency.USD]}/>
@@ -90,16 +90,16 @@ const CoinDetails = () => {
                                       style={{fontWeight: 1000, fontSize: 20}}
                                       value={coinDetails.marketData.totalVolume[`${Currency.USD}`]}/>
                     </div>
-                    <div className="col-xl-2 col-lg-3 col-sm-6 col-12 mt-4 mb-3">
-                        <div>
-                            <p className="h5">Circulating Supply</p>
+                    <div className="col-xl-3 col-lg-3 col-sm-6 col-12 mt-4 mb-3">
+                        {coinDetails.marketData.maxSupply && <div className="d-flex">
+                            <p className="h5">Circulating<br/>Supply</p>
                             <NumberFormat decimalScale={2} displayType={"text"}
                                           thousandSeparator={true}
                                           className="m-auto"
                                           style={{fontWeight: 1000, fontSize: 15}}
                                           value={coinDetails.marketData.circulatingSupply}/>
 
-                        </div>
+                        </div>}
                         {coinDetails.marketData.maxSupply && <div className="d-flex mt-2">
                             <p className="h5">Max Supply</p>
                             <NumberFormat decimalScale={2} displayType={"text"}

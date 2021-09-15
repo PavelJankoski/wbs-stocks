@@ -7,6 +7,7 @@ import ReactApexChart from "react-apexcharts";
 import cryptoTimeSeriesCharts from "../../../shared/objects/cryptoTimeSeriesCharts";
 import {datasetKeyProvider} from "../../../shared/utils/utils";
 import {Line} from "react-chartjs-2";
+import * as Zoom from "chartjs-plugin-zoom" //DO NOT REMOVE THIS
 
 const CoinTimeSeries = (props) => {
     const [active, setActive] = useState(cryptoIntervals[0]);

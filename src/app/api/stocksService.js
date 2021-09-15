@@ -63,24 +63,28 @@ const StocksService = {
     fetchCompanyProductsWikiLinks: (name) => {
         return API_DRIVER_BACKEND.get(`companies/${name}/wikiLinks`, {
             params: {
-                predicate: "product",
-                isSubject: true
+                predicate: "product"
             }
         })
     },
     fetchCompanyServicesWikiLinks: (name) => {
         return API_DRIVER_BACKEND.get(`companies/${name}/wikiLinks`, {
             params: {
-                predicate: "service",
-                isSubject: true
+                predicate: "service"
             }
         })
     },
     fetchCompanyDevelopmentsWikiLinks: (name) => {
         return API_DRIVER_BACKEND.get(`companies/${name}/wikiLinks`, {
             params: {
-                predicate: "developer",
-                isSubject: false
+                predicate: "developer"
+            }
+        })
+    },
+    fetchCompanyDesignsWikiLinks: (name) => {
+        return API_DRIVER_BACKEND.get(`companies/${name}/wikiLinks`, {
+            params: {
+                predicate: "designer"
             }
         })
     },

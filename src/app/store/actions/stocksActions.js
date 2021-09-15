@@ -2,6 +2,7 @@ import StocksService from "../../api/stocksService";
 import * as actionTypes from '../actionTypes';
 import {calculateStockPercentage, toIsoDate} from "../../shared/utils/utils";
 import latestStocksArray from "../../shared/objects/latestStocksArray";
+import {FETCH_COMPANY_DESIGNS_WIKI_LINKS_LOADING} from "../actionTypes";
 
 export const fetchMostPopularStock = (symbol) => {
     return (dispatch) => {
@@ -62,6 +63,7 @@ export const fetchAnnualReports = (symbol) => {
 export const getBasicDetails = (symbol) => {
     return (dispatch) => {
         StocksService.getBasicDetails(symbol).then(res => {
+            debugger
             dispatch(mapResponseToDetails(res.data));
         }).catch(e => {
             console.log(e)
@@ -71,6 +73,7 @@ export const getBasicDetails = (symbol) => {
 export const getStockDetails = (symbol) => {
     return (dispatch) => {
         StocksService.fetchCompanyOverview(symbol).then(res => {
+            debugger
             dispatch(mapResponseToStocksDetails(res.data));
         }).catch(e => {
             console.log(e)
@@ -125,6 +128,23 @@ export const fetchCompanyDevelopmentsWikiLinks = (name) => {
             console.log(e)
         }).finally(() => {
             dispatch({type: actionTypes.FETCH_COMPANY_DEVELOPMENTS_WIKI_LINKS_LOADING, value: false})
+        })
+    }
+}
+
+export const fetchCompanyDesignsWikiLinks = (name) => {
+    return (dispatch) => {
+        dispatch({type: actionTypes.FETCH_COMPANY_DESIGNS_WIKI_LINKS_LOADING, value: true})
+        let parsedName = name.replace(" ", "_")
+        StocksService.fetchCompanyDesignsWikiLinks(parsedName).then(res => {
+            dispatch({
+                type: actionTypes.FETCH_COMPANY_DESIGNS_WIKI_LINKS_SUCCESS,
+                payload: res.data
+            });
+        }).catch(e => {
+            console.log(e)
+        }).finally(() => {
+            dispatch({type: actionTypes.FETCH_COMPANY_DESIGNS_WIKI_LINKS_LOADING, value: false})
         })
     }
 }
