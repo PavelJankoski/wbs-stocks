@@ -6,6 +6,7 @@ import * as actions from '../../../store/actions/index';
 import stockIntervals from "../../../shared/objects/stockIntervals";
 import {Spinner} from "react-bootstrap";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 
 const StockTimeSeries = (props) => {
     const [active, setActive] = useState(stockIntervals[1]);
@@ -81,7 +82,7 @@ const StockTimeSeries = (props) => {
 
         <div className="card">
             {!stockInInterval.loading ? <div className="card-body">
-                <h4 className="mb-0 font-weight-medium">{props.selectedStock.name}</h4>
+                <h4 className="mb-0 font-weight-medium"><Link className="text-black" to={`/stocks/details/${props.selectedStock.shortName}`}>{props.selectedStock.name}</Link></h4>
                 <div className="d-xl-flex flex-column flex-lg-row">
                     <p>
                         O:<span className="text-info">{formatStringToDecimal(stockInInterval.lastData?.open)} </span>
