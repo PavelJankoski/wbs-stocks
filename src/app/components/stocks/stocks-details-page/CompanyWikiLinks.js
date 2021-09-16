@@ -3,13 +3,13 @@ import React from "react";
 
 const CompanyWikiLinks = (props) => {
 
-    const renderItems = props.wikiLinks ? props.wikiLinks.map((item, idx) => (
-        <li key={`wiki-links-${idx}`}><a href={item} target="_blank"  rel="noopener noreferrer">{item.split("/").at(-1)}</a></li>)) : null
+    const renderItems = () => props.wikiLinks.map(item => (
+        <li><a href={item} target="_blank"  rel="noopener noreferrer">{item.split("/").at(-1)}</a></li>))
 
     return (
         <div>
             <h3>{props.title}</h3>
-            <ul>{renderItems}</ul>
+            { props.wikiLinks && <ul>{renderItems}</ul>}
         </div>
     )
 }
