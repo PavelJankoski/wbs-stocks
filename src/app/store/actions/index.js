@@ -12,7 +12,11 @@ export {
     fetchCompanyServicesWikiLinks,
     fetchCompanyDevelopmentsWikiLinks,
     fetchCompanyDesignsWikiLinks,
-    fetchCompanyRecommendationTrends
+    fetchCompanyRecommendationTrends,
+    cleanUpCompanyServicesWikiLinks,
+    cleanUpCompanyProductsWikiLinks,
+    cleanUpCompanyDesignsWikiLinks,
+    cleanUpCompanyDevelopmentsWikiLinks
 } from './stocksActions';
 
 export {

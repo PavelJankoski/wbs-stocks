@@ -9,6 +9,7 @@ import NumberFormat from "react-number-format";
 import CompanyWikiLinks from "./CompanyWikiLinks";
 import {Spinner} from "react-bootstrap";
 import RecommendationTrends from "./RecommendationTrends";
+import {cleanUpCoinDetails} from "../../../store/actions";
 
 const Details = (props) => {
     const dispatch = useDispatch();
@@ -52,13 +53,18 @@ const Details = (props) => {
     }, [dispatch])
 
     useEffect(() => {
-        debugger
         if (details?.name !== undefined) {
-            debugger
+
             dispatch(actions.fetchCompanyProductsWikiLinks(details.name));
             dispatch(actions.fetchCompanyServicesWikiLinks(details.name));
             dispatch(actions.fetchCompanyDevelopmentsWikiLinks(details.name));
             dispatch(actions.fetchCompanyDesignsWikiLinks(details.name))
+        }
+        return function cleanup() {
+            dispatch(actions.cleanUpCompanyServicesWikiLinks())
+            dispatch(actions.cleanUpCompanyProductsWikiLinks())
+            dispatch(actions.cleanUpCompanyDesignsWikiLinks())
+            dispatch(actions.cleanUpCompanyDevelopmentsWikiLinks())
         }
     }, [dispatch, details])
 
