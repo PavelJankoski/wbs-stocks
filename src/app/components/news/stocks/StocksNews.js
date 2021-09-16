@@ -10,7 +10,7 @@ import {Spinner} from "react-bootstrap";
 const StocksNews = () => {
     const stocksNews = useSelector((state) => state.newsReducer.stocksNews, shallowEqual);
     const [page, setPage] = useState(0);
-    const cardsPerPage = 15;
+    const cardsPerPage = 16;
     const dispatch = useDispatch();
     const searchLoading = useSelector((state) => state.stocksReducer.searchStocksLoading);
     const searchAutocompleteData = useSelector((state) => state.stocksReducer.searchedStocks);

@@ -9,7 +9,7 @@ const CryptocurrencyNews = () => {
     const cryptoNews = useSelector((state) => state.newsReducer.cryptocurrencyNews, shallowEqual);
     const cryptoNewsLoading = useSelector((state) => state.newsReducer.cryptoNewsLoading, shallowEqual);
     const [page, setPage] = useState(0);
-    const cardsPerPage = 15;
+    const cardsPerPage = 16;
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(actions.fetchCryptocurrenciesNews())
