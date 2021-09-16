@@ -73,7 +73,6 @@ export const getBasicDetails = (symbol) => {
 export const getStockDetails = (symbol) => {
     return (dispatch) => {
         StocksService.fetchCompanyOverview(symbol).then(res => {
-            debugger
             dispatch(mapResponseToStocksDetails(res.data));
         }).catch(e => {
             console.log(e)
@@ -215,6 +214,28 @@ export const fetchStockExchanges = (limit, offset, search = "") => {
         })
     }
 }
+
+export const cleanUpCompanyProductsWikiLinks = () => {
+    return {
+        type: actionTypes.FETCH_COMPANY_PRODUCTS_WIKI_LINKS_SUCCESS, payload: null
+    }
+}
+export const cleanUpCompanyDesignsWikiLinks = () => {
+    return {
+        type: actionTypes.FETCH_COMPANY_DESIGNS_WIKI_LINKS_SUCCESS, payload: null
+    }
+}
+export const cleanUpCompanyDevelopmentsWikiLinks = () => {
+    return {
+        type: actionTypes.FETCH_COMPANY_DEVELOPMENTS_WIKI_LINKS_SUCCESS, payload: null
+    }
+}
+export const cleanUpCompanyServicesWikiLinks = () => {
+    return {
+        type: actionTypes.FETCH_COMPANY_SERVICES_WIKI_LINKS_SUCCESS, payload: null
+    }
+}
+
 
 const mapResponseToPopularStockData = (response, symbol) => {
     let data = response.data.data
