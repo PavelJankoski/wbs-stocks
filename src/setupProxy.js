@@ -9,8 +9,4 @@ module.exports = function (app) {
         target: 'https://finnhub.io/',
         changeOrigin: true
     }));
-    app.use(proxy('/query', {
-        target: 'https://www.alphavantage.co/',
-        changeOrigin: true
-    }));
 };

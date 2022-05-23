@@ -63,7 +63,6 @@ export const fetchAnnualReports = (symbol) => {
 export const getBasicDetails = (symbol) => {
     return (dispatch) => {
         StocksService.getBasicDetails(symbol).then(res => {
-            debugger
             dispatch(mapResponseToDetails(res.data));
         }).catch(e => {
             console.log(e)
@@ -152,7 +151,6 @@ export const fetchCompanyRecommendationTrends = (symbol) => {
     return (dispatch) => {
         dispatch({type: actionTypes.FETCH_COMPANY_RECOMMENDATION_TRENDS_LOADING, value: true})
         StocksService.fetchCompanyRecommendationTrends(symbol).then(res => {
-            debugger
             dispatch(mapResponseToRecommendationTrendsData(res.data));
         }).catch(e => {
             console.log(e)

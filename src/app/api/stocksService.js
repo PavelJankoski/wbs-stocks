@@ -1,4 +1,4 @@
-import {API_DRIVER_AV, API_DRIVER_BACKEND, API_DRIVER_FH, API_DRIVER_MS} from "../../axiosConfig";
+import {API_DRIVER_BACKEND, API_DRIVER_FH, API_DRIVER_MS} from "../../axiosConfig";
 
 
 const StocksService = {
@@ -46,12 +46,7 @@ const StocksService = {
         })
     },
     fetchCompanyOverview: (symbol) => {
-        return API_DRIVER_AV.get('', {
-            params: {
-                function: "OVERVIEW",
-                symbol: symbol
-            }
-        })
+        return API_DRIVER_BACKEND.get(`/companies/${symbol}/details`)
     },
     fetchCompanyRecommendationTrends: (symbol) => {
         return API_DRIVER_FH.get(`stock/recommendation`, {
@@ -89,20 +84,10 @@ const StocksService = {
         })
     },
     epsCompanyPerYear: (symbol) => {
-        return API_DRIVER_AV.get('', {
-            params: {
-                function: "EARNINGS",
-                symbol: symbol
-            }
-        })
+        return API_DRIVER_BACKEND.get(`companies/${symbol}/earnings`)
     },
     annualReportsCompanyPerYear: (symbol) => {
-        return API_DRIVER_AV.get('', {
-            params: {
-                function: "INCOME_STATEMENT",
-                symbol: symbol
-            }
-        })
+        return API_DRIVER_BACKEND.get(`companies/${symbol}/annualReports`)
     },
     getBasicDetails: (symbol) => {
         return API_DRIVER_FH.get('/stock/profile2', {

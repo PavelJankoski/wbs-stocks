@@ -26,17 +26,6 @@ export const API_DRIVER_FH = axios.create({
     }
 })
 
-export const API_DRIVER_AV = axios.create({
-    baseURL: "/query",
-    params: {
-        apikey: process.env.REACT_APP_ALPHAVANTAGE_APIKEY
-    },
-    responseType: "json",
-    headers: {
-        'Access-Control-Allow-Origin': '*'
-    }
-})
-
 export const API_DRIVER_CG = axios.create({
     baseURL: "https://api.coingecko.com/api/v3",
     responseType: "json",
