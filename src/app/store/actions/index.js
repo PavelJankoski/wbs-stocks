@@ -5,7 +5,7 @@ export {
     searchStocks,
     fetchStockExchanges,
     getBasicDetails,
-    getStockDetails,
+    getStockOverview,
     epsCompanyPerYear,
     fetchAnnualReports,
     fetchCompanyProductsWikiLinks,
@@ -23,10 +23,8 @@ export {
     fetchCoinsMarketData,
     fetchExchanges,
     fetchCoinDetails,
-    fetchCoinOHCLData,
     fetchCoinMarketChartData,
     cleanUpCoinDetails,
-    cleanUpCoinOHCLTimeSeries,
     cleanUpCoinMarketChartTimeSeries
 } from './cryptocurrenciesActions';
 

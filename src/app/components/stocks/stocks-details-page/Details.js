@@ -9,12 +9,11 @@ import NumberFormat from "react-number-format";
 import CompanyWikiLinks from "./CompanyWikiLinks";
 import {Spinner} from "react-bootstrap";
 import RecommendationTrends from "./RecommendationTrends";
-import {cleanUpCoinDetails} from "../../../store/actions";
 
 const Details = (props) => {
     const dispatch = useDispatch();
     const details = useSelector((state) => state.stocksReducer.detailsData, shallowEqual);
-    const stockDetails = useSelector((state) => state.stocksReducer.detailsStockData, shallowEqual);
+    const stockOverviewData = useSelector((state) => state.stocksReducer.stockOverviewData, shallowEqual);
     const eps = useSelector((state) => state.stocksReducer.epsCompany, shallowEqual);
     const reports = useSelector((state) => state.stocksReducer.reportsData, shallowEqual);
     const productsWikiLinks = useSelector((state) => state.stocksReducer.productsWikiLinks.data, shallowEqual);
@@ -38,7 +37,7 @@ const Details = (props) => {
 
     }, [dispatch])
     useEffect(() => {
-        dispatch(actions.getStockDetails(props.match.params.symbol));
+        dispatch(actions.getStockOverview(props.match.params.symbol));
     }, [dispatch])
     useEffect(() => {
         dispatch(actions.epsCompanyPerYear(props.match.params.symbol));
@@ -176,7 +175,7 @@ const Details = (props) => {
                                 textAlign: 'left',
                                 fontSize: '1.2em',
                                 marginLeft: '2px'
-                            }}>{stockDetails.Description}</div>
+                            }}>{stockOverviewData.Description}</div>
                         </div>
 
                     </div>

@@ -1,8 +1,8 @@
 import StocksService from "../../api/stocksService";
 import * as actionTypes from '../actionTypes';
-import {calculateStockPercentage, toIsoDate} from "../../shared/utils/utils";
+import {calculateStockPercentage, toIsoDate, RECOMMENDATION_TRENDS_DATE_FORMAT} from "../../shared/utils/utils";
 import latestStocksArray from "../../shared/objects/latestStocksArray";
-import {FETCH_COMPANY_DESIGNS_WIKI_LINKS_LOADING} from "../actionTypes";
+import moment from "moment";
 
 export const fetchMostPopularStock = (symbol) => {
     return (dispatch) => {
@@ -69,10 +69,10 @@ export const getBasicDetails = (symbol) => {
         })
     }
 }
-export const getStockDetails = (symbol) => {
+export const getStockOverview = (symbol) => {
     return (dispatch) => {
         StocksService.fetchCompanyOverview(symbol).then(res => {
-            dispatch(mapResponseToStocksDetails(res.data));
+            dispatch(mapResponseToStocksOverview(res.data));
         }).catch(e => {
             console.log(e)
         })
@@ -274,8 +274,8 @@ const mapResponseToEps = (data, symbol) => {
     }
 }
 
-const mapResponseToStocksDetails = (data) => {
-    return {type: actionTypes.FETCH_STOCKS_DETAILS, payload: data}
+const mapResponseToStocksOverview = (data) => {
+    return {type: actionTypes.FETCH_STOCKS_OVERVIEW, payload: data}
 }
 
 const mapResponseToDetails = (data) => {
@@ -321,13 +321,14 @@ const mapResponseToRecommendationTrendsData = (data) => {
     let strongSellData = []
     let labels = []
 
-    data.forEach(s => {
+    data.reverse().forEach(s => {
         strongBuyData.push(s.strongBuy)
         buyData.push(s.buy)
         holdData.push(s.hold)
         sellData.push(s.sell)
         strongSellData.push(s.strongSell)
-        labels.push(s.period)
+        let date = moment(new Date(s.period)).format(RECOMMENDATION_TRENDS_DATE_FORMAT)
+        labels.push(date)
     })
 
     datasets.push({

@@ -15,17 +15,6 @@ export const API_DRIVER_MS = axios.create({
 
 axiosRetry(API_DRIVER_MS, axiosRetryConfig);
 
-export const API_DRIVER_FH = axios.create({
-    baseURL: "/api/v1",
-    params: {
-        token: process.env.REACT_APP_FINNHUB_APIKEY
-    },
-    responseType: "json",
-    headers: {
-        'Access-Control-Allow-Origin': '*'
-    }
-})
-
 export const API_DRIVER_CG = axios.create({
     baseURL: "https://api.coingecko.com/api/v3",
     responseType: "json",

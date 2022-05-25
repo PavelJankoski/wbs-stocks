@@ -1,4 +1,4 @@
-import {API_DRIVER_BACKEND, API_DRIVER_FH, API_DRIVER_MS} from "../../axiosConfig";
+import {API_DRIVER_BACKEND, API_DRIVER_MS} from "../../axiosConfig";
 
 
 const StocksService = {
@@ -30,7 +30,7 @@ const StocksService = {
         })
     },
     searchStocks: (searchText) => {
-        return API_DRIVER_FH.get('/search', {
+        return API_DRIVER_BACKEND.get('/companies/search', {
             params: {
                 q: searchText
             }
@@ -46,14 +46,10 @@ const StocksService = {
         })
     },
     fetchCompanyOverview: (symbol) => {
-        return API_DRIVER_BACKEND.get(`/companies/${symbol}/details`)
+        return API_DRIVER_BACKEND.get(`/companies/${symbol}/overview`)
     },
     fetchCompanyRecommendationTrends: (symbol) => {
-        return API_DRIVER_FH.get(`stock/recommendation`, {
-            params: {
-                symbol: symbol
-            }
-        })
+        return API_DRIVER_BACKEND.get(`/companies/${symbol}/recommendation`)
     },
     fetchCompanyProductsWikiLinks: (name) => {
         return API_DRIVER_BACKEND.get(`companies/${name}/wikiLinks`, {
@@ -90,7 +86,7 @@ const StocksService = {
         return API_DRIVER_BACKEND.get(`companies/${symbol}/annualReports`)
     },
     getBasicDetails: (symbol) => {
-        return API_DRIVER_FH.get('/stock/profile2', {
+        return API_DRIVER_BACKEND.get(`companies/${symbol}/details`, {
             params: {
                 symbol: symbol
             }

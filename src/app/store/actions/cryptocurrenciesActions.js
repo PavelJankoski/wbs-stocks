@@ -60,19 +60,6 @@ export const fetchCoinAbstract = (name) => {
     }
 }
 
-export const fetchCoinOHCLData = (id, days = 7) => {
-    return (dispatch) => {
-        CryptocurrenciesService.fetchCoinOHCLData(id, days).then(res => {
-            debugger
-            dispatch(mapResponseToCoinOHCLData(res.data))
-        }).catch(e => {
-            console.log(e)
-        }).finally(() => {
-
-        })
-    }
-}
-
 export const fetchCoinMarketChartData = (id, days = 7) => {
     return (dispatch) => {
         CryptocurrenciesService.fetchCoinMarketChartData(id, days).then(res => {
@@ -122,15 +109,13 @@ const mapResponseToExchanges = (data) => {
 }
 
 const mapResponseToCoinDetails = (data) => {
-
-    debugger
     const coinDetails = {
         symbol: data.symbol,
         name: data.name,
         image: data.image['small'],
         marketCapRank: data.market_cap_rank,
         hashingAlgorithm: data.hashing_algorithm,
-        description: data.description.en,
+        description: data.description['en'],
         links: {
             homePageUrls: data.links.homepage.filter(l => l !== ""),
             blockChainSitesUrls: data.links.blockchain_site.filter(l => l !== ""),
@@ -206,23 +191,7 @@ const mapResponseToCoinDetails = (data) => {
             }
         }
     }
-    debugger
     return {type: actionTypes.FETCH_COIN_DETAILS_SUCCESS, payload: coinDetails};
-}
-
-const mapResponseToCoinOHCLData = (data) => {
-    const ohclDataArr = [{data: []}]
-    data.forEach(item => {
-
-        let date = new Date(item[0]).toLocaleDateString()
-        let time = new Date(item[0]).toLocaleTimeString()
-        ohclDataArr[0].data.push({
-            x: [`${date} ${time}`],
-            y: item.slice(1, 5)
-        })
-    })
-    debugger
-    return {type: actionTypes.FETCH_COIN_OHCL_DATA_SUCCESS, payload: ohclDataArr}
 }
 
 const mapResponseToCoinMarketChartData = (data) => {
@@ -249,12 +218,6 @@ export const cleanUpCoinDetails = () => {
 export const cleanUpCoinAbstract = () => {
     return {
         type: actionTypes.FETCH_COIN_ABSTRACT_SUCCESS, payload: null
-    }
-}
-
-export const cleanUpCoinOHCLTimeSeries = () => {
-    return {
-        type: actionTypes.FETCH_COIN_OHCL_DATA_SUCCESS, payload: []
     }
 }
 

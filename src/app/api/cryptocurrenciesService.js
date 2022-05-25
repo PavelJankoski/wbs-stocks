@@ -3,42 +3,30 @@ import {Currency} from "../shared/objects/currencies";
 
 const CryptocurrenciesService = {
     fetchCoinsMarketData: (vsCurrency = 'usd', page = 1, pageSize = 100) => {
-        return API_DRIVER_CG.get('/coins/markets', {
+        return API_DRIVER_BACKEND.get('/cryptocurrency/all', {
             params: {
-                vs_currency: vsCurrency,
+                vsCurrency: vsCurrency,
                 page: page,
-                per_page: pageSize,
-                price_change_percentage: '1h,24h,7d'
+                pageSize: pageSize,
+                priceChangePercentage: '1h,24h,7d'
             }
         })
     },
 
     fetchExchangesList: (page = 1, pageSize = 100) => {
-        return API_DRIVER_CG.get('/exchanges', {
+        return API_DRIVER_BACKEND.get('/cryptocurrency/exchanges', {
             params: {
                 page: page,
-                per_size: pageSize
+                pageSize: pageSize
             }
         })
     },
 
     fetchCoinDetails: (id) => {
-        return API_DRIVER_CG.get(`/coins/${id}`, {
-            params: {
-                tickers: false
-            }
-        })
+        return API_DRIVER_BACKEND.get(`/cryptocurrency/${id}/details`)
     },
     fetchCoinAbstract: (name) => {
-        return API_DRIVER_BACKEND.get(`/cryptocurrency/${name}`)
-    },
-    fetchCoinOHCLData: (id, days, vsCurrency = Currency.USD) => {
-        return API_DRIVER_CG.get(`/coins/${id}/ohlc`, {
-            params: {
-                vs_currency: vsCurrency,
-                days: days
-            }
-        })
+        return API_DRIVER_BACKEND.get(`/cryptocurrency/${name}/description`)
     },
     fetchCoinMarketChartData: (id, days, vsCurrency = Currency.USD) => {
         return API_DRIVER_CG.get(`/coins/${id}/market_chart`, {

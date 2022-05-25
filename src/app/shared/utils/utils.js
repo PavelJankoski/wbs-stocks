@@ -40,3 +40,6 @@ export const toIsoDate = (date) => {
 export const formatStringToDecimal = (value) => {
     return value !== null ? parseFloat(value).toFixed(2) : "";
 }
+
+export const RECOMMENDATION_TRENDS_DATE_FORMAT = "MMM YYYY"
+export const DEFAULT_DATE_FORMAT = "DD MMM YYYY"

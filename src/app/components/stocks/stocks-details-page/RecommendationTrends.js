@@ -22,6 +22,7 @@ const RecommendationTrends = (props) => {
         },
         scales: {
             yAxes: [{
+                stacked: true,
                 ticks: {
                     display: true,
                     beginAtZero: true,
@@ -50,7 +51,8 @@ const RecommendationTrends = (props) => {
             }]
         },
         legend: {
-            display: false
+            display: true,
+            position: 'bottom'
         },
         elements: {
             point: {
@@ -61,8 +63,7 @@ const RecommendationTrends = (props) => {
     return (
         <div>
             <h3>Recommendation Trends</h3>
-            <Bar data={props.data} options={marketingOverviewOptions} datasetKeyProvider={datasetKeyProvider}
-                 height={200}/>
+            <Bar data={props.data} options={marketingOverviewOptions} datasetKeyProvider={datasetKeyProvider}/>
         </div>
 
     )

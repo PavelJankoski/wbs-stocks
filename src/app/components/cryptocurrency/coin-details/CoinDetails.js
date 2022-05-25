@@ -7,7 +7,7 @@ import {Currency} from "../../../shared/objects/currencies";
 import NumberFormat from "react-number-format";
 import LinkDropdownButton from "../../UI/LinkDropdownButton";
 import CoinTimeSeries from "../coin-timeseries/CoinTimeSeries";
-import CoinAbstract from "./CoinAbstract";
+import parse from 'html-react-parser'
 
 const CoinDetails = () => {
 
@@ -73,13 +73,13 @@ const CoinDetails = () => {
                         </div>
                     </div>
                     {coinDetails.marketData.fullyDilutedMarketCap[Currency.USD] &&
-                    <div className="col-xl-2 col-lg-3 col-sm-6 col-12 mb-3 mt-4 border-right-lg">
-                        <p className="h5">Fully Diluted Market Cap</p>
-                        <NumberFormat decimalScale={2} displayType={"text"} prefix={'$'}
-                                      thousandSeparator={true}
-                                      style={{fontWeight: 1000, fontSize: 20}}
-                                      value={coinDetails.marketData.fullyDilutedMarketCap[Currency.USD]}/>
-                    </div>}
+                        <div className="col-xl-2 col-lg-3 col-sm-6 col-12 mb-3 mt-4 border-right-lg">
+                            <p className="h5">Fully Diluted Market Cap</p>
+                            <NumberFormat decimalScale={2} displayType={"text"} prefix={'$'}
+                                          thousandSeparator={true}
+                                          style={{fontWeight: 1000, fontSize: 20}}
+                                          value={coinDetails.marketData.fullyDilutedMarketCap[Currency.USD]}/>
+                        </div>}
                     <div className="col-xl-2 col-lg-3 col-sm-6 col-12 mb-3 mt-4 border-right-lg">
                         <div className="d-flex">
                             <p className="h5">Volume</p>
@@ -121,7 +121,7 @@ const CoinDetails = () => {
 
                 <div className="row mt-4">
                     <div className="col-xl-8 col-12">
-                        <CoinTimeSeries coinId={coin_id}/>
+                        <CoinTimeSeries coinSymbol={coinDetails.symbol}/>
                     </div>
 
                     <div className="col-xl-4 col-12 mt-xl-0 mt-4">
@@ -195,7 +195,10 @@ const CoinDetails = () => {
 
                 <div className="row mt-4">
                     <div className="col-lg-8 col-12">
-                        <CoinAbstract coinName={coinDetails.name}/>
+                        <p className="h2 font-weight-medium">About {coinDetails.name}</p>
+                        <span style={{fontSize: 20}}>
+                            {parse(coinDetails.description)}
+                         </span>
                     </div>
                 </div>
             </div>
