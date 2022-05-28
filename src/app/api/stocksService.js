@@ -29,19 +29,21 @@ const StocksService = {
             }
         })
     },
-    searchStocks: (searchText) => {
-        return API_DRIVER_BACKEND.get('/companies/search', {
+    searchStocks: (limit, offset, searchText) => {
+        return API_DRIVER_BACKEND.get('/companies', {
             params: {
-                q: searchText
+                size: limit,
+                page: offset,
+                query: searchText
             }
         })
     },
     fetchStockExchanges: (limit, offset, search) => {
-        return API_DRIVER_MS.get('/exchanges', {
+        return API_DRIVER_BACKEND.get('/companies/exchanges', {
             params: {
-                limit: limit,
-                offset: offset,
-                ...(search !== "" ? {search: search} : {})
+                size: limit,
+                page: offset,
+                query: search
             }
         })
     },

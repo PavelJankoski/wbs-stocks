@@ -8,7 +8,7 @@ const SearchAutocomplete = (props) => {
     const renderDropdownItems = props.autocompleteData.map((s, idx) => (
         <React.Fragment key={s.symbol + "-dropdown-item"}>
             <Dropdown.Item onClick={() => props.onItemClick(s.symbol)} as={"div"}>
-                <p className="mb-0 font-weight-bold">{s.symbol}</p>
+                <p className="mb-0 font-weight-bold">{s.symbol} <span className="text-muted">({s.stockExchangeAcronym})</span></p>
                 <span className="text-muted">{s.name}</span>
             </Dropdown.Item>
             {idx !== props.autocompleteData.length - 1 ? <Dropdown.Divider /> : null}

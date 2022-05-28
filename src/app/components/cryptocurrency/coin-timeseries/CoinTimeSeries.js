@@ -1,7 +1,7 @@
 import React from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import PropTypes from "prop-types";
-import {AdvancedChart} from "react-tradingview-embed"; //DO NOT REMOVE THIS
+import {AdvancedChart, TechnicalAnalysis, Ticker} from "react-tradingview-embed"; //DO NOT REMOVE THIS
 
 const CoinTimeSeries = (props) => {
     const dispatch = useDispatch();
@@ -15,8 +15,18 @@ const CoinTimeSeries = (props) => {
                 widgetProps={{
                     "withdateranges": false,
                     "theme": "light",
+                    "toolbar_bg": "#f1f3f6",
+                    "style": "3",
+                    "interval": "5",
+                    "range": "1D",
                     "symbol": `BINANCE:${props.coinSymbol === "usdt" ? "BTC" : props.coinSymbol}USDT`
                 }}/>
+
+            <TechnicalAnalysis widgetProps={{
+                "isTransparent": true,
+                "colorTheme": "light",
+                "symbol": `BINANCE:${props.coinSymbol === "usdt" ? "BTC" : props.coinSymbol}USDT`
+            }} />
         </div>
     );
 }

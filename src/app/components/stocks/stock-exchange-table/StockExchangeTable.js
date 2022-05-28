@@ -27,9 +27,9 @@ const StockExchangeTable = () => {
         }
         setTimer(setTimeout(() => {
                     setPage(0);
-                    setRowsPerPage(5);
+                    setRowsPerPage(10);
                     setSearchText(searchText);
-                    dispatch(actions.fetchStockExchanges(5, 0, searchText));
+                    dispatch(actions.fetchStockExchanges(10, 0, searchText));
         }, 1500)
         );
     }

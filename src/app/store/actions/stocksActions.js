@@ -177,8 +177,8 @@ export const epsCompanyPerYear = (symbol) => {
 export const searchStocks = (searchText) => {
     return (dispatch) => {
         dispatch({type: actionTypes.SET_SEARCH_STOCKS_LOADING, value: true});
-        StocksService.searchStocks(searchText).then(res => {
-            dispatch(mapResponseToSearchedStocks(res.data.result))
+        StocksService.searchStocks(10, 0, searchText).then(res => {
+            dispatch(mapResponseToSearchedStocks(res.data.data))
         }).catch(e => {
             console.log(e);
         }).finally(() => {
@@ -305,8 +305,9 @@ const mapResponseToSearchedStocks = (data) => {
     return {
         type: actionTypes.SEARCH_STOCKS_SUCCESS, payload: data.splice(0, 5).map(s => {
             return {
-                name: s.description,
-                symbol: s.symbol
+                name: s.name,
+                symbol: s.symbol,
+                stockExchangeAcronym: s.stock_exchange.acronym
             }
         })
     }
