@@ -2,14 +2,13 @@ import React, {useEffect} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import StockTableRow from "./stock-table-row/StockTableRow";
 import * as actions from '../../../store/actions/index';
-import latestStocksArray from "../../../shared/objects/latestStocksArray";
 import PropTypes from "prop-types";
 
 const StockTable = (props) => {
     const dispatch = useDispatch();
     const stocksTableData = useSelector((state) => state.stocksReducer.stocksTableData, shallowEqual);
     useEffect(() => {
-        const symbolsJoined = latestStocksArray.map(s => s.shortName).join(",");
+        const symbolsJoined = [].map(s => s.shortName).join(",");
         dispatch(actions.fetchLatestStockValues(symbolsJoined));
     }, [dispatch])
 

@@ -1,15 +1,15 @@
-import initialPopularStock from "../../shared/objects/initialPopularStock";
 import * as actionTypes from '../actionTypes';
 import {stockChartObject, updateObject} from "../../shared/utils/utils";
 import lineColors from "../../shared/objects/lineColors";
-import {FETCH_COMPANY_DESIGNS_WIKI_LINKS_LOADING} from "../actionTypes";
 
 const initialState = {
-    mostPopular: {
-        TSLA: {...initialPopularStock, name: "Tesla Inc"},
-        AAPL: {...initialPopularStock, name: "Apple Inc"},
-        MSFT: {...initialPopularStock, name: "Microsoft Corp"},
-        IBM: {...initialPopularStock, name: "IBM"}
+    topGainers: {
+        loading: true,
+        stocks: []
+    },
+    topLosers: {
+        loading: true,
+        stocks: []
     },
     stockInInterval: {
         symbol: '',
@@ -58,29 +58,43 @@ const initialState = {
     recommendationTrendsLoading: true
 }
 
-const updatePopularStocks = (state, action) => {
+const updateTopGainersStocks = (state, action) => {
+    debugger
     return updateObject(state,
         {
-            mostPopular: updateObject(state.mostPopular,
+            topGainers: updateObject(state.topGainers,
                 {
-                    [`${action.payload.symbol}`]: updateObject(state.mostPopular[`${action.payload.symbol}`],
-                        {
-                            chartData: stockChartObject(action.payload.dateTimes, action.payload.prices, action.payload.symbol),
-                            stockPercentage: action.payload.stockPercentage
-                        })
+                    stocks: action.payload
                 })
         })
 }
 
-const setPopularStocksLoading = (state, action) => {
+const setTopGainersStocksLoading = (state, action) => {
     return updateObject(state,
         {
-            mostPopular: updateObject(state.mostPopular,
+            topGainers: updateObject(state.topGainers,
                 {
-                    [`${action.symbol}`]: updateObject(state.mostPopular[`${action.symbol}`],
-                        {
-                            loading: action.value
-                        })
+                    loading: action.value
+                })
+        })
+}
+
+const updateTopLosersStocks = (state, action) => {
+    return updateObject(state,
+        {
+            topLosers: updateObject(state.topLosers,
+                {
+                    stocks: action.payload
+                })
+        })
+}
+
+const setTopLosersStocksLoading = (state, action) => {
+    return updateObject(state,
+        {
+            topLosers: updateObject(state.topLosers,
+                {
+                    loading: action.value
                 })
         })
 }
@@ -240,10 +254,14 @@ const setCompanyRecommendationTrendsLoading = (state, action) => {
 
 const stocksReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.FETCH_MOST_POPULAR_STOCK_SUCCESS:
-            return updatePopularStocks(state, action);
-        case actionTypes.SET_POPULAR_STOCKS_LOADING:
-            return setPopularStocksLoading(state, action);
+        case actionTypes.FETCH_TOP_GAINERS_STOCK_SUCCESS:
+            return updateTopGainersStocks(state, action);
+        case actionTypes.SET_TOP_GAINERS_STOCKS_LOADING:
+            return setTopGainersStocksLoading(state, action);
+        case actionTypes.FETCH_TOP_LOSERS_STOCK_SUCCESS:
+            return updateTopLosersStocks(state, action);
+        case actionTypes.SET_TOP_LOSERS_STOCKS_LOADING:
+            return setTopLosersStocksLoading(state, action);
         case actionTypes.FETCH_STOCK_IN_INTERVAL_SUCCESS:
             return updateStockInInterval(state, action);
         case actionTypes.SET_INTERVAL_STOCK_LOADING:

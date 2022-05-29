@@ -12,6 +12,12 @@ const StocksService = {
             }
         })
     },
+    fetchMarketTopGainers: () => {
+        return API_DRIVER_BACKEND.get('/market/top-gainers')
+    },
+    fetchMarketTopLosers: () => {
+        return API_DRIVER_BACKEND.get('/market/top-losers')
+    },
     // Use stockInterval object for interval constants
     fetchStocksIntraday: (symbols, interval = "24hour", limit = 10) => {
         return API_DRIVER_MS.get('/intraday', {

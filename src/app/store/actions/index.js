@@ -1,6 +1,6 @@
 export {
     fetchStocksForInterval,
-    fetchMostPopularStock,
+    fetchMarketTopGainers,
     fetchLatestStockValues,
     searchStocks,
     fetchStockExchanges,

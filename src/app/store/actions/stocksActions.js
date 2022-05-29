@@ -1,24 +1,49 @@
 import StocksService from "../../api/stocksService";
 import * as actionTypes from '../actionTypes';
 import {calculateStockPercentage, toIsoDate, RECOMMENDATION_TRENDS_DATE_FORMAT} from "../../shared/utils/utils";
-import latestStocksArray from "../../shared/objects/latestStocksArray";
 import moment from "moment";
 
-export const fetchMostPopularStock = (symbol) => {
+export const fetchMarketTopGainers = () => {
     return (dispatch) => {
-        dispatch({type: actionTypes.SET_POPULAR_STOCKS_LOADING, symbol: symbol, value: true});
-        StocksService.fetchStocksIntraday(symbol).then(res => {
-            dispatch(
-                {
-                    type: actionTypes.FETCH_MOST_POPULAR_STOCK_SUCCESS,
-                    payload: mapResponseToPopularStockData(res, symbol)
-                }
-            )
-        }).catch(e => {
-            console.log(e);
-        }).finally(() => {
-            dispatch({type: actionTypes.SET_POPULAR_STOCKS_LOADING, value: false, symbol: symbol});
-        })
+        dispatch({type: actionTypes.SET_TOP_GAINERS_STOCKS_LOADING, value: true});
+        StocksService.fetchMarketTopGainers()
+            .then(res => {
+                debugger
+                dispatch(
+                    {
+                        type: actionTypes.FETCH_TOP_GAINERS_STOCK_SUCCESS,
+                        payload: res.data.slice(0,5)
+                    }
+                )
+            })
+            .catch(e => {
+                console.log(e);
+            })
+            .finally(() => {
+                dispatch({type: actionTypes.SET_TOP_GAINERS_STOCKS_LOADING, value: false});
+            })
+    }
+}
+
+export const fetchMarketTopLosers = () => {
+    return (dispatch) => {
+        dispatch({type: actionTypes.SET_TOP_LOSERS_STOCKS_LOADING, value: true});
+        StocksService.fetchMarketTopLosers()
+            .then(res => {
+                debugger
+                dispatch(
+                    {
+                        type: actionTypes.FETCH_TOP_LOSERS_STOCK_SUCCESS,
+                        payload: res.data
+                    }
+                )
+            })
+            .catch(e => {
+                console.log(e);
+            })
+            .finally(() => {
+                dispatch({type: actionTypes.SET_TOP_LOSERS_STOCKS_LOADING, value: false});
+            })
     }
 }
 
@@ -289,7 +314,7 @@ const mapResponseToReport = (data) => {
 const mapResponseToLatestStocks = (data) => {
     const latestStocksArr = [];
     data.forEach(s => {
-        let name = latestStocksArray.find(sym => sym.shortName === s.symbol).name;
+        let name = [].find(sym => sym.shortName === s.symbol).name;
         let calculatedPercentage = calculateStockPercentage(s.open, s.close);
         latestStocksArr.push({
             name: name,

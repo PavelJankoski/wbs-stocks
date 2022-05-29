@@ -1,12 +1,26 @@
-import React, {useState} from 'react';
-import latestStocksArray from "../../shared/objects/latestStocksArray";
+import React, {useEffect, useState} from 'react';
 import StockExchangeTable from "./stock-exchange-table/StockExchangeTable";
-import MostPopularStocks from "./most-popular-stocks/MostPopularStocks";
+import MarketTopStocks from "./top-stocks/MarketTopStocks";
 import StockTimeSeries from "./stock-timeseries/StockTimeSeries";
 import StockTable from "./stock-table/StockTable";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import {fetchMarketTopGainers} from "../../store/actions";
+import {fetchMarketTopLosers} from "../../store/actions/stocksActions";
 
 const Stocks = () => {
-    const [selectedStock, setSelectedStock] = useState(latestStocksArray[0]);
+    const [selectedStock, setSelectedStock] = useState([]);
+
+    const dispatch = useDispatch();
+    const topGainersData = useSelector((state) => state.stocksReducer.topGainers, shallowEqual)
+    const topLosersData = useSelector((state) => state.stocksReducer.topLosers, shallowEqual)
+
+    useEffect(() => {
+        dispatch(fetchMarketTopGainers())
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(fetchMarketTopLosers())
+    }, [dispatch]);
 
     const handleOnTableRowClick = (stock) => {
         setSelectedStock(stock);
@@ -22,8 +36,11 @@ const Stocks = () => {
                 </div>
             </div>
             <div className="row">
-                <div className="col-md-12 grid-margin">
-                    <MostPopularStocks/>
+                <div className="col-xl-6 grid-margin">
+                    <MarketTopStocks icon={require("../../../assets/images/bull-market.png")} title={"Biggest Market Gainers"} loading={topGainersData.loading} stocks={topGainersData.stocks}/>
+                </div>
+                <div className="col-xl-6 grid-margin">
+                    <MarketTopStocks icon={require("../../../assets/images/bear-market.png")} title={"Biggest Market Losers"} loading={topLosersData.loading} stocks={topLosersData.stocks}/>
                 </div>
             </div>
             <div className="row">
