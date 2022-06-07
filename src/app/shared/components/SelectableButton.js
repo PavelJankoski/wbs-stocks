@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 
 const SelectableButton = (props) => {
     return (
-        <button onClick={props.handleOnButtonClick} type="button"
-                className={`m-2 btn ${props.selected === true ? "btn-secondary" : "btn-light"}`}>{props.label}</button>
+        <a onClick={props.handleOnButtonClick}
+                className={`m-2 btn ${props.selected === true ? "btn-secondary" : "btn-light"}`}>{props.label}</a>
     )
 }
 
