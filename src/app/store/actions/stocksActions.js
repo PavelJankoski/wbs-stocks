@@ -3,12 +3,29 @@ import * as actionTypes from '../actionTypes';
 import {calculateStockPercentage, toIsoDate, RECOMMENDATION_TRENDS_DATE_FORMAT} from "../../shared/utils/utils";
 import moment from "moment";
 
+export const fetchStockSectors = () => {
+    return (dispatch) => {
+        StocksService.fetchStockSectors()
+            .then(res => {
+                debugger
+                dispatch(
+                    {
+                        type: actionTypes.FETCH_STOCK_SECTORS_SUCCESS,
+                        payload: res.data
+                    }
+                )
+            })
+            .catch(e => {
+                console.log(e);
+            })
+    }
+}
+
 export const fetchMarketTopGainers = () => {
     return (dispatch) => {
         dispatch({type: actionTypes.SET_TOP_GAINERS_STOCKS_LOADING, value: true});
         StocksService.fetchMarketTopGainers()
             .then(res => {
-                debugger
                 dispatch(
                     {
                         type: actionTypes.FETCH_TOP_GAINERS_STOCK_SUCCESS,
@@ -30,11 +47,10 @@ export const fetchMarketTopLosers = () => {
         dispatch({type: actionTypes.SET_TOP_LOSERS_STOCKS_LOADING, value: true});
         StocksService.fetchMarketTopLosers()
             .then(res => {
-                debugger
                 dispatch(
                     {
                         type: actionTypes.FETCH_TOP_LOSERS_STOCK_SUCCESS,
-                        payload: res.data
+                        payload: res.data.slice(0,5)
                     }
                 )
             })

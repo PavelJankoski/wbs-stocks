@@ -1,4 +1,5 @@
 export {
+    fetchStockSectors,
     fetchStocksForInterval,
     fetchMarketTopGainers,
     fetchLatestStockValues,

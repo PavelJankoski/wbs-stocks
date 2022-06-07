@@ -12,6 +12,9 @@ const StocksService = {
             }
         })
     },
+    fetchStockSectors: () => {
+        return API_DRIVER_BACKEND.get('/companies/sectors')
+    },
     fetchMarketTopGainers: () => {
         return API_DRIVER_BACKEND.get('/market/top-gainers')
     },

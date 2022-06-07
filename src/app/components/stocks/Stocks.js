@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import StockExchangeTable from "./stock-exchange-table/StockExchangeTable";
 import MarketTopStocks from "./top-stocks/MarketTopStocks";
-import StockTimeSeries from "./stock-timeseries/StockTimeSeries";
 import StockTable from "./stock-table/StockTable";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {fetchMarketTopGainers} from "../../store/actions";
@@ -31,7 +30,7 @@ const Stocks = () => {
             <div className="row page-title-header">
                 <div className="col-12">
                     <div className="page-header">
-                        <h4 className="page-title font-weight-medium">Dashboard</h4>
+                        <h3 className=" font-weight-medium">Stock Market</h3>
                     </div>
                 </div>
             </div>
@@ -44,10 +43,7 @@ const Stocks = () => {
                 </div>
             </div>
             <div className="row">
-                <div className="col-md-8 grid-margin stretch-card">
-                    <StockTimeSeries selectedStock={selectedStock}/>
-                </div>
-                <div className="col-md-4 grid-margin stretch-card">
+                <div className="col-12 grid-margin stretch-card">
                     <StockTable selectedStock={selectedStock} handleOnTableRowClick={handleOnTableRowClick}/>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import {stockChartObject, updateObject} from "../../shared/utils/utils";
 import lineColors from "../../shared/objects/lineColors";
 
 const initialState = {
+    stockSectors: [],
     topGainers: {
         loading: true,
         stocks: []
@@ -56,6 +57,10 @@ const initialState = {
         datasets: null
     },
     recommendationTrendsLoading: true
+}
+
+const updateStockSectors = (state, action) => {
+    return updateObject(state, {stockSectors: action.payload})
 }
 
 const updateTopGainersStocks = (state, action) => {
@@ -254,6 +259,8 @@ const setCompanyRecommendationTrendsLoading = (state, action) => {
 
 const stocksReducer = (state = initialState, action) => {
     switch (action.type) {
+        case actionTypes.FETCH_STOCK_SECTORS_SUCCESS:
+            return updateStockSectors(state, action);
         case actionTypes.FETCH_TOP_GAINERS_STOCK_SUCCESS:
             return updateTopGainersStocks(state, action);
         case actionTypes.SET_TOP_GAINERS_STOCKS_LOADING:
