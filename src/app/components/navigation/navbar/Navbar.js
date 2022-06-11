@@ -6,9 +6,7 @@ import languages from "../../../shared/objects/languages";
 const Navbar = (props) => {
 
     const toggleOffcanvas = () => {
-        debugger
         document.querySelector('.sidebar-offcanvas').classList.toggle('active');
-        props.history.push("/stocks/details/"+"AAPL")
     }
 
     return (

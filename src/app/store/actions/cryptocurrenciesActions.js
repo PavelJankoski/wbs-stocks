@@ -5,11 +5,11 @@ import {Currency} from "../../shared/objects/currencies";
 import {toIsoDate} from "../../shared/utils/utils";
 import {FETCH_COIN_ABSTRACT_SUCCESS} from "../actionTypes";
 
-export const fetchCoinsMarketData = () => {
+export const fetchCoinsMarketData = (page, pageSize) => {
     return (dispatch) => {
         dispatch({type: actionTypes.SET_COINS_MARKET_DATA_LOADING, value: true});
 
-        CryptocurrenciesService.fetchCoinsMarketData().then(res => {
+        CryptocurrenciesService.fetchCoinsMarketData("usd", page, pageSize).then(res => {
             dispatch(mapResponseToCoinsMarketData(res.data));
         }).catch(e => {
             console.log(e);
@@ -77,7 +77,7 @@ export const fetchCoinMarketChartData = (id, days = 7) => {
 
 const mapResponseToCoinsMarketData = (data) => {
     const coinsArr = [];
-    data.forEach(coin => {
+    data.data.forEach(coin => {
         coinsArr.push({
             id: coin.id,
             coinIcon: coin.image,
@@ -87,10 +87,14 @@ const mapResponseToCoinsMarketData = (data) => {
             priceChangePercentage1h: coin.price_change_percentage_1h_in_currency,
             priceChangePercentage24h: coin.price_change_percentage_24h_in_currency,
             priceChangePercentage7d: coin.price_change_percentage_7d_in_currency,
-            marketCapital: coin.market_cap
+            marketCapital: coin.market_cap,
+            marketCapitalRank: coin.market_cap_rank
         })
     })
-    return {type: actionTypes.FETCH_COINS_MARKET_DATA_SUCCESS, payload: coinsArr};
+    return {type: actionTypes.FETCH_COINS_MARKET_DATA_SUCCESS, payload: {
+            coinsArr: coinsArr,
+            pagination: data.pagination
+        }};
 }
 
 const mapResponseToExchanges = (data) => {

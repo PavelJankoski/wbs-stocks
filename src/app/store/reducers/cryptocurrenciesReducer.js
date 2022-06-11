@@ -2,7 +2,10 @@ import * as actionTypes from '../actionTypes';
 import {stockChartObject, updateObject} from "../../shared/utils/utils";
 
 const initialState = {
-    coinsTableData: [],
+    coinsTableData: {
+        coinsArr: [],
+        pagination: {}
+    },
     coinsTableLoading: false,
     exchangesTableData: [],
     exchangesTableLoading: false,
@@ -14,6 +17,7 @@ const initialState = {
 }
 
 const updateCoinsMarketData = (state, action) => {
+    debugger
     return updateObject(state, {coinsTableData: action.payload})
 }
 

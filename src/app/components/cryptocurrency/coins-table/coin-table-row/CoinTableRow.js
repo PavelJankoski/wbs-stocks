@@ -7,6 +7,9 @@ import NumberFormat from 'react-number-format';
 const CoinTableRow = (props) => {
     return (
         <tr onClick={props.handleOnTableRowClick} style={{cursor: "pointer"}}>
+            <td>
+                <p className="mb-1 text-dark font-weight-semibold">{props.rank}</p>
+            </td>
             <td><Image src={props.coinIcon} alt={"Coin icon"}/></td>
             <td>
                 <p className="mb-1 text-dark font-weight-semibold">{props.symbol.toUpperCase()}</p>
@@ -44,6 +47,7 @@ CoinTableRow.propTypes = {
     priceChangePercentage24h: PropTypes.number,
     priceChangePercentage7d: PropTypes.number,
     marketCapital: PropTypes.number,
+    rank: PropTypes.number,
     handleOnTableRowClick: PropTypes.func
 }
 

@@ -8,6 +8,7 @@ import {IconButton, InputAdornment, TextField} from '@mui/material';
 import CancelRoundedIcon from '@material-ui/icons/CancelRounded'
 import SearchIcon from '@material-ui/icons/Search'
 import AppPagination from "../../../shared/components/AppPagination";
+import PropTypes from "prop-types";
 
 const StockTable = (props) => {
     const [searchedStock, setSearchedStock] = useState(undefined);
@@ -37,17 +38,12 @@ const StockTable = (props) => {
         dispatch(actions.searchStocks(0, 5, searchedStock, selectedSector))
     }, [dispatch]);
 
-
-    const handleOnTableRowClick = (stock) => {
-        props.history.push("/stocks/details/" + "AAPL")
-    }
-
     const renderTableData = stocksTableData.data.map((s) => (
         <StockTableRow key={s.companyName + "-table-row"}
                        name={s.companyName}
                        exchange={s.exchange}
                        logoUrl={s.logoUrl}
-                       handleOnTableRowClick={() => handleOnTableRowClick(s)}
+                       handleOnTableRowClick={() => props.handleClick(s)}
                        symbol={s.symbol}
         />
     ));
@@ -117,27 +113,34 @@ const StockTable = (props) => {
                 </div>
 
                 {
-                    stocksTableData.data.length > 0 ? <div className="table-responsive">
-                        <table className="table table-stretched table-hover">
-                            <thead>
-                            <tr>
-                                <th className="col-2">Symbol</th>
-                                <th className="col-5">Name</th>
-                                <th className="col-5">Exchange</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {renderTableData}
-                            </tbody>
-                        </table>
-                            <div className="d-flex justify-content-center mt-3">
-                                    <AppPagination size={stocksTableData.pagination.totalPages} onPageChange={handlePageChange}/>
+                    stocksTableData.data.length > 0 ? <div>
+                            <div className="table-responsive">
+                                <table className="table table-stretched table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th className="col-2">Symbol</th>
+                                        <th className="col-5">Name</th>
+                                        <th className="col-5">Exchange</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {renderTableData}
+                                    </tbody>
+                                </table>
+                                <div className="d-flex justify-content-center mt-3">
+                                    <AppPagination size={stocksTableData.pagination.totalPages}
+                                                   onPageChange={handlePageChange}/>
+                                </div>
                             </div>
-                    </div>
-                    : <div/>}
+                        </div>
+                        : <div/>}
             </div>
         </div>
     )
+}
+
+StockTable.propTypes = {
+    handleClick: PropTypes.func
 }
 
 export default StockTable;

@@ -2,8 +2,8 @@ import {API_DRIVER_BACKEND, API_DRIVER_CG} from "../../axiosConfig";
 import {Currency} from "../shared/objects/currencies";
 
 const CryptocurrenciesService = {
-    fetchCoinsMarketData: (vsCurrency = 'usd', page = 1, pageSize = 100) => {
-        return API_DRIVER_BACKEND.get('/cryptocurrency/all', {
+    fetchCoinsMarketData: (vsCurrency = 'usd', page = 1, pageSize = 50) => {
+        return API_DRIVER_BACKEND.get('/cryptocurrency', {
             params: {
                 vsCurrency: vsCurrency,
                 page: page,
