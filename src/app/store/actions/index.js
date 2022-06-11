@@ -2,7 +2,6 @@ export {
     fetchStockSectors,
     fetchStocksForInterval,
     fetchMarketTopGainers,
-    fetchLatestStockValues,
     searchStocks,
     fetchStockExchanges,
     getBasicDetails,

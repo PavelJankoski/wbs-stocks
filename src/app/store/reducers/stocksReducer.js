@@ -19,9 +19,10 @@ const initialState = {
         lastData: {},
         loading: true
     },
-    stocksTableData: [],
     detailsData: [],
-    searchedStocks: [],
+    searchedStocks: {
+        data: []
+    },
     stockOverviewData: [],
     reportsData: [],
     epsCompany: {
@@ -64,7 +65,6 @@ const updateStockSectors = (state, action) => {
 }
 
 const updateTopGainersStocks = (state, action) => {
-    debugger
     return updateObject(state,
         {
             topGainers: updateObject(state.topGainers,
@@ -148,9 +148,6 @@ const setStockInIntervalLoading = (state, action) => {
     })
 }
 
-const updateLatestStocks = (state, action) => {
-    return updateObject(state, {stocksTableData: action.payload})
-}
 
 const updateSearchStocksData = (state, action) => {
     return updateObject(state, {searchedStocks: action.payload})
@@ -273,8 +270,6 @@ const stocksReducer = (state = initialState, action) => {
             return updateStockInInterval(state, action);
         case actionTypes.SET_INTERVAL_STOCK_LOADING:
             return setStockInIntervalLoading(state, action);
-        case actionTypes.FETCH_LATEST_STOCK_VALUES_SUCCESS:
-            return updateLatestStocks(state, action);
         case actionTypes.SEARCH_STOCKS_SUCCESS:
             return updateSearchStocksData(state, action);
         case actionTypes.SET_SEARCH_STOCKS_LOADING:

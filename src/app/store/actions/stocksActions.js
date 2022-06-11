@@ -7,7 +7,6 @@ export const fetchStockSectors = () => {
     return (dispatch) => {
         StocksService.fetchStockSectors()
             .then(res => {
-                debugger
                 dispatch(
                     {
                         type: actionTypes.FETCH_STOCK_SECTORS_SUCCESS,
@@ -77,16 +76,6 @@ export const fetchStocksForInterval = (symbol, interval, limit) => {
             console.log(e);
         }).finally(() => {
             dispatch({type: actionTypes.SET_INTERVAL_STOCK_LOADING, value: false});
-        })
-    }
-}
-
-export const fetchLatestStockValues = (symbols) => {
-    return (dispatch) => {
-        StocksService.fetchLatestStockValues(symbols).then(res => {
-            dispatch(mapResponseToLatestStocks(res.data.data));
-        }).catch(e => {
-            console.log(e);
         })
     }
 }
@@ -215,11 +204,11 @@ export const epsCompanyPerYear = (symbol) => {
         })
     }
 }
-export const searchStocks = (searchText) => {
+export const searchStocks = (page, size, searchText, sector) => {
     return (dispatch) => {
         dispatch({type: actionTypes.SET_SEARCH_STOCKS_LOADING, value: true});
-        StocksService.searchStocks(10, 0, searchText).then(res => {
-            dispatch(mapResponseToSearchedStocks(res.data.data))
+        StocksService.searchStocks(page, size, searchText, sector).then(res => {
+            dispatch({type: actionTypes.SEARCH_STOCKS_SUCCESS, payload: res.data});
         }).catch(e => {
             console.log(e);
         }).finally(() => {
@@ -325,33 +314,6 @@ const mapResponseToDetails = (data) => {
 
 const mapResponseToReport = (data) => {
     return {type: actionTypes.FETCH_REPORTS_DATA, payload: data}
-}
-
-const mapResponseToLatestStocks = (data) => {
-    const latestStocksArr = [];
-    data.forEach(s => {
-        let name = [].find(sym => sym.shortName === s.symbol).name;
-        let calculatedPercentage = calculateStockPercentage(s.open, s.close);
-        latestStocksArr.push({
-            name: name,
-            shortName: s.symbol,
-            change: calculatedPercentage,
-            latestPrice: s.close
-        })
-    })
-    return {type: actionTypes.FETCH_LATEST_STOCK_VALUES_SUCCESS, payload: latestStocksArr};
-}
-
-const mapResponseToSearchedStocks = (data) => {
-    return {
-        type: actionTypes.SEARCH_STOCKS_SUCCESS, payload: data.splice(0, 5).map(s => {
-            return {
-                name: s.name,
-                symbol: s.symbol,
-                stockExchangeAcronym: s.stock_exchange.acronym
-            }
-        })
-    }
 }
 
 const mapResponseToRecommendationTrendsData = (data) => {

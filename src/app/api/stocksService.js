@@ -31,20 +31,14 @@ const StocksService = {
             }
         })
     },
-    fetchLatestStockValues: (symbols) => {
-        return API_DRIVER_MS.get('/eod/latest', {
-            params: {
-                symbols: symbols
-            }
-        })
-    },
-    searchStocks: (limit, offset, searchText) => {
-        return API_DRIVER_BACKEND.get('/companies', {
-            params: {
-                size: limit,
-                page: offset,
-                query: searchText
-            }
+    searchStocks: (page, size, searchText, sector) => {
+        return API_DRIVER_BACKEND.post('/companies', {
+            pageRequest: {
+                size: size,
+                page: page
+            },
+            query: searchText,
+            sector: sector
         })
     },
     fetchStockExchanges: (limit, offset, search) => {

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import StockExchangeTable from "./stock-exchange-table/StockExchangeTable";
 import MarketTopStocks from "./top-stocks/MarketTopStocks";
 import StockTable from "./stock-table/StockTable";
@@ -7,7 +7,6 @@ import {fetchMarketTopGainers} from "../../store/actions";
 import {fetchMarketTopLosers} from "../../store/actions/stocksActions";
 
 const Stocks = () => {
-    const [selectedStock, setSelectedStock] = useState([]);
 
     const dispatch = useDispatch();
     const topGainersData = useSelector((state) => state.stocksReducer.topGainers, shallowEqual)
@@ -20,10 +19,6 @@ const Stocks = () => {
     useEffect(() => {
         dispatch(fetchMarketTopLosers())
     }, [dispatch]);
-
-    const handleOnTableRowClick = (stock) => {
-        setSelectedStock(stock);
-    }
 
     return (
         <div>
@@ -44,7 +39,7 @@ const Stocks = () => {
             </div>
             <div className="row">
                 <div className="col-12 grid-margin stretch-card">
-                    <StockTable selectedStock={selectedStock} handleOnTableRowClick={handleOnTableRowClick}/>
+                    <StockTable/>
                 </div>
             </div>
             <div className="row">
