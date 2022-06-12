@@ -39,6 +39,8 @@ const CryptocurrencyNews = () => {
                       source={s.source}
                       day={dateTime[2]}
                       month={dateTime[1]}
+                      year={dateTime[3]}
+                      category={s.category}
                       title={s.headline}
                       description={s.summary}
                       link={s.url}

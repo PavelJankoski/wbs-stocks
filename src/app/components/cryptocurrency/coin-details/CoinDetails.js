@@ -8,6 +8,7 @@ import NumberFormat from "react-number-format";
 import LinkDropdownButton from "../../UI/LinkDropdownButton";
 import CoinTimeSeries from "../coin-timeseries/CoinTimeSeries";
 import parse from 'html-react-parser'
+import {TechnicalAnalysis} from "react-tradingview-embed";
 
 const CoinDetails = () => {
 
@@ -121,7 +122,17 @@ const CoinDetails = () => {
 
                 <div className="row mt-4">
                     <div className="col-xl-8 col-12">
-                        <CoinTimeSeries coinSymbol={coinDetails.symbol}/>
+                        <div className="row">
+                            <CoinTimeSeries coinSymbol={coinDetails.symbol}/>
+
+                        </div>
+                        <div className="row mt-5">
+                            <p className="h2 font-weight-medium">About {coinDetails.name}</p>
+                            <span style={{fontSize: 20}}>
+                            {parse(coinDetails.description)}
+                         </span>
+                        </div>
+
                     </div>
 
                     <div className="col-xl-4 col-12 mt-xl-0 mt-4">
@@ -190,15 +201,13 @@ const CoinDetails = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div className="row mt-4">
-                    <div className="col-lg-8 col-12">
-                        <p className="h2 font-weight-medium">About {coinDetails.name}</p>
-                        <span style={{fontSize: 20}}>
-                            {parse(coinDetails.description)}
-                         </span>
+                        <div className="w-100">
+                            <TechnicalAnalysis widgetProps={{
+                                "isTransparent": true,
+                                "colorTheme": "light",
+                                "symbol": `BINANCE:${coinDetails.symbol === "usdt" ? "BTC" : coinDetails.symbol}USDT`
+                            }} />
+                        </div>
                     </div>
                 </div>
             </div>

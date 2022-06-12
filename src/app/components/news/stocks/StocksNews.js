@@ -44,7 +44,7 @@ const StocksNews = () => {
         }
         if (searchText.length !== 0) {
             setTimer(setTimeout(() =>
-                dispatch(actions.searchStocks(searchText)), 1500)
+                dispatch(actions.searchStocks(0, 5, searchText)), 1500)
             );
         } else {
             dispatch({type: actionTypes.SEARCH_STOCKS_SUCCESS, payload: []});
@@ -63,8 +63,10 @@ const StocksNews = () => {
                       source={s.source}
                       day={dateTime[2]}
                       month={dateTime[1]}
+                      year={dateTime[3]}
                       title={s.headline}
                       description={s.summary}
+                      category={s.category}
                       link={s.url}
                       image={s.image}/>
         )

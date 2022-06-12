@@ -7,7 +7,10 @@ const initialState = {
         pagination: {}
     },
     coinsTableLoading: false,
-    exchangesTableData: [],
+    exchangesTableData: {
+        exchangesArr: [],
+        pagination: {}
+    },
     exchangesTableLoading: false,
     coinDetails: null,
     coinMarketChartData: {
@@ -17,7 +20,6 @@ const initialState = {
 }
 
 const updateCoinsMarketData = (state, action) => {
-    debugger
     return updateObject(state, {coinsTableData: action.payload})
 }
 

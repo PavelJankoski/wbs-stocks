@@ -1,7 +1,7 @@
 import React from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import PropTypes from "prop-types";
-import {AdvancedChart, TechnicalAnalysis, Ticker} from "react-tradingview-embed"; //DO NOT REMOVE THIS
+import {AdvancedChart} from "react-tradingview-embed";
 
 const CoinTimeSeries = (props) => {
     const dispatch = useDispatch();
@@ -21,12 +21,6 @@ const CoinTimeSeries = (props) => {
                     "range": "1D",
                     "symbol": `BINANCE:${props.coinSymbol === "usdt" ? "BTC" : props.coinSymbol}USDT`
                 }}/>
-
-            <TechnicalAnalysis widgetProps={{
-                "isTransparent": true,
-                "colorTheme": "light",
-                "symbol": `BINANCE:${props.coinSymbol === "usdt" ? "BTC" : props.coinSymbol}USDT`
-            }} />
         </div>
     );
 }

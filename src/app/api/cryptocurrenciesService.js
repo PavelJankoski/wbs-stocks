@@ -13,7 +13,7 @@ const CryptocurrenciesService = {
         })
     },
 
-    fetchExchangesList: (page = 1, pageSize = 100) => {
+    fetchExchangesList: (page = 1, pageSize = 50) => {
         return API_DRIVER_BACKEND.get('/cryptocurrency/exchanges', {
             params: {
                 page: page,

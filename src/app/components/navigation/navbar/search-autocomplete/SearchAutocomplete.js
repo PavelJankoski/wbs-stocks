@@ -5,10 +5,10 @@ import PropTypes from "prop-types";
 
 const SearchAutocomplete = (props) => {
 
-    const renderDropdownItems = props.autocompleteData.map((s, idx) => (
+    const renderDropdownItems = props.autocompleteData.data.map((s, idx) => (
         <React.Fragment key={s.symbol + "-dropdown-item"}>
             <Dropdown.Item onClick={() => props.onItemClick(s.symbol)} as={"div"}>
-                <p className="mb-0 font-weight-bold">{s.symbol} <span className="text-muted">({s.stockExchangeAcronym})</span></p>
+                <p className="mb-0 font-weight-bold">{s.symbol} <span className="text-muted">({s.exchange})</span></p>
                 <span className="text-muted">{s.name}</span>
             </Dropdown.Item>
             {idx !== props.autocompleteData.length - 1 ? <Dropdown.Divider /> : null}
@@ -17,7 +17,7 @@ const SearchAutocomplete = (props) => {
     ))
 
     const renderDropdownMenu = () => {
-        if(props.autocompleteData.length === 0 && !props.loading) {
+        if(props.autocompleteData.data.length === 0 && !props.loading) {
             return (<Dropdown.Item disabled>
                 No data
             </Dropdown.Item>)
@@ -51,7 +51,7 @@ const SearchAutocomplete = (props) => {
 
 SearchAutocomplete.propTypes = {
     loading: PropTypes.bool,
-    autocompleteData: PropTypes.array,
+    autocompleteData: PropTypes.object,
     onSearchChange: PropTypes.func,
     onItemClick: PropTypes.func,
     inputPlaceholder: PropTypes.string

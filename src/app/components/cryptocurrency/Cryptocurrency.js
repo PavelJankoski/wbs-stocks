@@ -18,16 +18,20 @@ const Cryptocurrency = () => {
     const renderTable = () => {
         switch (activeTab) {
             case COINS:
-                return <CoinsTable coinsData={coinsTableData} pageSize={50} handlePageChange={handlePageChange}/>
+                return <CoinsTable coinsData={coinsTableData} pageSize={50} handlePageChange={handleCoinsPageChange}/>
             case EXCHANGES:
-                return <ExchangesTable exchanges={exchangesTableData}/>
+                return <ExchangesTable exchanges={exchangesTableData} pageSize={50} handlePageChange={handleExchangesPageChange}/>
             default:
                 return null;
         }
     }
 
-    const handlePageChange = (e, page) => {
+    const handleCoinsPageChange = (e, page) => {
         dispatch(fetchCoinsMarketData(page))
+    }
+
+    const handleExchangesPageChange = (e, page) => {
+        dispatch(fetchExchanges(page))
     }
 
     const renderSpinner = () => {

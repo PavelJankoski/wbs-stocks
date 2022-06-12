@@ -19,10 +19,10 @@ export const fetchCoinsMarketData = (page, pageSize) => {
     }
 }
 
-export const fetchExchanges = () => {
+export const fetchExchanges = (page, pageSize) => {
     return (dispatch) => {
         dispatch({type: actionTypes.SET_EXCHANGES_LOADING, value: true});
-        CryptocurrenciesService.fetchExchangesList().then(res => {
+        CryptocurrenciesService.fetchExchangesList(page, pageSize).then(res => {
             dispatch(mapResponseToExchanges(res.data));
         }).catch(e => {
             console.log(e);
@@ -99,17 +99,21 @@ const mapResponseToCoinsMarketData = (data) => {
 
 const mapResponseToExchanges = (data) => {
     const exchangesArr = [];
-    data.forEach(exchange => {
+    data.data.forEach(exchange => {
         exchangesArr.push({
             id: exchange.id,
             name: exchange.name,
             yearEstablished: exchange.year_established,
             country: exchange.country,
             icon: exchange.image,
-            tradeVolume24hBTC: exchange.trade_volume_24h_btc
+            tradeVolume24hBTC: exchange.trade_volume_24h_btc,
+            url: exchange.url
         })
     })
-    return {type: actionTypes.FETCH_EXCHANGES_SUCCESS, payload: exchangesArr};
+    return {type: actionTypes.FETCH_EXCHANGES_SUCCESS, payload: {
+            exchangesArr: exchangesArr,
+            pagination: data.pagination
+        }};
 }
 
 const mapResponseToCoinDetails = (data) => {

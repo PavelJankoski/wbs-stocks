@@ -8,7 +8,7 @@ const TopStockItem = (props) => {
         <div className="row align-items-center mb-2">
             <div className="col-2">
                 <p className="m-0 font-weight-semibold text-truncate">{props.index} <Image
-                    src={`${props.stock.logo !== null ? props.stock.logo : require("../../../../../assets/images/no-connection.png")}`}
+                    src={`${props.stock.logo !== null ? props.stock.logo : require("../../../../../assets/images/placeholder.jpg")}`}
                     alt={"Stock icon"}
                     style={{width: "38px", height: "38px"}} className="ml-2"/></p>
             </div>
