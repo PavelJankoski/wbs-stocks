@@ -2,11 +2,15 @@ $twoCardSize: 1600px;
 
 #cards{
   display: grid;
-  grid-row-gap: 1rem;
-  grid-column-gap: 1rem;
+  grid-row-gap: 2rem;
+  grid-column-gap: 2rem;
   justify-items: center;
 
   @media (min-width: $twoCardSize) {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+#dropdown-button{
+  background-color: #69abb9
 }

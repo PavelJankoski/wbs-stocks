@@ -21,9 +21,10 @@ const Stocks = (props) => {
         dispatch(fetchMarketTopLosers())
     }, [dispatch]);
 
-    const x = (e) => {
-        props.history.push(e.symbol)
+    const handleStockClick = (e) => {
+        props.history.push('/stocks/details/'+e.symbol)
     }
+
     return (
         <div>
             <div className="row page-title-header">
@@ -37,17 +38,19 @@ const Stocks = (props) => {
                 <div className="col-xl-6 grid-margin">
                     <MarketTopStocks icon={require("../../../assets/images/bull-market.png")}
                                      title={"Biggest Market Gainers"} loading={topGainersData.loading}
+                                     handleStockClick={handleStockClick}
                                      stocks={topGainersData.stocks}/>
                 </div>
                 <div className="col-xl-6 grid-margin">
                     <MarketTopStocks icon={require("../../../assets/images/bear-market.png")}
                                      title={"Biggest Market Losers"} loading={topLosersData.loading}
+                                     handleStockClick={handleStockClick}
                                      stocks={topLosersData.stocks}/>
                 </div>
             </div>
             <div className="row">
                 <div className="col-12 grid-margin stretch-card">
-                    <StockTable handleClick={x}/>
+                    <StockTable handleClick={handleStockClick}/>
                 </div>
             </div>
             <div className="row">
@@ -59,4 +62,4 @@ const Stocks = (props) => {
     );
 }
 
-export default withRouter(Stocks);
+export default Stocks;

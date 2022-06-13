@@ -7,8 +7,9 @@ import {datasetKeyProvider} from "../../../shared/utils/utils";
 import {Table, TableBody, TableCell, TableHead, TableRow} from "@material-ui/core";
 import NumberFormat from "react-number-format";
 import CompanyWikiLinks from "./CompanyWikiLinks";
-import {Spinner} from "react-bootstrap";
+import {Image, Spinner} from "react-bootstrap";
 import RecommendationTrends from "./RecommendationTrends";
+import StockTimeSeries from "../stock-timeseries/StockTimeSeries";
 
 const Details = (props) => {
     const dispatch = useDispatch();
@@ -54,10 +55,10 @@ const Details = (props) => {
     useEffect(() => {
         if (details?.name !== undefined) {
 
-            dispatch(actions.fetchCompanyProductsWikiLinks(details.name));
-            dispatch(actions.fetchCompanyServicesWikiLinks(details.name));
-            dispatch(actions.fetchCompanyDevelopmentsWikiLinks(details.name));
-            dispatch(actions.fetchCompanyDesignsWikiLinks(details.name))
+            dispatch(actions.fetchCompanyProductsWikiLinks(details.companyName));
+            dispatch(actions.fetchCompanyServicesWikiLinks(details.companyName));
+            dispatch(actions.fetchCompanyDevelopmentsWikiLinks(details.companyName));
+            dispatch(actions.fetchCompanyDesignsWikiLinks(details.companyName))
         }
         return function cleanup() {
             dispatch(actions.cleanUpCompanyServicesWikiLinks())
@@ -133,34 +134,30 @@ const Details = (props) => {
         <div>
             <div className="card" style={divStyle}>
                 <div className="card-body">
-                    <h1 className="font-weight-medium">{details.name}</h1>
+                    <div className="row d-flex">
+                        <Image
+                            src={`${details.logo !== null ? details.logo : require("../../../../assets/images/placeholder.jpg")}`}
+                            roundedCircle alt={'Stock icon'}
+                            style={{width: 65, height: 65}}/>
+                        <p className="h1 font-weight-bold ml-2" style={{fontSize: 50}}>{details.companyName}</p>
+                        <p className="h4 mt-4 ml-1">{details.symbol}</p>
+                    </div>
                     <div className="row">
-                        <div className="col">
-                            <img style={styleImg} src={details.logo} alt="logo"/>
-                        </div>
-
                         <div className="col-sm" style={{marginTop: "40px"}}>
-
-                            <div><span><b>Country: </b></span>{details.country}</div>
-                            <div style={{marginTop: '10px'}}><span><b>Industry: </b></span>{details.finnhubIndustry}
+                            <div><span><b>Industry: </b></span>{details.industry}
                             </div>
-                            <div style={{marginTop: '10px'}}><span><b>Currency: </b></span>{details.currency}</div>
+                            <div style={{marginTop: '10px'}}><span><b>Exchange: </b></span>{details.exchange}</div>
                             <div style={{marginTop: '10px'}}><span><b>Website:</b> </span><a
-                                href={details.weburl}>{details.weburl}</a></div>
+                                href={details.website}>{details.website}</a></div>
 
                         </div>
                         <div className="col-sm" style={{marginTop: "40px"}}>
-                            <div><span><b>Exchange: </b></span>{details.exchange}</div>
-                            <div style={{marginTop: '10px'}}>
-                                <span><b>Share Outstanding: </b></span>{details.shareOutstanding}</div>
-                            <div style={{marginTop: '10px'}}><span><b>Initial Public Offering: </b></span>{details.ipo}
-                            </div>
-                            <div style={{marginTop: '10px'}}><span><b>Market Capitalization: </b></span> <NumberFormat
-                                value={details.marketCapitalization} decimalScale={2}
-                                displayType={'text'}
-                                thousandSeparator={true}
-                                prefix={'$'}/></div>
                             <div>
+                                <span><b>Country: </b></span>{details.country}
+                            </div>
+                            <div style={{marginTop: '10px'}}><span><b>CEO: </b></span>{details.CEO}</div>
+                            <div style={{marginTop: '10px'}}>
+                                <span><b>Employees: </b></span>{details.employees}
                             </div>
                         </div>
                     </div>
@@ -170,12 +167,7 @@ const Details = (props) => {
                 <div className="col-md-7 grid-margin stretch-card">
                     <div className="card">
                         <div className="card-body">
-                            <h3>About Us</h3>
-                            <div style={{
-                                textAlign: 'left',
-                                fontSize: '1.2em',
-                                marginLeft: '2px'
-                            }}>{stockOverviewData.Description}</div>
+                           {/* <StockTimeSeries selectedStock={}/>*/}
                         </div>
 
                     </div>
@@ -185,77 +177,80 @@ const Details = (props) => {
                         <div className="card-body">
                             <h3>Annual Reports for Last Year</h3>
                             {reports.annualReports &&
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell align="left" style={{fontWeight: 'bold'}}>Details</TableCell>
-                                        <TableCell align="left" style={{fontWeight: 'bold'}}>Values</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell align="left" style={{fontWeight: 'bold'}}>Cost of revenue</TableCell>
-                                        <TableCell style={{fontWeight: 'bold'}} align="left"> <NumberFormat
-                                            value={reports.annualReports[0].costOfRevenue} decimalScale={2}
-                                            displayType={'text'}
-                                            thousandSeparator={true}
-                                            prefix={'$'}/></TableCell>
-                                    </TableRow>
-                                    <TableRow style={{fontWeight: 'bold'}}>
-                                        <TableCell align="left" style={{fontWeight: 'bold'}}>Gross Profit</TableCell>
-                                        <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
-                                            value={reports.annualReports[0].grossProfit} decimalScale={2}
-                                            displayType={'text'}
-                                            thousandSeparator={true}
-                                            prefix={'$'}/></TableCell>
-                                    </TableRow>
-                                    <TableRow style={{fontWeight: 'bold'}}>
-                                        <TableCell align="left" style={{fontWeight: 'bold'}}>Net income</TableCell>
-                                        <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
-                                            value={reports.annualReports[0].netIncome} decimalScale={2}
-                                            displayType={'text'}
-                                            thousandSeparator={true}
-                                            prefix={'$'}/></TableCell>
-                                    </TableRow>
-                                    <TableRow style={{fontWeight: 'bold'}}>
-                                        <TableCell align="left" style={{fontWeight: 'bold'}}>Total Revenue</TableCell>
-                                        <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
-                                            value={reports.annualReports[0].totalRevenue} decimalScale={2}
-                                            displayType={'text'}
-                                            thousandSeparator={true}
-                                            prefix={'$'}/></TableCell>
-                                    </TableRow>
-                                    <TableRow style={{fontWeight: 'bold'}}>
-                                        <TableCell align="left" style={{fontWeight: 'bold'}}>Operating
-                                            income</TableCell>
-                                        <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
-                                            value={reports.annualReports[0].operatingIncome} decimalScale={2}
-                                            displayType={'text'}
-                                            thousandSeparator={true}
-                                            prefix={'$'}/></TableCell>
-                                    </TableRow>
-                                    <TableRow style={{fontWeight: 'bold'}}>
-                                        <TableCell align="left" style={{fontWeight: 'bold'}}>Income Before
-                                            tax</TableCell>
-                                        <TableCell align="left" style={{fontWeight: 'bold'}}>
-                                            <NumberFormat value={reports.annualReports[0].incomeBeforeTax}
-                                                          decimalScale={2}
-                                                          displayType={'text'} thousandSeparator={true}
-                                                          prefix={'$'}/></TableCell>
-                                    </TableRow>
-                                    <TableRow style={{fontWeight: 'bold'}}>
-                                        <TableCell align="left" style={{fontWeight: 'bold'}}>income tax
-                                            expense</TableCell>
-                                        <TableCell align="left" style={{fontWeight: 'bold'}}>
-                                            <NumberFormat value={reports.annualReports[0].incomeTaxExpense}
-                                                          decimalScale={2}
-                                                          displayType={'text'} thousandSeparator={true}
-                                                          prefix={'$'}/>
-                                        </TableCell>
-                                    </TableRow>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell align="left" style={{fontWeight: 'bold'}}>Details</TableCell>
+                                            <TableCell align="left" style={{fontWeight: 'bold'}}>Values</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell align="left" style={{fontWeight: 'bold'}}>Cost of
+                                                revenue</TableCell>
+                                            <TableCell style={{fontWeight: 'bold'}} align="left"> <NumberFormat
+                                                value={reports.annualReports[0].costOfRevenue} decimalScale={2}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                prefix={'$'}/></TableCell>
+                                        </TableRow>
+                                        <TableRow style={{fontWeight: 'bold'}}>
+                                            <TableCell align="left" style={{fontWeight: 'bold'}}>Gross
+                                                Profit</TableCell>
+                                            <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
+                                                value={reports.annualReports[0].grossProfit} decimalScale={2}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                prefix={'$'}/></TableCell>
+                                        </TableRow>
+                                        <TableRow style={{fontWeight: 'bold'}}>
+                                            <TableCell align="left" style={{fontWeight: 'bold'}}>Net income</TableCell>
+                                            <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
+                                                value={reports.annualReports[0].netIncome} decimalScale={2}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                prefix={'$'}/></TableCell>
+                                        </TableRow>
+                                        <TableRow style={{fontWeight: 'bold'}}>
+                                            <TableCell align="left" style={{fontWeight: 'bold'}}>Total
+                                                Revenue</TableCell>
+                                            <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
+                                                value={reports.annualReports[0].totalRevenue} decimalScale={2}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                prefix={'$'}/></TableCell>
+                                        </TableRow>
+                                        <TableRow style={{fontWeight: 'bold'}}>
+                                            <TableCell align="left" style={{fontWeight: 'bold'}}>Operating
+                                                income</TableCell>
+                                            <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
+                                                value={reports.annualReports[0].operatingIncome} decimalScale={2}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                prefix={'$'}/></TableCell>
+                                        </TableRow>
+                                        <TableRow style={{fontWeight: 'bold'}}>
+                                            <TableCell align="left" style={{fontWeight: 'bold'}}>Income Before
+                                                tax</TableCell>
+                                            <TableCell align="left" style={{fontWeight: 'bold'}}>
+                                                <NumberFormat value={reports.annualReports[0].incomeBeforeTax}
+                                                              decimalScale={2}
+                                                              displayType={'text'} thousandSeparator={true}
+                                                              prefix={'$'}/></TableCell>
+                                        </TableRow>
+                                        <TableRow style={{fontWeight: 'bold'}}>
+                                            <TableCell align="left" style={{fontWeight: 'bold'}}>Income tax
+                                                expense</TableCell>
+                                            <TableCell align="left" style={{fontWeight: 'bold'}}>
+                                                <NumberFormat value={reports.annualReports[0].incomeTaxExpense}
+                                                              decimalScale={2}
+                                                              displayType={'text'} thousandSeparator={true}
+                                                              prefix={'$'}/>
+                                            </TableCell>
+                                        </TableRow>
 
-                                </TableBody>
-                            </Table>
+                                    </TableBody>
+                                </Table>
                             }
                         </div>
                     </div>
@@ -274,6 +269,16 @@ const Details = (props) => {
                             </div>
                         </div>
 
+                    </div>
+                    <div className="card mt-4">
+                        <div className="card-body">
+                            <h3>About Us</h3>
+                            <div style={{
+                                textAlign: 'left',
+                                fontSize: '1.2em',
+                                marginLeft: '2px'
+                            }}>{stockOverviewData.description}</div>
+                        </div>
                     </div>
                 </div>
                 <div className="col-xl-5 mt-xl-0 mt-4">

@@ -23,7 +23,7 @@ const MarketTopStocks = (props) => {
                     <div className="col">
                         {props.loading ? renderSpinner() :
                             props.stocks.map((s, index) =>
-                                <TopStockItem key={s.symbol} stock={s} index={index + 1}/>)
+                                <TopStockItem key={s.symbol} stock={s} index={index + 1} handleStockClick={props.handleStockClick}/>)
                         }
                     </div>
 
@@ -37,7 +37,8 @@ MarketTopStocks.propTypes = {
     icon: PropTypes.string,
     title: PropTypes.string,
     loading: PropTypes.bool,
-    stocks: PropTypes.object
+    stocks: PropTypes.object,
+    handleStockClick: PropTypes.func
 }
 
 export default MarketTopStocks;
