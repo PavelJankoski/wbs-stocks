@@ -9,10 +9,14 @@ import NumberFormat from "react-number-format";
 import CompanyWikiLinks from "./CompanyWikiLinks";
 import {Image, Spinner} from "react-bootstrap";
 import RecommendationTrends from "./RecommendationTrends";
-import StockTimeSeries from "../stock-timeseries/StockTimeSeries";
+import {Breadcrumbs, Link} from "@mui/material";
+import {useLocation} from "react-router-dom";
+import Typography from "@mui/material/Typography";
 
 const Details = (props) => {
+    const location = useLocation();
     const dispatch = useDispatch();
+
     const details = useSelector((state) => state.stocksReducer.detailsData, shallowEqual);
     const stockOverviewData = useSelector((state) => state.stocksReducer.stockOverviewData, shallowEqual);
     const eps = useSelector((state) => state.stocksReducer.epsCompany, shallowEqual);
@@ -124,14 +128,24 @@ const Details = (props) => {
     const firstRow = {
         marginTop: '10px',
     }
-    const styleImg = {
-        width: '200px',
-        height: '200px',
-        marginBottom: '20px'
+
+    const handleBreadcrumbClick = () => {
+        props.history.replace("/stocks")
     }
 
     return (
         <div>
+            <div className="row mb-3 ml-2">
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link className="btn p-0 m-0" underline="hover" color="inherit" onClick={handleBreadcrumbClick}>
+                        Stocks
+                    </Link>
+                    <Typography
+                        color="text.primary">
+                        {location.pathname.split("/").reverse()[0]}
+                    </Typography>
+                </Breadcrumbs>
+            </div>
             <div className="card" style={divStyle}>
                 <div className="card-body">
                     <div className="row d-flex">

@@ -1,4 +1,6 @@
 import btoa from 'btoa';
+import NumberFormat from "react-number-format";
+import React from "react";
 
 export const updateObject = (oldObject, updatedProperties) => {
     return {
@@ -39,6 +41,31 @@ export const toIsoDate = (date) => {
 
 export const formatStringToDecimal = (value) => {
     return value !== null ? parseFloat(value).toFixed(2) : "";
+}
+
+export const numberFormatter = (num, prefix = "", digits = 2) => {
+    debugger
+    const si = [
+        {value: 1E6, symbol: "M"},
+        {value: 1E9, symbol: "B"},
+        {value: 1E12, symbol: "T"},
+        {value: 1E15, symbol: "P"},
+        {value: 1E18, symbol: "E"}
+    ];
+    const rx = /\.0+$|(\.\d*[1-9])0+$/;
+    let i;
+    for (i = si.length - 1; i > -1; i--) {
+        if (num >= si[i].value) {
+            break;
+        }
+    }
+    if (i < 0){
+        return <NumberFormat decimalScale={2} displayType={"text"} prefix={prefix}
+                      thousandSeparator={true}
+                      value={num}/>
+    } else {
+        return `${prefix}${(num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol}`;
+    }
 }
 
 export const RECOMMENDATION_TRENDS_DATE_FORMAT = "MMM YYYY"

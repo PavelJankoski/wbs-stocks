@@ -4,12 +4,14 @@
       .brand-logo {
         display: none;
       }
+
       .brand-logo-mini {
         display: inline-block;
       }
     }
   }
 }
+
 @media screen and (max-width: 991px) {
   .row-offcanvas {
     position: relative;
@@ -52,7 +54,109 @@
     ::ng-deep .sidebar-offcanvas {
       position: absolute;
       top: 0;
-      width: calc( 50% + 30px); // 6 columns
+      width: calc(50% + 30px); // 6 columns
     }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .coin-price-box {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+  .coin-important-data-box {
+    margin-left: 25px;
+  }
+  .coin-important-data {
+    justify-content: space-between;
+  }
+  .coin-price {
+    font-size: 75px;
+  }
+  .news-description {
+    display: none;
+  }
+  .news-box {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+
+@media screen and (min-width: 800px) {
+  .coin-price-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .coin-important-data-box {
+    margin-left: 45px;
+  }
+  .coin-important-data {
+    justify-content: space-between;
+  }
+  .coin-price {
+    font-size: 100px;
+  }
+  .news-description {
+    display: inline-block;
+  }
+  .news-box {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width: 1301px) {
+  .coin-price-statistics-row-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .coin-price-statistics-right-item {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+  }
+}
+
+@media screen and (min-width: 1201px) and (max-width: 1300px) {
+  .coin-price-statistics-row-box {
+    display: flex;
+    flex-direction: column;
+  }
+  .coin-price-statistics-right-item {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+}
+
+@media screen and (min-width: 601px) and (max-width: 1200px) {
+  .coin-price-statistics-row-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .coin-price-statistics-right-item {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .coin-price-statistics-row-box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .coin-price-statistics-right-item {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
   }
 }

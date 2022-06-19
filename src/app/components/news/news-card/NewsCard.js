@@ -4,9 +4,11 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import {Box, CardActionArea} from '@mui/material';
+import {Box, CardActionArea, useMediaQuery} from '@mui/material';
 
 const NewsCard = (props) => {
+    const minWidth = useMediaQuery('(min-width:800px)');
+
     const handleCardClick = () => {
         window.open(props.link, "_blank");
     }
@@ -16,12 +18,12 @@ const NewsCard = (props) => {
             <CardActionArea sx={{
                 height: "100%"
             }}>
-                <Box sx={{
-                    display: 'flex'
-                }}>
+                <Box className="news-box">
                     <CardMedia
                         component="img"
-                        sx={{width: '30%'}}
+                        sx={{
+                            height: minWidth ? "auto" : "300px",
+                            width:  minWidth ? "30%" : "100%"}}
                         image={`${props.image !== "" ? props.image : require("../../../../assets/images/placeholder.jpg")}`}
                         alt="News image"
                     />
@@ -40,7 +42,7 @@ const NewsCard = (props) => {
                         }}>
                             {props.title}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary" sx={{
+                        <Typography variant="body2" color="text.secondary" className="news-description" sx={{
                             display: "-webkit-box",
                             WebkitLineClamp: 3,
                             textOverflow: 'ellipsis',

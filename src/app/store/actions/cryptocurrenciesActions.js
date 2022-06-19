@@ -125,9 +125,9 @@ const mapResponseToCoinDetails = (data) => {
         hashingAlgorithm: data.hashing_algorithm,
         description: data.description['en'],
         links: {
-            homePageUrls: data.links.homepage.filter(l => l !== ""),
-            blockChainSitesUrls: data.links.blockchain_site.filter(l => l !== ""),
-            communityUrls: [...data.links.official_forum_url.filter(l => l !== ""), ...data.links.chat_url.filter(l => l !== ""), data.links.subreddit_url],
+            homePageUrls: data.links.homepage.filter(l => l !== "").filter(link => link !== null),
+            blockChainSitesUrls: data.links.blockchain_site.filter(l => l !== "").filter(link => link !== null),
+            communityUrls: [...data.links.official_forum_url.filter(l => l !== "").filter(link => link !== null), ...data.links.chat_url.filter(l => l !== "").filter(link => link !== null)],
             socialNetworksUrls: [data.links.twitter_screen_name ? `${socialNetworks.find(s => s.name === 'twitter').url}${data.links.twitter_screen_name}` : "",
                 data.links.facebook_username ? `${socialNetworks.find(s => s.name === 'facebook').url}${data.links.facebook_username}` : ""
             ],
