@@ -1,19 +1,35 @@
 const stockIntervals = [
     {
-        label: "15m",
-        interval: "15min"
+        label: "5D",
+        interval: "5d"
     },
     {
-        label: "1H",
-        interval: "1hour"
+        label: "1M",
+        interval: "1m"
     },
     {
-        label: "12H",
-        interval: "12hour"
+        label: "3M",
+        interval: "3m"
     },
     {
-        label: "1D",
-        interval: "24hour"
+        label: "6M",
+        interval: "6m"
+    },
+    {
+        label: "YTD",
+        interval: "ytd"
+    },
+    {
+        label: "1Y",
+        interval: "1y"
+    },
+    {
+        label: "2Y",
+        interval: "2y"
+    },
+    {
+        label: "5Y",
+        interval: "5y"
     }
 ]
 

@@ -160,7 +160,7 @@ const CoinDetails = () => {
                     </div>
 
                     <div className="col-xl-4 offset-xl-1 col-12 mt-xl-0 mt-4">
-                        <div className="card" style={{borderRadius: 30, backgroundColor: "#f5f5f5"}}>
+                        <div className="card bg-light" style={{borderRadius: 30}}>
                             <div className="card-title ml-3 mt-4 mb-0"><h3
                                 className="font-weight-bold">{coinDetails.name} Statistics</h3></div>
                             <div className="card-body ml-2 mr-2 mt-0">

@@ -1,5 +1,5 @@
 import * as actionTypes from '../actionTypes';
-import {stockChartObject, updateObject} from "../../shared/utils/utils";
+import { updateObject} from "../../shared/utils/utils";
 
 const initialState = {
     coinsTableData: {
@@ -13,9 +13,6 @@ const initialState = {
     },
     exchangesTableLoading: false,
     coinDetails: null,
-    coinMarketChartData: {
-        chartData: {}
-    },
     coinAbstract: null
 }
 
@@ -43,15 +40,6 @@ const updateCoinDetails = (state, action) => {
     return updateObject(state, {coinDetails: action.payload})
 }
 
-const updateCoinMarketChartData = (state, action) => {
-    return updateObject(state, {
-        coinMarketChartData:
-            updateObject(state.coinMarketChartData, {
-                chartData: stockChartObject(action.payload.dateTimes, action.payload.prices)
-            })
-    })
-}
-
 const updateCoinAbstract = (state, action) => {
     return updateObject(state, {coinAbstract: action.payload})
 }
@@ -68,8 +56,6 @@ const cryptocurrenciesReducer = (state = initialState, action) => {
             return setExchangesLoading(state, action)
         case actionTypes.FETCH_COIN_DETAILS_SUCCESS:
             return updateCoinDetails(state, action)
-        case actionTypes.FETCH_COIN_MARKET_CHART_DATA_SUCCESS:
-            return updateCoinMarketChartData(state, action)
         case actionTypes.FETCH_COIN_ABSTRACT_SUCCESS:
             return updateCoinAbstract(state, action)
         default:

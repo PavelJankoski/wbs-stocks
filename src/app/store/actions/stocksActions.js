@@ -1,6 +1,11 @@
 import StocksService from "../../api/stocksService";
 import * as actionTypes from '../actionTypes';
-import {calculateStockPercentage, toIsoDate, RECOMMENDATION_TRENDS_DATE_FORMAT} from "../../shared/utils/utils";
+import {
+    calculateStockPercentage,
+    toIsoDate,
+    RECOMMENDATION_TRENDS_DATE_FORMAT,
+    stockChartObject
+} from "../../shared/utils/utils";
 import moment from "moment";
 
 export const fetchStockSectors = () => {
@@ -28,7 +33,7 @@ export const fetchMarketTopGainers = () => {
                 dispatch(
                     {
                         type: actionTypes.FETCH_TOP_GAINERS_STOCK_SUCCESS,
-                        payload: res.data.slice(0,5)
+                        payload: res.data.slice(0, 5)
                     }
                 )
             })
@@ -49,7 +54,7 @@ export const fetchMarketTopLosers = () => {
                 dispatch(
                     {
                         type: actionTypes.FETCH_TOP_LOSERS_STOCK_SUCCESS,
-                        payload: res.data.slice(0,5)
+                        payload: res.data.slice(0, 5)
                     }
                 )
             })
@@ -59,24 +64,6 @@ export const fetchMarketTopLosers = () => {
             .finally(() => {
                 dispatch({type: actionTypes.SET_TOP_LOSERS_STOCKS_LOADING, value: false});
             })
-    }
-}
-
-export const fetchStocksForInterval = (symbol, interval, limit) => {
-    return (dispatch) => {
-        dispatch({type: actionTypes.SET_INTERVAL_STOCK_LOADING, value: true});
-        StocksService.fetchStocksIntraday(symbol, interval, limit).then(res => {
-            dispatch(
-                {
-                    type: actionTypes.FETCH_STOCK_IN_INTERVAL_SUCCESS,
-                    payload: mapResponseToPopularStockData(res, symbol)
-                }
-            )
-        }).catch(e => {
-            console.log(e);
-        }).finally(() => {
-            dispatch({type: actionTypes.SET_INTERVAL_STOCK_LOADING, value: false});
-        })
     }
 }
 
@@ -264,26 +251,6 @@ export const cleanUpCompanyServicesWikiLinks = () => {
     }
 }
 
-
-const mapResponseToPopularStockData = (response, symbol) => {
-    let data = response.data.data
-    const prices = [];
-    const dateTimes = [];
-    for (let i = data.length - 1; i >= 0; i--) {
-        let currentDateTime = data[i].date
-        let currentPrice = parseFloat(data[i].open);
-        prices.push(currentPrice);
-        dateTimes.push(toIsoDate(currentDateTime))
-    }
-    return {
-        prices: prices,
-        dateTimes: dateTimes,
-        stockPercentage: calculateStockPercentage(prices[0], prices[9]),
-        symbol: symbol,
-        lastData: data[0]
-    }
-
-}
 const mapResponseToEps = (data, symbol) => {
 
     let earnings = data.annualEarnings;
@@ -369,4 +336,61 @@ const mapResponseToRecommendationTrendsData = (data) => {
         type: actionTypes.FETCH_COMPANY_RECOMMENDATION_TRENDS_SUCCESS,
         payload: {datasets: datasets, labels: labels}
     };
+}
+
+export const fetchStockHistoricalPrices = (symbol, range, chartCloseOnly) => {
+    return (dispatch) => {
+        dispatch({type: actionTypes.SET_STOCK_HISTORICAL_PRICES_LOADING, value: true});
+        StocksService.fetchStockHistoricalPrices(symbol, range, chartCloseOnly)
+            .then(res => {
+                debugger
+                dispatch(
+                    {
+                        type: actionTypes.FETCH_STOCK_HISTORICAL_PRICES_SUCCESS,
+                        payload: chartCloseOnly ? mapResponseToLineData(res.data) : mapResponseToOHCLData(res.data)
+                    }
+                )
+            })
+            .catch(e => {
+                console.log(e);
+            })
+            .finally(() => {
+                dispatch({type: actionTypes.SET_STOCK_HISTORICAL_PRICES_LOADING, value: false});
+            })
+    }
+}
+
+export const cleanUpStockHistoricalPrices = () => {
+    return {
+        type: actionTypes.FETCH_STOCK_HISTORICAL_PRICES_SUCCESS, payload: {
+            data: [],
+            loading: true
+        }
+    }
+}
+
+const mapResponseToLineData = (data) => {
+    const prices = [{data: [], name: "Price"}];
+    data.forEach(item => {
+        let date = new Date(item.date).toLocaleDateString()
+        let currentPrice = parseFloat(item.close);
+        prices[0].data.push({
+            x: [`${date}`],
+            y: [currentPrice]
+        })
+    })
+    return prices
+}
+
+const mapResponseToOHCLData = (data) => {
+    const ohclDataArr = [{data: []}]
+    data.forEach(item => {
+
+        let date = new Date(item.date).toLocaleDateString()
+        ohclDataArr[0].data.push({
+            x: [`${date}`],
+            y: [item.open, item.high, item.low, item.close]
+        })
+    })
+    return ohclDataArr
 }

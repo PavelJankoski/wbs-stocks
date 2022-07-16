@@ -12,11 +12,8 @@ const initialState = {
         loading: true,
         stocks: []
     },
-    stockInInterval: {
-        symbol: '',
-        chartData: {},
-        stockPercentage: 0.0,
-        lastData: {},
+    stockHistoricalPrices: {
+        data: [],
         loading: true
     },
     detailsData: [],
@@ -104,23 +101,26 @@ const setTopLosersStocksLoading = (state, action) => {
         })
 }
 
-const updateStockInInterval = (state, action) => {
-    let borderColor = lineColors.error.borderColor;
-    let backgroundColor = lineColors.error.backgroundColor;
-    if (action.payload.stockPercentage >= 0) {
-        borderColor = lineColors.success.borderColor
-        backgroundColor = lineColors.success.backgroundColor;
-    }
+const updateStockHistoricalPrices = (state, action) => {
     return updateObject(state, {
-        stockInInterval:
-            updateObject(state.stockInInterval, {
-                symbol: action.payload.symbol,
-                chartData: stockChartObject(action.payload.dateTimes, action.payload.prices, action.payload.symbol, borderColor, backgroundColor),
-                stockPercentage: action.payload.stockPercentage,
-                lastData: action.payload.lastData
-            })
+        stockHistoricalPrices: updateObject(state.stockHistoricalPrices,
+            {
+                data: action.payload
+            }
+        )
     })
 }
+
+const setStockHistoricalPricesLoading = (state, action) => {
+    return updateObject(state, {
+        stockHistoricalPrices: updateObject(state.stockHistoricalPrices,
+            {
+                loading: action.value
+            }
+        )
+    })
+}
+
 const setEpsData = (state, action) => {
     let borderColor = lineColors.error.borderColor;
     let backgroundColor = lineColors.error.backgroundColor;
@@ -137,17 +137,6 @@ const setEpsData = (state, action) => {
         })
     })
 }
-const setStockInIntervalLoading = (state, action) => {
-    return updateObject(state, {
-        stockInInterval:
-            updateObject(state.stockInInterval,
-                {
-                    loading: action.value
-                }
-            )
-    })
-}
-
 
 const updateSearchStocksData = (state, action) => {
     return updateObject(state, {searchedStocks: action.payload})
@@ -256,6 +245,10 @@ const setCompanyRecommendationTrendsLoading = (state, action) => {
 
 const stocksReducer = (state = initialState, action) => {
     switch (action.type) {
+        case actionTypes.FETCH_STOCK_HISTORICAL_PRICES_SUCCESS:
+            return updateStockHistoricalPrices(state, action);
+        case actionTypes.SET_STOCK_HISTORICAL_PRICES_LOADING:
+            return setStockHistoricalPricesLoading(state, action);
         case actionTypes.FETCH_STOCK_SECTORS_SUCCESS:
             return updateStockSectors(state, action);
         case actionTypes.FETCH_TOP_GAINERS_STOCK_SUCCESS:
@@ -266,10 +259,6 @@ const stocksReducer = (state = initialState, action) => {
             return updateTopLosersStocks(state, action);
         case actionTypes.SET_TOP_LOSERS_STOCKS_LOADING:
             return setTopLosersStocksLoading(state, action);
-        case actionTypes.FETCH_STOCK_IN_INTERVAL_SUCCESS:
-            return updateStockInInterval(state, action);
-        case actionTypes.SET_INTERVAL_STOCK_LOADING:
-            return setStockInIntervalLoading(state, action);
         case actionTypes.SEARCH_STOCKS_SUCCESS:
             return updateSearchStocksData(state, action);
         case actionTypes.SET_SEARCH_STOCKS_LOADING:

@@ -60,21 +60,6 @@ export const fetchCoinAbstract = (name) => {
     }
 }
 
-export const fetchCoinMarketChartData = (id, days = 7) => {
-    return (dispatch) => {
-        CryptocurrenciesService.fetchCoinMarketChartData(id, days).then(res => {
-            dispatch({
-                type: actionTypes.FETCH_COIN_MARKET_CHART_DATA_SUCCESS,
-                payload: mapResponseToCoinMarketChartData(res.data.prices)
-            })
-        }).catch(e => {
-            console.log(e)
-        }).finally(() => {
-
-        })
-    }
-}
-
 const mapResponseToCoinsMarketData = (data) => {
     const coinsArr = [];
     data.data.forEach(coin => {
@@ -202,21 +187,6 @@ const mapResponseToCoinDetails = (data) => {
     return {type: actionTypes.FETCH_COIN_DETAILS_SUCCESS, payload: coinDetails};
 }
 
-const mapResponseToCoinMarketChartData = (data) => {
-    const prices = [];
-    const dateTimes = [];
-    data.forEach(item => {
-        let currentDateTime = new Date(item[0]);
-        let currentPrice = parseFloat(item[1]);
-        prices.push(currentPrice);
-        dateTimes.push(toIsoDate(currentDateTime))
-    })
-    return {
-        prices: prices,
-        dateTimes: dateTimes
-    }
-}
-
 export const cleanUpCoinDetails = () => {
     return {
         type: actionTypes.FETCH_COIN_DETAILS_SUCCESS, payload: null
@@ -226,11 +196,5 @@ export const cleanUpCoinDetails = () => {
 export const cleanUpCoinAbstract = () => {
     return {
         type: actionTypes.FETCH_COIN_ABSTRACT_SUCCESS, payload: null
-    }
-}
-
-export const cleanUpCoinMarketChartTimeSeries = () => {
-    return {
-        type: actionTypes.FETCH_COIN_MARKET_CHART_DATA_SUCCESS, payload: []
     }
 }

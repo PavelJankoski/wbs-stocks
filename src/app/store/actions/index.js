@@ -1,9 +1,10 @@
 export {
     fetchStockSectors,
-    fetchStocksForInterval,
     fetchMarketTopGainers,
     searchStocks,
     fetchStockExchanges,
+    fetchStockHistoricalPrices,
+    cleanUpStockHistoricalPrices,
     getBasicDetails,
     getStockOverview,
     epsCompanyPerYear,
@@ -23,9 +24,7 @@ export {
     fetchCoinsMarketData,
     fetchExchanges,
     fetchCoinDetails,
-    fetchCoinMarketChartData,
-    cleanUpCoinDetails,
-    cleanUpCoinMarketChartTimeSeries
+    cleanUpCoinDetails
 } from './cryptocurrenciesActions';
 
 export {

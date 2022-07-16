@@ -12,6 +12,7 @@ import RecommendationTrends from "./RecommendationTrends";
 import {Breadcrumbs, Link} from "@mui/material";
 import {useLocation} from "react-router-dom";
 import Typography from "@mui/material/Typography";
+import StockTimeSeries from "../stock-timeseries/StockTimeSeries";
 
 const Details = (props) => {
     const location = useLocation();
@@ -57,7 +58,7 @@ const Details = (props) => {
     }, [dispatch])
 
     useEffect(() => {
-        if (details?.name !== undefined) {
+        if (details?.companyName !== undefined) {
 
             dispatch(actions.fetchCompanyProductsWikiLinks(details.companyName));
             dispatch(actions.fetchCompanyServicesWikiLinks(details.companyName));
@@ -181,7 +182,7 @@ const Details = (props) => {
                 <div className="col-md-7 grid-margin stretch-card">
                     <div className="card">
                         <div className="card-body">
-                           {/* <StockTimeSeries selectedStock={}/>*/}
+                            {details.symbol && <StockTimeSeries selectedStock={details.symbol}/>}
                         </div>
 
                     </div>
@@ -296,46 +297,19 @@ const Details = (props) => {
                     </div>
                 </div>
                 <div className="col-xl-5 mt-xl-0 mt-4">
-                    <div className="card">
-                        <div className="card-body">
-                            {recommendationTrendsLoading ? renderSpinner :
-                                <RecommendationTrends data={recommendationTrends}/>}
+                    <div className="row m-0">
+                        <div className="card w-100">
+                            <div className="card-body">
+                                {recommendationTrendsLoading ? renderSpinner :
+                                    <RecommendationTrends data={recommendationTrends}/>}
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div className="row mt-5">
-                <div className="col-lg-3 col-sm-6 col-12">
-                    <div className="card">
-                        <div className="card-body">
-                            {productsWikiLinksLoading ? renderSpinner :
-                                <CompanyWikiLinks wikiLinks={productsWikiLinks} title="Products:"/>}
-                        </div>
-                    </div>
-                </div>
-                <div className="col-lg-3 col-sm-6 col-12">
-                    <div className="card">
-                        <div className="card-body">
-                            {servicesWikiLinksLoading ? renderSpinner :
-                                <CompanyWikiLinks wikiLinks={servicesWikiLinks} title="Services:"/>}
-                        </div>
-                    </div>
-                </div>
-                <div className="col-lg-3 col-sm-6 col-12">
-                    <div className="card">
-                        <div className="card-body">
-                            {developmentsWikiLinksLoading ? renderSpinner :
-                                <CompanyWikiLinks wikiLinks={developmentsWikiLinks} title="Developments:"/>}
-                        </div>
-                    </div>
-                </div>
-                <div className="col-lg-3 col-sm-6 col-12">
-                    <div className="card">
-                        <div className="card-body">
-                            {designsWikiLinksLoading ? renderSpinner :
-                                <CompanyWikiLinks wikiLinks={designsWikiLinks} title="Designs:"/>}
-                        </div>
+                    <div className="mt-4">
+                        <CompanyWikiLinks wikiLinks={productsWikiLinks} title="Products" loading={productsWikiLinksLoading}/>
+                        <CompanyWikiLinks wikiLinks={developmentsWikiLinks} title="Developments" loading={developmentsWikiLinksLoading}/>
+                        <CompanyWikiLinks wikiLinks={servicesWikiLinks} title="Services" loading={servicesWikiLinksLoading}/>
+                        <CompanyWikiLinks wikiLinks={designsWikiLinks} title="Designs" loading={designsWikiLinksLoading}/>
                     </div>
                 </div>
             </div>

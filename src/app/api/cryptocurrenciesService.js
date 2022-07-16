@@ -1,5 +1,4 @@
-import {API_DRIVER_BACKEND, API_DRIVER_CG} from "../../axiosConfig";
-import {Currency} from "../shared/objects/currencies";
+import {API_DRIVER_BACKEND} from "../../axiosConfig";
 
 const CryptocurrenciesService = {
     fetchCoinsMarketData: (vsCurrency = 'usd', page = 1, pageSize = 50) => {
@@ -28,14 +27,6 @@ const CryptocurrenciesService = {
     fetchCoinAbstract: (name) => {
         return API_DRIVER_BACKEND.get(`/cryptocurrency/${name}/description`)
     },
-    fetchCoinMarketChartData: (id, days, vsCurrency = Currency.USD) => {
-        return API_DRIVER_CG.get(`/coins/${id}/market_chart`, {
-            params: {
-                vs_currency: vsCurrency,
-                days: days
-            }
-        })
-    }
 }
 
 export default CryptocurrenciesService;

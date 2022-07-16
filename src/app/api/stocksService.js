@@ -1,14 +1,13 @@
-import {API_DRIVER_BACKEND, API_DRIVER_MS} from "../../axiosConfig";
+import {API_DRIVER_BACKEND} from "../../axiosConfig";
 
 
 const StocksService = {
-    // Use stocksTimeSeries object for timeSeries constants
-    // example: https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=IBM&apikey=demo
-    fetchDataForTimeSeries: (timeSeries, symbol) => {
-        return API_DRIVER_MS.get('', {
+    fetchStockHistoricalPrices: (symbol, range, chartCloseOnly) => {
+        debugger
+        return API_DRIVER_BACKEND.get(`/companies/${symbol}/historicalPrices`, {
             params: {
-                function: `TIME_SERIES_${timeSeries}`,
-                symbol: symbol
+                range: range,
+                chartCloseOnly: chartCloseOnly
             }
         })
     },
@@ -20,16 +19,6 @@ const StocksService = {
     },
     fetchMarketTopLosers: () => {
         return API_DRIVER_BACKEND.get('/market/top-losers')
-    },
-    // Use stockInterval object for interval constants
-    fetchStocksIntraday: (symbols, interval = "24hour", limit = 10) => {
-        return API_DRIVER_MS.get('/intraday', {
-            params: {
-                symbols: symbols,
-                interval: interval,
-                limit: limit
-            }
-        })
     },
     searchStocks: (page, size, searchText, sector) => {
         return API_DRIVER_BACKEND.post('/companies', {
