@@ -31,7 +31,7 @@ const CoinsTable = (props) => {
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th colSpan={2}>Coin</th>
+                        <th>Coin</th>
                         <th>Last Price</th>
                         <th>1h</th>
                         <th>24h</th>

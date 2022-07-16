@@ -10,10 +10,14 @@ const CoinTableRow = (props) => {
             <td>
                 <p className="mb-1 text-dark font-weight-semibold">{props.rank}</p>
             </td>
-            <td><Image src={props.coinIcon} alt={"Coin icon"}/></td>
             <td>
-                <p className="mb-1 text-dark font-weight-semibold">{props.symbol.toUpperCase()}</p>
-                <p className="font-weight-medium m-0">{props.name}</p>
+                <div className="d-flex">
+                    <Image src={props.coinIcon} alt={"Coin icon"}/>
+                    <div className="ml-5">
+                        <p className="mb-1 text-dark font-weight-semibold">{props.symbol.toUpperCase()}</p>
+                        <p className="font-weight-medium m-0">{props.name}</p>
+                    </div>
+                </div>
             </td>
             <td className="font-weight-medium">
                 <NumberFormat value={props.lastPrice} decimalScale={2} displayType={'text'} thousandSeparator={true}

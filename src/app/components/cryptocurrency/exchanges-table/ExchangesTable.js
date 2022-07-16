@@ -27,7 +27,7 @@ const ExchangesTable = (props) => {
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th colSpan={2}>Exchange</th>
+                        <th>Exchange</th>
                         <th>24h Volume</th>
                         <th>Country</th>
                         <th>Year Established</th>

@@ -9,9 +9,11 @@ const ExchangeTableRow = (props) => {
             <td>
                 <p className="mb-1 text-dark font-weight-semibold">{props.rank}</p>
             </td>
-            <td><Image src={props.exchangeIcon} alt={"Exchange icon"}/></td>
             <td>
-                <p className="font-weight-medium m-0">{props.name}</p>
+                <div className="d-flex align-items-center">
+                    <Image src={props.exchangeIcon} alt={"Exchange icon"}/>
+                    <p className="font-weight-medium ml-5 mt-3">{props.name}</p>
+                </div>
             </td>
             <td className="font-weight-medium">
                 <NumberFormat value={props.tradeVolume24hBTC} decimalScale={2} displayType={'text'}
