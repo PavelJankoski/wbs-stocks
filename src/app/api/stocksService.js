@@ -15,10 +15,10 @@ const StocksService = {
         return API_DRIVER_BACKEND.get('/companies/sectors')
     },
     fetchMarketTopGainers: () => {
-        return API_DRIVER_BACKEND.get('/market/top-gainers')
+        return API_DRIVER_BACKEND.get('/market/TOP_GAINERS')
     },
     fetchMarketTopLosers: () => {
-        return API_DRIVER_BACKEND.get('/market/top-losers')
+        return API_DRIVER_BACKEND.get('/market/TOP_LOSERS')
     },
     searchStocks: (page, size, searchText, sector) => {
         return API_DRIVER_BACKEND.post('/companies', {
