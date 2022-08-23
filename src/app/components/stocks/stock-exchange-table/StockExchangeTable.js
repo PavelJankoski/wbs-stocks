@@ -15,7 +15,7 @@ const StockExchangeTable = () => {
 
     useEffect(() => {
         dispatch(actions.fetchStockExchanges(rowsPerPage, rowsPerPage * page, searchText));
-    }, [dispatch, page, rowsPerPage])
+    }, [dispatch, searchText, page, rowsPerPage])
 
     const onTableRowClick = useCallback((rowData, rowMeta) => {
         window.open(`https://${stockExchanges.data[rowMeta.rowIndex].website}`, "_blank");

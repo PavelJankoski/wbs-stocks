@@ -5,7 +5,6 @@ import StockTable from "./stock-table/StockTable";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {fetchMarketTopGainers} from "../../store/actions";
 import {fetchMarketTopLosers} from "../../store/actions/stocksActions";
-import {withRouter} from "react-router-dom";
 
 const Stocks = (props) => {
 

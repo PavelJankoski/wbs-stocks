@@ -1,9 +1,7 @@
 import React from 'react';
 import {Link, withRouter} from "react-router-dom";
-import LanguageDropdown from "./language-dropdown/LanguageDropdown";
-import languages from "../../../shared/objects/languages";
 
-const Navbar = (props) => {
+const Navbar = () => {
 
     const toggleOffcanvas = () => {
         document.querySelector('.sidebar-offcanvas').classList.toggle('active');
@@ -20,13 +18,6 @@ const Navbar = (props) => {
                         onClick={() => document.body.classList.toggle('sidebar-icon-only')}>
                     <i className="mdi mdi-menu"/>
                 </button>
-
-                <ul className="navbar-nav navbar-nav-right header-links align-self-center">
-                    <li className="nav-item dropdown language-dropdown">
-                        <LanguageDropdown languages={languages}/>
-                    </li>
-
-                </ul>
                 <button className="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
                         onClick={toggleOffcanvas}>
                     <span className="mdi mdi-menu"/>

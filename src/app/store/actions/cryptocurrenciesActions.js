@@ -2,7 +2,6 @@ import CryptocurrenciesService from "../../api/cryptocurrenciesService";
 import * as actionTypes from "../actionTypes";
 import socialNetworks from "../../shared/objects/socialNetworks";
 import {Currency} from "../../shared/objects/currencies";
-import {toIsoDate} from "../../shared/utils/utils";
 import {FETCH_COIN_ABSTRACT_SUCCESS} from "../actionTypes";
 
 export const fetchCoinsMarketData = (page, pageSize) => {
@@ -37,21 +36,6 @@ export const fetchCoinDetails = (id) => {
         CryptocurrenciesService.fetchCoinDetails(id).then(res => {
             console.log(res.data)
             dispatch(mapResponseToCoinDetails(res.data))
-        }).catch(e => {
-            console.log(e)
-        }).finally(() => {
-
-        })
-    }
-}
-
-export const fetchCoinAbstract = (name) => {
-    return (dispatch) => {
-        CryptocurrenciesService.fetchCoinAbstract(name).then(res => {
-            debugger
-            dispatch({
-                type: FETCH_COIN_ABSTRACT_SUCCESS, payload: res.data
-            })
         }).catch(e => {
             console.log(e)
         }).finally(() => {
@@ -190,11 +174,5 @@ const mapResponseToCoinDetails = (data) => {
 export const cleanUpCoinDetails = () => {
     return {
         type: actionTypes.FETCH_COIN_DETAILS_SUCCESS, payload: null
-    }
-}
-
-export const cleanUpCoinAbstract = () => {
-    return {
-        type: actionTypes.FETCH_COIN_ABSTRACT_SUCCESS, payload: null
     }
 }

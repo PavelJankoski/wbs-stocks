@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import ExchangeTableRow from "./exchange-table-row/ExchangeTableRow";
 import AppPagination from "../../../shared/components/AppPagination";
