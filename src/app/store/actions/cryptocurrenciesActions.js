@@ -2,7 +2,7 @@ import CryptocurrenciesService from "../../api/cryptocurrenciesService";
 import * as actionTypes from "../actionTypes";
 import socialNetworks from "../../shared/objects/socialNetworks";
 import {Currency} from "../../shared/objects/currencies";
-import {FETCH_COIN_ABSTRACT_SUCCESS} from "../actionTypes";
+
 
 export const fetchCoinsMarketData = (page, pageSize) => {
     return (dispatch) => {

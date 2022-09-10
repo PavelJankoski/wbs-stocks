@@ -22,19 +22,19 @@ const StocksService = {
     },
     searchStocks: (page, size, searchText, sector) => {
         return API_DRIVER_BACKEND.post('/companies', {
-            pageRequest: {
-                size: size,
-                page: page
-            },
-            query: searchText,
-            sector: sector
+            size: size,
+            page: page,
+            filterBy: {
+                query: searchText,
+                sector: sector
+            }
         })
     },
     fetchStockExchanges: (limit, offset, search) => {
-        return API_DRIVER_BACKEND.get('/companies/exchanges', {
-            params: {
-                size: limit,
-                page: offset,
+        return API_DRIVER_BACKEND.post('/companies/exchanges', {
+            size: limit,
+            page: offset,
+            filterBy: {
                 query: search
             }
         })
