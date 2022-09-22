@@ -20,7 +20,7 @@ const CoinTableRow = (props) => {
                 </div>
             </td>
             <td className="font-weight-medium">
-                <NumberFormat value={props.lastPrice} decimalScale={2} displayType={'text'} thousandSeparator={true}
+                <NumberFormat value={props.lastPrice} decimalScale={5} displayType={'text'} thousandSeparator={true}
                               prefix={'$'}/>
             </td>
             <td className={`${props.priceChangePercentage1h >= 0 ? "text-success" : "text-danger"} font-weight-medium`}>
