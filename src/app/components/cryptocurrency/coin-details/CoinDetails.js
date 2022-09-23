@@ -61,7 +61,7 @@ const CoinDetails = () => {
                         <NumberFormat className="coin-price" style={{
                             fontWeight: "bold",
                             fontFamily: "Neue Haas Grotesk Display Pro, sans-serif"
-                        }} decimalScale={2} displayType={"text"} prefix={'$'}
+                        }} displayType={"text"} prefix={'$'}
                                       thousandSeparator={true}
                                       value={coinDetails.priceData.currentPrice[Currency.USD]}/>
                         <Box className="coin-important-data-box">
@@ -82,7 +82,7 @@ const CoinDetails = () => {
                             <div className="row d-flex align-items-center coin-important-data">
                                 <h4 className="m-0 mr-4"
                                     style={{fontFamily: "Neue Haas Grotesk Display Pro, sans-serif"}}>24H High</h4>
-                                <NumberFormat decimalScale={2} displayType={"text"}
+                                <NumberFormat displayType={"text"}
                                               prefix={'$'}
                                               thousandSeparator={true}
                                               className="font-weight-bold"
@@ -96,7 +96,7 @@ const CoinDetails = () => {
                             <div className="row d-flex align-items-center coin-important-data">
                                 <h4 className="m-0 mr-4"
                                     style={{fontFamily: "Neue Haas Grotesk Display Pro, sans-serif"}}>24H Low</h4>
-                                <NumberFormat decimalScale={2} displayType={"text"}
+                                <NumberFormat displayType={"text"}
                                               prefix={'$'}
                                               thousandSeparator={true}
                                               className="font-weight-bold"
@@ -187,7 +187,7 @@ const CoinDetails = () => {
                                             <p className="m-0" style={{fontSize: 18}}>Price Change</p>
                                             <p className="badge badge-secondary align-self-center p-1 ml-2 m-0">24h</p>
                                         </div>
-                                        <NumberFormat decimalScale={2} displayType={"text"}
+                                        <NumberFormat decimalScale={8} displayType={"text"}
                                                       prefix={"$"}
                                                       thousandSeparator={true}
                                                       style={{
@@ -203,7 +203,7 @@ const CoinDetails = () => {
                                 <div className="row coin-price-statistics-row-box">
                                     <div className="mt-4">
                                         <p className="m-0" style={{fontSize: 18}}>All Time High</p>
-                                        <NumberFormat decimalScale={2} displayType={"text"}
+                                        <NumberFormat displayType={"text"}
                                                       prefix={'$'}
                                                       thousandSeparator={true}
                                                       style={{
