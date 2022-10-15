@@ -3,7 +3,6 @@ import {API_DRIVER_BACKEND} from "../../axiosConfig";
 
 const StocksService = {
     fetchStockHistoricalPrices: (symbol, range, chartCloseOnly) => {
-        debugger
         return API_DRIVER_BACKEND.get(`/companies/${symbol}/historicalPrices`, {
             params: {
                 range: range,
@@ -39,9 +38,6 @@ const StocksService = {
             }
         })
     },
-    fetchCompanyOverview: (symbol) => {
-        return API_DRIVER_BACKEND.get(`/companies/${symbol}/overview`)
-    },
     fetchCompanyRecommendationTrends: (symbol) => {
         return API_DRIVER_BACKEND.get(`/companies/${symbol}/recommendation`)
     },
@@ -76,8 +72,8 @@ const StocksService = {
     epsCompanyPerYear: (symbol) => {
         return API_DRIVER_BACKEND.get(`companies/${symbol}/earnings`)
     },
-    annualReportsCompanyPerYear: (symbol) => {
-        return API_DRIVER_BACKEND.get(`companies/${symbol}/annualReports`)
+    annualReportsCompanyPerYear: (id) => {
+        return API_DRIVER_BACKEND.get(`companies/${id}/annualReports`)
     },
     getBasicDetails: (symbol) => {
         return API_DRIVER_BACKEND.get(`companies/${symbol}/details`, {

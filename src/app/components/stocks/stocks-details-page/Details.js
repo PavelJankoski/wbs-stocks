@@ -19,7 +19,6 @@ const Details = (props) => {
     const dispatch = useDispatch();
 
     const details = useSelector((state) => state.stocksReducer.detailsData, shallowEqual);
-    const stockOverviewData = useSelector((state) => state.stocksReducer.stockOverviewData, shallowEqual);
     const eps = useSelector((state) => state.stocksReducer.epsCompany, shallowEqual);
     const reports = useSelector((state) => state.stocksReducer.reportsData, shallowEqual);
     const productsWikiLinks = useSelector((state) => state.stocksReducer.productsWikiLinks.data, shallowEqual);
@@ -40,17 +39,10 @@ const Details = (props) => {
 
     useEffect(() => {
         dispatch(actions.getBasicDetails(props.match.params.symbol));
+    }, [dispatch])
 
-    }, [dispatch])
-    useEffect(() => {
-        dispatch(actions.getStockOverview(props.match.params.symbol));
-    }, [dispatch])
     useEffect(() => {
         dispatch(actions.epsCompanyPerYear(props.match.params.symbol));
-    }, [dispatch])
-
-    useEffect(() => {
-        dispatch(actions.fetchAnnualReports(props.match.params.symbol));
     }, [dispatch])
 
     useEffect(() => {
@@ -191,7 +183,7 @@ const Details = (props) => {
                     <div className="card">
                         <div className="card-body">
                             <h3>Annual Reports for Last Year</h3>
-                            {reports.annualReports &&
+                            {reports &&
                                 <Table>
                                     <TableHead>
                                         <TableRow>
@@ -204,7 +196,7 @@ const Details = (props) => {
                                             <TableCell align="left" style={{fontWeight: 'bold'}}>Cost of
                                                 revenue</TableCell>
                                             <TableCell style={{fontWeight: 'bold'}} align="left"> <NumberFormat
-                                                value={reports.annualReports[0].costOfRevenue} decimalScale={2}
+                                                value={reports.costOfRevenue} decimalScale={2}
                                                 displayType={'text'}
                                                 thousandSeparator={true}
                                                 prefix={'$'}/></TableCell>
@@ -213,7 +205,7 @@ const Details = (props) => {
                                             <TableCell align="left" style={{fontWeight: 'bold'}}>Gross
                                                 Profit</TableCell>
                                             <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
-                                                value={reports.annualReports[0].grossProfit} decimalScale={2}
+                                                value={reports.grossProfit} decimalScale={2}
                                                 displayType={'text'}
                                                 thousandSeparator={true}
                                                 prefix={'$'}/></TableCell>
@@ -221,7 +213,7 @@ const Details = (props) => {
                                         <TableRow style={{fontWeight: 'bold'}}>
                                             <TableCell align="left" style={{fontWeight: 'bold'}}>Net income</TableCell>
                                             <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
-                                                value={reports.annualReports[0].netIncome} decimalScale={2}
+                                                value={reports.netIncome} decimalScale={2}
                                                 displayType={'text'}
                                                 thousandSeparator={true}
                                                 prefix={'$'}/></TableCell>
@@ -230,7 +222,7 @@ const Details = (props) => {
                                             <TableCell align="left" style={{fontWeight: 'bold'}}>Total
                                                 Revenue</TableCell>
                                             <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
-                                                value={reports.annualReports[0].totalRevenue} decimalScale={2}
+                                                value={reports.totalRevenue} decimalScale={2}
                                                 displayType={'text'}
                                                 thousandSeparator={true}
                                                 prefix={'$'}/></TableCell>
@@ -239,7 +231,7 @@ const Details = (props) => {
                                             <TableCell align="left" style={{fontWeight: 'bold'}}>Operating
                                                 income</TableCell>
                                             <TableCell align="left" style={{fontWeight: 'bold'}}> <NumberFormat
-                                                value={reports.annualReports[0].operatingIncome} decimalScale={2}
+                                                value={reports.operatingIncome} decimalScale={2}
                                                 displayType={'text'}
                                                 thousandSeparator={true}
                                                 prefix={'$'}/></TableCell>
@@ -248,16 +240,15 @@ const Details = (props) => {
                                             <TableCell align="left" style={{fontWeight: 'bold'}}>Income Before
                                                 tax</TableCell>
                                             <TableCell align="left" style={{fontWeight: 'bold'}}>
-                                                <NumberFormat value={reports.annualReports[0].incomeBeforeTax}
+                                                <NumberFormat value={reports.pretaxIncome}
                                                               decimalScale={2}
                                                               displayType={'text'} thousandSeparator={true}
                                                               prefix={'$'}/></TableCell>
                                         </TableRow>
                                         <TableRow style={{fontWeight: 'bold'}}>
-                                            <TableCell align="left" style={{fontWeight: 'bold'}}>Income tax
-                                                expense</TableCell>
+                                            <TableCell align="left" style={{fontWeight: 'bold'}}>Income tax</TableCell>
                                             <TableCell align="left" style={{fontWeight: 'bold'}}>
-                                                <NumberFormat value={reports.annualReports[0].incomeTaxExpense}
+                                                <NumberFormat value={reports.incomeTax}
                                                               decimalScale={2}
                                                               displayType={'text'} thousandSeparator={true}
                                                               prefix={'$'}/>
@@ -287,12 +278,12 @@ const Details = (props) => {
                     </div>
                     <div className="card mt-4">
                         <div className="card-body">
-                            <h3>About Us</h3>
+                            <h3>About</h3>
                             <div style={{
                                 textAlign: 'left',
                                 fontSize: '1.2em',
                                 marginLeft: '2px'
-                            }}>{stockOverviewData.description}</div>
+                            }}>{details.description}</div>
                         </div>
                     </div>
                 </div>

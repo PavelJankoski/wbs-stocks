@@ -44,7 +44,6 @@ export const formatStringToDecimal = (value) => {
 }
 
 export const numberFormatter = (num, prefix = "", digits = 2) => {
-    debugger
     const si = [
         {value: 1E6, symbol: "M"},
         {value: 1E9, symbol: "B"},

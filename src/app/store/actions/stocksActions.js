@@ -3,8 +3,7 @@ import * as actionTypes from '../actionTypes';
 import {
     calculateStockPercentage,
     toIsoDate,
-    RECOMMENDATION_TRENDS_DATE_FORMAT,
-    stockChartObject
+    RECOMMENDATION_TRENDS_DATE_FORMAT
 } from "../../shared/utils/utils";
 import moment from "moment";
 
@@ -67,9 +66,9 @@ export const fetchMarketTopLosers = () => {
     }
 }
 
-export const fetchAnnualReports = (symbol) => {
+export const fetchAnnualReports = (id) => {
     return (dispatch) => {
-        StocksService.annualReportsCompanyPerYear(symbol).then(res => {
+        StocksService.annualReportsCompanyPerYear(id).then(res => {
             dispatch(mapResponseToReport(res.data));
         }).catch(e => {
             console.log(e)
@@ -81,15 +80,8 @@ export const getBasicDetails = (symbol) => {
     return (dispatch) => {
         StocksService.getBasicDetails(symbol).then(res => {
             dispatch(mapResponseToDetails(res.data));
-        }).catch(e => {
-            console.log(e)
-        })
-    }
-}
-export const getStockOverview = (symbol) => {
-    return (dispatch) => {
-        StocksService.fetchCompanyOverview(symbol).then(res => {
-            dispatch(mapResponseToStocksOverview(res.data));
+            debugger
+            dispatch(fetchAnnualReports(res.data.id))
         }).catch(e => {
             console.log(e)
         })
@@ -271,10 +263,6 @@ const mapResponseToEps = (data, symbol) => {
     }
 }
 
-const mapResponseToStocksOverview = (data) => {
-    return {type: actionTypes.FETCH_STOCKS_OVERVIEW, payload: data}
-}
-
 const mapResponseToDetails = (data) => {
     return {type: actionTypes.FETCH_DETAILS_DATA, payload: data}
 }
@@ -343,7 +331,6 @@ export const fetchStockHistoricalPrices = (symbol, range, chartCloseOnly) => {
         dispatch({type: actionTypes.SET_STOCK_HISTORICAL_PRICES_LOADING, value: true});
         StocksService.fetchStockHistoricalPrices(symbol, range, chartCloseOnly)
             .then(res => {
-                debugger
                 dispatch(
                     {
                         type: actionTypes.FETCH_STOCK_HISTORICAL_PRICES_SUCCESS,

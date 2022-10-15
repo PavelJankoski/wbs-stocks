@@ -20,7 +20,6 @@ const initialState = {
     searchedStocks: {
         data: []
     },
-    stockOverviewData: [],
     reportsData: [],
     epsCompany: {
         symbol: '',
@@ -159,10 +158,6 @@ const setDetailsData = (state, action) => {
     return updateObject(state, {detailsData: action.payload})
 }
 
-const setStockOverviewData = (state, action) => {
-    return updateObject(state, {stockOverviewData: action.payload})
-}
-
 const setReportsData = (state, action) => {
     return updateObject(state, {reportsData: action.payload})
 }
@@ -267,8 +262,6 @@ const stocksReducer = (state = initialState, action) => {
             return setStocksExchanges(state, action);
         case actionTypes.FETCH_DETAILS_DATA:
             return setDetailsData(state, action);
-        case actionTypes.FETCH_STOCKS_OVERVIEW:
-            return setStockOverviewData(state, action);
         case actionTypes.EPS_COMPANY_PER_YEAR:
             return setEpsData(state, action);
         case actionTypes.FETCH_REPORTS_DATA:

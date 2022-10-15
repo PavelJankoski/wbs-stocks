@@ -6,7 +6,6 @@ export {
     fetchStockHistoricalPrices,
     cleanUpStockHistoricalPrices,
     getBasicDetails,
-    getStockOverview,
     epsCompanyPerYear,
     fetchAnnualReports,
     fetchCompanyProductsWikiLinks,
