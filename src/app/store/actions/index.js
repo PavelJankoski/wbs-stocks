@@ -23,6 +23,7 @@ export {
     fetchCoinsMarketData,
     fetchExchanges,
     fetchCoinDetails,
+    fetchCoinMarketData,
     cleanUpCoinDetails
 } from './cryptocurrenciesActions';
 

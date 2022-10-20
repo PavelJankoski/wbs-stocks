@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {AdvancedChart} from "react-tradingview-embed";
+import { AdvancedChart } from "react-tradingview-embed";
 
 const CoinTimeSeries = (props) => {
     return (
@@ -10,9 +10,6 @@ const CoinTimeSeries = (props) => {
                     "withdateranges": false,
                     "theme": "light",
                     "toolbar_bg": "#f1f3f6",
-                    "style": "3",
-                    "interval": "5",
-                    "range": "1D",
                     "symbol": `BINANCE:${props.coinSymbol === "usdt" ? "BTC" : props.coinSymbol}USDT`
                 }}/>
         </div>

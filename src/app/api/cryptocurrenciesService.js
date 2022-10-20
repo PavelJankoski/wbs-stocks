@@ -23,6 +23,10 @@ const CryptocurrenciesService = {
 
     fetchCoinDetails: (id) => {
         return API_DRIVER_BACKEND.get(`/cryptocurrency/${id}/details`)
+    },
+
+    getCoinMarketDataEventSource: (id) => {
+        return new EventSource(`http://localhost:8080/api/cryptocurrency/${id}/marketData-sse`)
     }
 }
 

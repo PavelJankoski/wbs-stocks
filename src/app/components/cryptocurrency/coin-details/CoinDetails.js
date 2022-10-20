@@ -1,16 +1,19 @@
 import React, {useEffect} from 'react'
 import {useParams} from "react-router-dom";
-import {cleanUpCoinDetails, fetchCoinDetails} from "../../../store/actions";
+import {cleanUpCoinDetails, fetchCoinDetails, fetchCoinMarketData} from "../../../store/actions";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {Badge, Image} from "react-bootstrap";
 import {Currency} from "../../../shared/objects/currencies";
 import NumberFormat from "react-number-format";
 import LinkDropdownButton from "../../UI/LinkDropdownButton";
-import CoinTimeSeries from "../coin-timeseries/CoinTimeSeries";
 import parse from 'html-react-parser'
-import {TechnicalAnalysis} from "react-tradingview-embed";
 import {Box} from "@mui/material";
 import {numberFormatter} from "../../../shared/utils/utils";
+import {cleanUpCoinMarketData, cleanUpCoinPriceDetails} from "../../../store/actions/cryptocurrenciesActions";
+import TechnicalAnalysis from 'react-tradingview-technical-analysis';
+import CoinTimeSeries from "../coin-timeseries/CoinTimeSeries";
+
+const CoinTimeSeriesMemo = React.memo(CoinTimeSeries);
 
 const CoinDetails = () => {
 
@@ -18,11 +21,17 @@ const CoinDetails = () => {
     const dispatch = useDispatch()
 
     let coinDetails = useSelector((state) => state.cryptocurrenciesReducer.coinDetails, shallowEqual)
+    let coinPriceDetails = useSelector((state) => state.cryptocurrenciesReducer.coinPriceDetails, shallowEqual)
+    let coinMarketData = useSelector((state) => state.cryptocurrenciesReducer.coinMarketData, shallowEqual)
 
     useEffect(() => {
         dispatch(fetchCoinDetails(coin_id))
+        dispatch(fetchCoinMarketData(coin_id))
+
         return function cleanup() {
             dispatch(cleanUpCoinDetails())
+            dispatch(cleanUpCoinMarketData())
+            dispatch(cleanUpCoinPriceDetails())
         }
     }, [dispatch, coin_id])
 
@@ -63,7 +72,7 @@ const CoinDetails = () => {
                             fontFamily: "Neue Haas Grotesk Display Pro, sans-serif"
                         }} displayType={"text"} prefix={'$'}
                                       thousandSeparator={true}
-                                      value={coinDetails.priceData.currentPrice[Currency.USD]}/>
+                                      value={coinPriceDetails.currentPrice[Currency.USD]}/>
                         <Box className="coin-important-data-box">
                             <div className="row d-flex align-items-center coin-important-data">
                                 <h4 className="m-0"
@@ -76,8 +85,8 @@ const CoinDetails = () => {
                                                   fontWeight: "bold",
                                                   fontFamily: "Neue Haas Grotesk Display Pro, sans-serif"
                                               }}
-                                              className={`${coinDetails.priceData.priceChangePercentage24h >= 0 ? "text-success" : "text-danger"} font-weight-bold ml-2`}
-                                              value={coinDetails.priceData.priceChangePercentage24h[Currency.USD]}/>
+                                              className={`${coinPriceDetails.priceChangePercentage24h >= 0 ? "text-success" : "text-danger"} font-weight-bold ml-2`}
+                                              value={coinPriceDetails.priceChangePercentage24h[Currency.USD]}/>
                             </div>
                             <div className="row d-flex align-items-center coin-important-data">
                                 <h4 className="m-0 mr-4"
@@ -91,7 +100,7 @@ const CoinDetails = () => {
                                                   fontWeight: "bold",
                                                   fontFamily: "Neue Haas Grotesk Display Pro, sans-serif"
                                               }}
-                                              value={coinDetails.priceData.high24h[Currency.USD]}/>
+                                              value={coinPriceDetails.high24h[Currency.USD]}/>
                             </div>
                             <div className="row d-flex align-items-center coin-important-data">
                                 <h4 className="m-0 mr-4"
@@ -105,7 +114,7 @@ const CoinDetails = () => {
                                                   fontWeight: "bold",
                                                   fontFamily: "Neue Haas Grotesk Display Pro, sans-serif"
                                               }}
-                                              value={coinDetails.priceData.low24h[Currency.USD]}/>
+                                              value={coinPriceDetails.low24h[Currency.USD]}/>
                             </div>
                         </Box>
                     </div>
@@ -121,7 +130,7 @@ const CoinDetails = () => {
                                     fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
                                     fontWeight: "bold",
                                     fontSize: 35
-                                }}>{numberFormatter(coinDetails.marketData.marketCap[Currency.USD], "$")}
+                                }}>{numberFormatter(coinMarketData.marketCap[Currency.USD], "$")}
                                 </p>
                             </div>
                             <div className="col-sm-6 text-center">
@@ -138,7 +147,7 @@ const CoinDetails = () => {
                                     fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
                                     fontWeight: "bold",
                                     fontSize: 35
-                                }}>{numberFormatter(coinDetails.marketData.totalVolume[Currency.USD], "$")}
+                                }}>{numberFormatter(coinMarketData.totalVolume[Currency.USD], "$")}
                                 </p>
                             </div>
                         </div>
@@ -148,7 +157,7 @@ const CoinDetails = () => {
                 <div className="row mt-4 ">
                     <div className="col-xl-7 col-12 ">
                         <div className="row">
-                            <CoinTimeSeries coinSymbol={coinDetails.symbol}/>
+                            <CoinTimeSeriesMemo coinSymbol={coinDetails.symbol}/>
                         </div>
                         <div className="row mt-5">
                             <p className="h2 font-weight-medium">About {coinDetails.name}</p>
@@ -173,13 +182,13 @@ const CoinDetails = () => {
 
                                         <NumberFormat decimalScale={2} displayType={"text"} suffix={"%"}
                                                       thousandSeparator={true}
-                                                      className={`${coinDetails.marketData.marketCapChangePercentage24h >= 0 ? "text-success" : "text-danger"}`}
+                                                      className={`${coinMarketData.marketCapChangePercentage24h >= 0 ? "text-success" : "text-danger"}`}
                                                       style={{
                                                           fontSize: 20,
                                                           fontWeight: "bold",
                                                           fontFamily: "Neue Haas Grotesk Display Pro, sans-serif"
                                                       }}
-                                                      value={coinDetails.marketData.marketCapChangePercentage24h[Currency.USD]}/>
+                                                      value={coinMarketData.marketCapChangePercentage24h[Currency.USD]}/>
 
                                     </div>
                                     <div className="coin-price-statistics-right-item mt-4">
@@ -187,7 +196,7 @@ const CoinDetails = () => {
                                             <p className="m-0" style={{fontSize: 18}}>Price Change</p>
                                             <p className="badge badge-secondary align-self-center p-1 ml-2 m-0">24h</p>
                                         </div>
-                                        <NumberFormat decimalScale={8} displayType={"text"}
+                                        <NumberFormat decimalScale={2} displayType={"text"}
                                                       prefix={"$"}
                                                       thousandSeparator={true}
                                                       style={{
@@ -195,8 +204,8 @@ const CoinDetails = () => {
                                                           fontWeight: "bold",
                                                           fontFamily: "Neue Haas Grotesk Display Pro, sans-serif"
                                                       }}
-                                                      className={`${coinDetails.priceData.priceChange24h[Currency.USD] >= 0 ? "text-success" : "text-danger"}`}
-                                                      value={coinDetails.priceData.priceChange24h[Currency.USD]}/>
+                                                      className={`${coinPriceDetails.priceChange24h[Currency.USD] >= 0 ? "text-success" : "text-danger"}`}
+                                                      value={coinPriceDetails.priceChange24h[Currency.USD]}/>
                                     </div>
                                 </div>
 
@@ -211,7 +220,7 @@ const CoinDetails = () => {
                                                           fontWeight: "bold",
                                                           fontFamily: "Neue Haas Grotesk Display Pro, sans-serif"
                                                       }}
-                                                      value={coinDetails.priceData.ath[Currency.USD]}/>
+                                                      value={coinPriceDetails.ath[Currency.USD]}/>
 
                                     </div>
                                     <div className="coin-price-statistics-right-item mt-4">
@@ -221,7 +230,7 @@ const CoinDetails = () => {
                                             fontSize: 20,
                                             fontWeight: "bold",
                                             fontFamily: "Neue Haas Grotesk Display Pro, sans-serif"
-                                        }}>{numberFormatter(coinDetails.marketData.circulatingSupply)}</p>
+                                        }}>{numberFormatter(coinMarketData.circulatingSupply)}</p>
                                     </div>
                                 </div>
 
@@ -233,7 +242,7 @@ const CoinDetails = () => {
                                             fontSize: 20,
                                             fontWeight: "bold",
                                             fontFamily: "Neue Haas Grotesk Display Pro, sans-serif"
-                                        }}>{numberFormatter(coinDetails.marketData.maxSupply)}</p>
+                                        }}>{numberFormatter(coinMarketData.maxSupply)}</p>
 
                                     </div>
                                     <div className="coin-price-statistics-right-item mt-4">
@@ -242,18 +251,14 @@ const CoinDetails = () => {
                                             fontSize: 20,
                                             fontWeight: "bold",
                                             fontFamily: "Neue Haas Grotesk Display Pro, sans-serif"
-                                        }}>{numberFormatter(coinDetails.marketData.totalSupply)}</p>
+                                        }}>{numberFormatter(coinMarketData.totalSupply)}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <TechnicalAnalysis widgetProps={{
-                                "isTransparent": true,
-                                "colorTheme": "light",
-                                "width": "100%",
-                                "symbol": `BINANCE:${coinDetails.symbol === "usdt" ? "BTC" : coinDetails.symbol}USDT`
-                            }}/>
+                            <TechnicalAnalysis isTransparent={true} width={"100%"}
+                                               symbol={`BINANCE:${coinDetails.symbol === "usdt" ? "BTC" : coinDetails.symbol}USDT`}/>
                         </div>
                     </div>
                 </div>

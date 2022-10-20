@@ -96,6 +96,7 @@
     "react-table": "^6.10.3",
     "react-tag-autocomplete": "^5.11.1",
     "react-tradingview-embed": "^3.0.6",
+    "react-tradingview-technical-analysis": "^1.0.2",
     "react-treebeard": "^3.2.4",
     "react-trello": "^2.2.3",
     "react-use-navigate": "^0.1.1",

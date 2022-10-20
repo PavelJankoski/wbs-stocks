@@ -13,6 +13,8 @@ const initialState = {
     },
     exchangesTableLoading: false,
     coinDetails: null,
+    coinMarketData: null,
+    coinPriceDetails: null,
     coinAbstract: null
 }
 
@@ -40,6 +42,14 @@ const updateCoinDetails = (state, action) => {
     return updateObject(state, {coinDetails: action.payload})
 }
 
+const updateCoinMarketData = (state, action) => {
+    return updateObject(state, {coinMarketData: action.payload})
+}
+
+const updateCoinPriceDetails = (state, action) => {
+    return updateObject(state, {coinPriceDetails: action.payload})
+}
+
 const updateCoinAbstract = (state, action) => {
     return updateObject(state, {coinAbstract: action.payload})
 }
@@ -56,6 +66,10 @@ const cryptocurrenciesReducer = (state = initialState, action) => {
             return setExchangesLoading(state, action)
         case actionTypes.FETCH_COIN_DETAILS_SUCCESS:
             return updateCoinDetails(state, action)
+        case actionTypes.FETCH_COIN_PRICE_DATA_SUCCESS:
+            return updateCoinPriceDetails(state, action)
+        case actionTypes.FETCH_COIN_MARKET_DATA_SUCCESS:
+            return updateCoinMarketData(state, action)
         case actionTypes.FETCH_COIN_ABSTRACT_SUCCESS:
             return updateCoinAbstract(state, action)
         default:
